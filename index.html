@@ -581,7 +581,7 @@ var DATA = {
         { name: "日本料理 一扇(ベネッセハウス内・会席)", price: 13970, requires: ["celebration"],
           note: "現行は会席「渚」13,970円・懐石「扇」17,710円(税サ込)。公式に「11月1日より潮16,000円/瀬戸25,000円へ変更」の注記あり(適用年は予約時に確認)。夕食予約はベネッセハウス宿泊者限定 — Day 2の夜をベネッセ泊にすると選べます。",
           source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/stay/benessehouse/restaurant.html" } },
-        { name: "長江SORAE(屋島・全席オーシャンビュー中華)", price: 15000, note: "旧・西麻布「麻布長江」の長坂シェフ。壇ノ浦を望む一軒家。火曜定休で日曜夜は営業(昼夜とも前日までの完全予約制・087-843-2567)。アメックス招待日和対象店の情報あり(対象コースは要会員確認)。",
+        { name: "長江SORAE(屋島・全席オーシャンビュー中華)", price: 15000, invite: true, note: "旧・西麻布「麻布長江」の長坂シェフ。壇ノ浦を望む一軒家。火曜定休で日曜夜は営業(昼夜とも前日までの完全予約制・087-843-2567)。アメックス招待日和対象店の情報あり(対象コースは要会員確認)。",
           source: { label: "長江SORAE公式", url: "https://choko-sorae.com/" } },
         { name: "レストラン フィオーレ(JRクレメント高松 20F)", price: 12000, note: "瀬戸内海の夜景を望むホテル最上層フレンチ、2名約1.5〜2.5万円。記念日プレートは事前依頼を。",
           source: { label: "JRホテルクレメント高松", url: "https://www.jrclement.co.jp/takamatsu/" } },
@@ -981,7 +981,7 @@ var DATA = {
           source: { label: "リウボウ旅行サービス", url: "https://rts21.co.jp/tour_options/view/dinnercruise-1st" } },
         { name: "MILANO|GRILL(ハイアット那覇 18F)", price: 15000, note: "那覇の夜景を望むグリル。レガロコース15,000円(税サ込)・個室あり、サプライズ・記念日演出対応(naha.regency@hyatt.com)。",
           source: { label: "ハイアット リージェンシー 那覇", url: "https://hyattregencynaha.jp/restaurant/milano-grill.html" } },
-        { name: "A LONG VACATION.(Southwest Grand Hotel 1F)", price: 6000, note: "クラシカルイタリアンのTasting Course 6,000円(税込・サ別)。アメックス招待日和掲載店(1名分無料の対象コースは要会員確認・3営業日前までに予約デスク経由)。",
+        { name: "A LONG VACATION.(Southwest Grand Hotel 1F)", price: 6000, invite: true, note: "クラシカルイタリアンのTasting Course 6,000円(税込・サ別)。アメックス招待日和掲載店(1名分無料の対象コースは要会員確認・3営業日前までに予約デスク経由)。",
           source: { label: "招待日和 掲載ページ", url: "https://syotaibiyori.com/restaurant/jp_ja/detail/10124" } },
         { name: "鉄板焼ステーキ 碧(へき)", price: 7150, note: "県産黒毛和牛の鉄板焼、完全個室多数。厳選県産牛コース7,150円。松尾店は日曜17:00–21:00営業(不定休あり・要事前確認)、記念日プレートは予約時依頼。",
           source: { label: "碧 公式", url: "https://www.heki.co.jp/" } },
@@ -1149,7 +1149,7 @@ var DATA = {
     };
   }
   function defaultState() {
-    var s = { tab: DATA.plans[0].id, budget: DEFAULT_BUDGET, plans: {} };
+    var s = { tab: DATA.plans[0].id, budget: DEFAULT_BUDGET, amex: false, plans: {} };
     DATA.plans.forEach(function (p) { s.plans[p.id] = freshPlanState(p); });
     return s;
   }
@@ -1171,6 +1171,7 @@ var DATA = {
     if (saved && saved.plans) {
       if (saved.tab && DATA.plans.some(function (p) { return p.id === saved.tab; })) state.tab = saved.tab;
       if (typeof saved.budget === "number" && saved.budget >= 0) state.budget = saved.budget;
+      if (typeof saved.amex === "boolean") state.amex = saved.amex;
       DATA.plans.forEach(function (p) {
         var sp = saved.plans[p.id];
         if (!sp) return;
@@ -1257,11 +1258,14 @@ var DATA = {
         }
       });
     });
-    var dinner = s.dinner != null && p.dinners[s.dinner] ? p.dinners[s.dinner].price : 0;
+    var dsel = s.dinner != null ? p.dinners[s.dinner] : null;
+    var dinner = dsel ? dsel.price : 0;
+    var inviteApplied = !!(dsel && dsel.invite && state.amex);
+    if (inviteApplied) dinner = dinner / 2; // 2名で1名分無料 -> 1人あたり半額相当
     var transport = s.transport.reduce(function (x, y) { return x + y; }, 0);
     var lodging = s.lodgingPrice.sat + s.lodgingPrice.sun;
     var perPerson = transport + act + meals + dinner + lodging / 2;
-    return { act: act, meals: meals, dinner: dinner, transport: transport, lodging: lodging, perPerson: perPerson, couple: perPerson * 2 };
+    return { act: act, meals: meals, dinner: dinner, inviteApplied: inviteApplied, transport: transport, lodging: lodging, perPerson: perPerson, couple: perPerson * 2 };
   }
 
   /* ---------- nav + hero ---------- */
@@ -1536,7 +1540,7 @@ var DATA = {
       '<option value=""' + (s.dinner == null ? " selected" : "") + ">ディナーを選ぶ…</option>" +
       p.dinners.map(function (dn, i) {
         var ok = dinnerAllowed(dn, s);
-        var priceTxt = dn.price === 0 ? "宿泊プランに含む" : yen(dn.price) + "/人";
+        var priceTxt = dn.price === 0 ? "宿泊プランに含む" : yen(dn.price) + "/人" + (dn.invite ? "・招待日和対象" : "");
         var lockTxt = ok ? "" : " — 要: 2泊目を" + dn.requires.map(function (lid) { return lodgById(p, lid).shortName; }).join("/") + "に";
         return '<option value="' + i + '"' + (s.dinner === i ? " selected" : "") + (ok ? "" : " disabled") + ">" +
           esc(dn.name) + "(" + priceTxt + ")" + esc(lockTxt) + "</option>";
@@ -1545,6 +1549,7 @@ var DATA = {
       (d ? '<div class="bmeta">' + esc(d.note) + ' <a href="' + esc(d.source.url) + '" target="_blank" rel="noopener">' + esc(d.source.label) + " ↗</a></div>"
          : '<div class="bmeta">グレー表示は宿泊とセットのディナー — 2泊目の宿を対象の宿にすると解禁されます。</div>') +
       (doubled ? '<div class="bmeta" style="color:var(--warn);font-weight:700">注意: 2泊目は夕食付きプランです。外のレストランにするなら「夕食なしプラン」で予約するか、宿の夕食を昼会席等に振替相談を。</div>' : "") +
+      (d && d.invite && state.amex ? '<div class="bmeta" style="color:var(--ok);font-weight:700">招待日和適用中: 対象コース2名利用で1名分無料(3営業日前19時までに予約デスク経由・対象コースは要会員確認)。</div>' : "") +
       "</div>";
   }
 
@@ -1902,8 +1907,9 @@ var DATA = {
     });
     html += '<div class="srow head"><span class="sl">アクティビティ・体験 <small>大人2名分</small></span><span class="sv" data-sv="act">' + yen(c.act * 2) + "</span></div>";
     html += '<div class="srow"><span class="sl">食事(朝・昼・夕) <small>大人2名分 · 宿泊込み分は¥0</small></span><span class="sv" data-sv="meals">' + yen(c.meals * 2) + "</span></div>";
-    html += '<div class="srow"><span class="sl">誕生日ディナー <small>大人2名分</small></span><span class="sv" data-sv="dinner">' +
+    html += '<div class="srow"><span class="sl">誕生日ディナー <small>大人2名分' + (c.inviteApplied ? " · 招待日和で1名分無料" : "") + '</small></span><span class="sv" data-sv="dinner">' +
       (s.dinner != null && c.dinner === 0 ? "宿泊込み" : c.dinner ? yen(c.dinner * 2) : "—") + "</span></div>";
+    html += '<div class="srow"><span class="sl"><label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" data-amex' + (state.amex ? " checked" : "") + '> アメックス招待日和を使う <small>対象店のコース2名で1名分無料</small></label></span></div>';
     html += "</div>";
     html += '<div class="stotal"><div class="row1"><span class="tlabel">合計金額</span><span class="tv">' + yen(c.couple) + "</span></div>" +
       '<div class="tp">1名あたり ' + yen(c.perPerson) + "</div>" +
@@ -1923,6 +1929,11 @@ var DATA = {
         pstate().lodgingPrice[inp.getAttribute("data-lodging")] = Number(inp.value) || 0;
         save(); updateTotals(); renderTimeline();
       });
+    });
+    var amexCb = el.querySelector("input[data-amex]");
+    if (amexCb) amexCb.addEventListener("change", function () {
+      state.amex = this.checked;
+      save(); refresh();
     });
     el.querySelector("input[data-budget]").addEventListener("input", function () {
       state.budget = Number(this.value) || 0;
