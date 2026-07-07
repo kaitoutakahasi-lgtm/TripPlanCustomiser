@@ -345,19 +345,28 @@ var DATA = {
           source: { label: "料亭二蝶(掬月亭)", url: "https://www.2chou.jp/news/ritsurin-kikugetsu/" } }
       ],
       dinners: [
-        { name: "日本料理 一扇(ベネッセハウス内・会席)", price: 16000, note: "会席「潮」16,000円。夕食はベネッセハウス宿泊者限定 — 直島泊にする場合の第一候補。",
+        { name: "日本料理 一扇(ベネッセハウス内・会席)", price: 14000, requires: ["celebration"],
+          note: "会席コース約11,900〜14,300円(税サ込)。夕食予約はベネッセハウス宿泊者限定のため、宿でベネッセハウスを選んだときだけ組み込めます。",
           source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/stay/benessehouse/restaurant.html" } },
         { name: "オーベルジュ ドゥ オオイシ(高松・フレンチ)", price: 13200, note: "ディナー13,200円〜。記念日申告でケーキサービスあり、要予約。",
           source: { label: "公式サイト", url: "https://www.auberge-de-oishi.jp/" } },
         { name: "ビストロ ミューザンミュー(高松・フレンチ)", price: 8800, note: "記念日向けシェフ厳選コース8,800円。2日前までに要予約。",
           source: { label: "公式サイト", url: "https://www.bistro-demieux-en-mieux.com/course.html" } }
       ],
-      defaults: { sat: ["chichu", "leeufan", "sento"], sun: ["cycle", "arthouse", "nnmoa"], mon: ["ritsurin", "kikugetsu"], dinner: 2 },
-      lodging: {
-        label: "高松市内ホテル(2人2泊 約4〜8万円)。直島泊ならベネッセハウスで2泊23万円〜",
-        range: "", price: 60000,
-        source: { label: "JTB ベネッセハウス", url: "https://www.jtb.co.jp/kokunai-hotel/htl/7540001/plan/" }
-      },
+      defaults: { sat: ["chichu", "leeufan", "sento"], sun: ["cycle", "arthouse", "nnmoa"], mon: ["ritsurin", "kikugetsu"], dinner: 2, lodging: "budget" },
+      lodgings: [
+        { id: "budget", grade: "手頃", name: "JRホテルクレメント高松(2泊)", shortName: "クレメント高松",
+          price: 48000, range: "2人2泊 約3.6〜6.4万円", mealNote: "素泊まり基準(朝食は+約6,000円/泊)、土曜泊が上振れ", perksNote: "",
+          source: { label: "トラベルコ実勢", url: "https://www.tour.ne.jp/j_hotel/5171/" } },
+        { id: "mid", grade: "中堅", name: "MY LODGE Naoshima(島泊2泊)", shortName: "MY LODGE",
+          price: 90000, range: "2人2泊 約7〜12万円", mealNote: "室料のみ・朝食別", perksNote: "全室シービュー、宮浦港近くの高台",
+          source: { label: "MY LODGE Naoshima公式", url: "https://mylodge-naoshima.com/room" } },
+        { id: "celebration", grade: "記念日", name: "ベネッセハウス(ミュージアム棟・2泊)", shortName: "ベネッセハウス",
+          price: 160000, range: "2人2泊 約13〜20万円(室料+朝食目安・パーク棟は1〜2割安)", mealNote: "室料基本・朝食別(約3,000円/人)・夕食別",
+          perksNote: "宿泊者特典: ミュージアム・時の回廊・ヴァレーギャラリー入館無料(23時まで鑑賞可)、専用シャトル、一扇の夕食予約可",
+          perks: { benesse: 0 },
+          source: { label: "ベネッセアートサイト直島 宿泊者特典", url: "https://benesse-artsite.jp/stay/benefits.html" } }
+      ],
       transport: [
         { label: "東京⇔高松 往復", price: 32000, note: "早割で2〜3.5万円/人" },
         { label: "高松⇔直島 フェリー往復", price: 1360, note: "四国汽船 片道680円・約50分" }
@@ -404,19 +413,26 @@ var DATA = {
           source: { label: "いぶすき観光ネット", url: "https://www.ibusuki.or.jp/tourism/course/folder19938/folder19947/index.html" } }
       ],
       dinners: [
-        { name: "指宿白水館 季節の和食会席(宿泊プラン夕食)", price: 12000, note: "1泊2食プランの夕食。記念日ケーキ・祝い膳の別注も相談可、移動不要でDay 2夜に最適。",
+        { name: "指宿白水館 季節の会席(宿の夕食)", price: 0, requires: ["mid", "celebration"],
+          note: "白水館の2食付プランに含まれる夕食 — Day 2を白水館泊にすると追加費用なしでお祝いできます。記念日ケーキ・祝い膳の別注も相談可。",
           source: { label: "指宿白水館公式", url: "https://www.hakusuikan.co.jp/plan/" } },
         { name: "Restaurant Nori(天文館・新薩摩料理フレンチ)", price: 10000, note: "コース5,500円/10,000円。日曜夜も営業、記念日プレート対応あり。",
           source: { label: "一休.comレストラン", url: "https://restaurant.ikyu.com/120050" } },
         { name: "イルチプレッソ(天文館・イタリアン)", price: 12100, note: "記念日向けロッシーニ風コース12,100円。月曜定休だが10/4(日)は営業。",
           source: { label: "公式サイト", url: "https://www.ilcipresso.jp/anniversary.html" } }
       ],
-      defaults: { sat: ["senganen", "kiriko", "tamatebako"], sun: ["saraku", "iburin"], mon: ["nagasakibana"], dinner: 0 },
-      lodging: {
-        label: "指宿白水館(1泊2食2名30,800円〜)。市内1泊+指宿1泊の分割も可",
-        range: "", price: 90000,
-        source: { label: "指宿白水館公式", url: "https://www.hakusuikan.co.jp/plan/" }
-      },
+      defaults: { sat: ["senganen", "kiriko", "tamatebako"], sun: ["saraku", "iburin"], mon: ["nagasakibana"], dinner: 0, lodging: "mid" },
+      lodgings: [
+        { id: "budget", grade: "手頃", name: "ソラリア西鉄ホテル鹿児島(市内2泊)", shortName: "ソラリア",
+          price: 46000, range: "2人2泊 約3.8〜6.4万円", mealNote: "素泊まり〜朝食付・夕食なし", perksNote: "鹿児島中央駅正面・桜島側客室あり",
+          source: { label: "JTB実勢(10/3・4日付指定)", url: "https://www.jtb.co.jp/kokunai-hotel/htl/8608057/plan/" } },
+        { id: "mid", grade: "中堅", name: "市内1泊+指宿白水館1泊(2食付)", shortName: "白水館(Day2泊)",
+          price: 80000, range: "2人2泊 約7.2〜10万円(土曜市内・日曜白水館なら約7.6万円)", mealNote: "白水館泊(Day 2)は夕食の会席込み", perksNote: "元禄風呂利用可。砂むしは別料金(税別1,400円/人)の場合が多い",
+          source: { label: "JTB 白水館実勢(10/4日付指定)", url: "https://www.jtb.co.jp/kokunai-hotel/htl/8621002/plan/" } },
+        { id: "celebration", grade: "記念日", name: "指宿白水館 2泊(1泊2食付×2)", shortName: "白水館",
+          price: 130000, range: "2人2泊 約11〜16.5万円(薩摩客殿約11.2万円・磯客殿約15万円)", mealNote: "両泊とも夕食の会席込み", perksNote: "離宮は源泉かけ流し風呂付き客室。砂むし入浴券付きプランはサイトにより有無あり",
+          source: { label: "JTB 白水館実勢(10/3・4日付指定)", url: "https://www.jtb.co.jp/kokunai-hotel/htl/8621002/plan/" } }
+      ],
       transport: [
         { label: "東京⇔鹿児島 往復", price: 30000, note: "早割・スカイマーク等で2万円台も" },
         { label: "鹿児島中央⇔指宿 往復", price: 2340, note: "普通列車。たまて箱利用は+特急料金" }
@@ -463,19 +479,26 @@ var DATA = {
           source: { label: "水口酒造公式", url: "https://www.dogobeer.jp/" } }
       ],
       dinners: [
-        { name: "別邸朧月夜 部屋食・個室会席(宿泊者向け)", price: 20000, note: "全室露天風呂付きの宿で部屋食の瀬戸内会席。記念日ケーキの手配も相談可 — Day 2をこの宿にする場合の選択肢。",
-          source: { label: "別邸朧月夜公式", url: "https://www.oborozukiyo.jp/" } },
+        { name: "宿の会席(道後舘・朧月夜の2食付プラン夕食)", price: 0, requires: ["mid", "celebration"],
+          note: "2食付プランに含まれる夕食でお祝い — 朧月夜なら完全個室の料亭で月替わり会席、記念日ケーキ・花束は予約時にリクエスト可。",
+          source: { label: "別邸朧月夜(一休.com)", url: "https://www.ikyu.com/00001407/" } },
         { name: "キングオブダイニング(道後山の手ホテル・フレンチ)", price: 8000, note: "英国調ホテル内フレンチ、コース6,000円〜。個室・記念日サプライズ対応、温泉街から徒歩圏。",
           source: { label: "記念日ディナー特集", url: "https://anniversarys-mag.jp/201902" } },
         { name: "にきたつ庵 夜の会席コース", price: 6000, note: "コース3,240円〜(目安5,000〜8,000円)。道後ビール・利き酒と合わせた和のお祝いに。個室は予約時に相談。",
           source: { label: "水口酒造公式", url: "https://www.dogobeer.jp/" } }
       ],
-      defaults: { sat: ["matsuyamajo", "botchan", "haikara"], sun: ["tobe", "asuka"], mon: ["honkan", "minakuchi"], dinner: 1 },
-      lodging: {
-        label: "道後の中堅温泉宿(2人2泊6〜10万円)。道後舘・ふなや2食付は1泊38,500円〜、別邸朧月夜は1泊約10万円",
-        range: "", price: 90000,
-        source: { label: "JTB 道後舘プラン", url: "https://www.jtb.co.jp/kokunai-hotel/htl/7461045/plan/" }
-      },
+      defaults: { sat: ["matsuyamajo", "botchan", "haikara"], sun: ["tobe", "asuka"], mon: ["honkan", "minakuchi"], dinner: 1, lodging: "budget" },
+      lodgings: [
+        { id: "budget", grade: "手頃", name: "ホテル葛城 Spa Resort 道後(2泊)", shortName: "葛城",
+          price: 64000, range: "2人2泊 約5.2〜7.8万円", mealNote: "朝食付・夕食なし(外食と組み合わせ)", perksNote: "道後温泉街徒歩圏・大浴場/貸切湯あり",
+          source: { label: "楽天トラベル実勢", url: "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/16718" } },
+        { id: "mid", grade: "中堅", name: "道後舘(1泊2食付×2泊)", shortName: "道後舘",
+          price: 115000, range: "2人2泊 約9.6〜14万円(同格のふなやもほぼ同水準)", mealNote: "夕食の会席込み(2食付)", perksNote: "黒川紀章設計の名旅館",
+          source: { label: "じゃらん実勢", url: "https://www.jalan.net/yad332766/plan/" } },
+        { id: "celebration", grade: "記念日", name: "別邸 朧月夜(1泊2食付×2泊)", shortName: "朧月夜",
+          price: 230000, range: "2人2泊 約20〜26万円(葛城1泊+朧月夜1泊なら約14〜17万円)", mealNote: "夕朝食とも完全個室の料亭・夕食込み", perksNote: "全19室が源泉かけ流し露天風呂付き。記念日ケーキ・花束・スパークリング手配可",
+          source: { label: "一休.com", url: "https://www.ikyu.com/00001407/" } }
+      ],
       transport: [
         { label: "東京⇔松山 往復", price: 32000, note: "早割で2.5〜4万円/人" },
         { label: "松山空港⇔道後 バス往復", price: 2400, note: "片道1,200円・約40分" }
@@ -529,12 +552,18 @@ var DATA = {
         { name: "琉球料理と琉球舞踊 四つ竹 久米店", price: 8000, note: "目安。琉球舞踊を鑑賞しながら琉球会席。沖縄らしい記念日向けの一軒。",
           source: { label: "記念日レストラン特集", url: "https://oiwai.anny.gift/celebrations/birthday-naha-okinawa" } }
       ],
-      defaults: { sat: ["shurijo", "zuisen", "makishi"], sun: ["kerama", "ryusen"], mon: ["churachari"], dinner: 0 },
-      lodging: {
-        label: "ハイアットリージェンシー那覇(2人2泊4.5〜7万円)。手頃なシティホテルなら2〜3.6万円",
-        range: "", price: 55000,
-        source: { label: "じゃらん ハイアット那覇", url: "https://www.jalan.net/yad373185/plan/" }
-      },
+      defaults: { sat: ["shurijo", "zuisen", "makishi"], sun: ["kerama", "ryusen"], mon: ["churachari"], dinner: 0, lodging: "mid" },
+      lodgings: [
+        { id: "budget", grade: "手頃", name: "ダイワロイネットホテル那覇国際通り(2泊)", shortName: "ダイワロイネット",
+          price: 36000, range: "2人2泊 約2.8〜4.5万円", mealNote: "素泊まり基準(朝食付は+約2,000円/泊/人)", perksNote: "牧志駅すぐ・国際通り沿い、2025年リニューアル済み",
+          source: { label: "トラベルコ実勢", url: "https://www.tour.ne.jp/j_hotel/29709/" } },
+        { id: "mid", grade: "中堅", name: "ハイアット リージェンシー 那覇(2泊)", shortName: "ハイアット",
+          price: 72000, range: "2人2泊 約5.5〜9万円(素泊まり2泊なら5万円台後半〜)", mealNote: "素泊まり〜朝食付(朝食+約3,500円/名)", perksNote: "牧志駅徒歩7分・国際通り200m、館内ダイニング充実",
+          source: { label: "トラベルコ実勢", url: "https://www.tour.ne.jp/j_hotel/38110/" } },
+        { id: "celebration", grade: "記念日", name: "ホテル コレクティブ プレミアムフロア(2泊)", shortName: "コレクティブ",
+          price: 95000, range: "2人2泊 約7.5〜12万円", mealNote: "朝食付・最上階ラウンジ(ティー/カクテルタイム)込み", perksNote: "公式アニバーサリーオプション: ケーキ3,000円〜・スパークリング4,000円〜・花束3,300円〜",
+          source: { label: "ホテルコレクティブ公式 Anniversary", url: "https://hotelcollective.jp/anniversary/" } }
+      ],
       transport: [
         { label: "東京⇔那覇 往復", price: 35000, note: "ANA/JAL早割3〜4.5万円、LCCなら2〜2.5万円" },
         { label: "ゆいレール等 市内移動", price: 1000, note: "24時間フリー乗車券1,000円" }
@@ -563,19 +592,38 @@ var DATA = {
     food: "食"
   };
   var STATUS_TXT = { open: "OK", closed: "休", check: "要確認" };
-  var LS_KEY = "tripstudio-v1";
+  var LS_KEY = "tripstudio-v2";
+
+  /* ---------- helpers ---------- */
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function yen(n) { return "¥" + Math.round(n).toLocaleString("ja-JP"); }
+  function srcLink(src, cls) {
+    return '<a class="' + (cls || "") + '" href="' + esc(src.url) + '" target="_blank" rel="noopener" title="出典: ' + esc(src.label) + '">';
+  }
+  function actById(p, id) {
+    return p.activities.filter(function (a) { return a.id === id; })[0] || null;
+  }
+  function lodgById(p, id) {
+    return p.lodgings.filter(function (l) { return l.id === id; })[0] || p.lodgings[0];
+  }
 
   /* ---------- state ---------- */
+  function freshPlanState(p) {
+    return {
+      days: { sat: p.defaults.sat.slice(), sun: p.defaults.sun.slice(), mon: p.defaults.mon.slice() },
+      dinner: p.defaults.dinner,
+      lodgingId: p.defaults.lodging,
+      lodgingPrice: lodgById(p, p.defaults.lodging).price,
+      transport: p.transport.map(function (t) { return t.price; })
+    };
+  }
   function defaultState() {
     var s = { tab: DATA.plans[0].id, plans: {} };
-    DATA.plans.forEach(function (p) {
-      s.plans[p.id] = {
-        days: { sat: p.defaults.sat.slice(), sun: p.defaults.sun.slice(), mon: p.defaults.mon.slice() },
-        dinner: p.defaults.dinner,
-        lodging: p.lodging.price,
-        transport: p.transport.map(function (t) { return t.price; })
-      };
-    });
+    DATA.plans.forEach(function (p) { s.plans[p.id] = freshPlanState(p); });
     return s;
   }
 
@@ -594,10 +642,13 @@ var DATA = {
           }
         });
         if (typeof sp.dinner === "number" && p.dinners[sp.dinner]) cur.dinner = sp.dinner;
-        if (typeof sp.lodging === "number") cur.lodging = sp.lodging;
+        if (sp.dinner === null) cur.dinner = null;
+        if (typeof sp.lodgingId === "string" && p.lodgings.some(function (l) { return l.id === sp.lodgingId; })) cur.lodgingId = sp.lodgingId;
+        if (typeof sp.lodgingPrice === "number") cur.lodgingPrice = sp.lodgingPrice;
         if (Array.isArray(sp.transport)) {
           sp.transport.forEach(function (v, i) { if (typeof v === "number" && i < cur.transport.length) cur.transport[i] = v; });
         }
+        validateDinner(p, cur);
       });
     }
   } catch (e) { /* corrupt storage -> defaults */ }
@@ -608,21 +659,21 @@ var DATA = {
 
   function plan() { return DATA.plans.filter(function (p) { return p.id === state.tab; })[0]; }
   function pstate() { return state.plans[state.tab]; }
-  function actById(p, id) {
-    return p.activities.filter(function (a) { return a.id === id; })[0] || null;
-  }
 
   var catFilter = "all";
 
-  /* ---------- helpers ---------- */
-  function esc(s) {
-    return String(s).replace(/[&<>"]/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-    });
+  /* ---------- lodging constraints ---------- */
+  function dinnerAllowed(dn, s) {
+    return !dn.requires || dn.requires.indexOf(s.lodgingId) >= 0;
   }
-  function yen(n) { return "¥" + Math.round(n).toLocaleString("ja-JP"); }
-  function srcLink(src, cls) {
-    return '<a class="' + (cls || "") + '" href="' + esc(src.url) + '" target="_blank" rel="noopener" title="出典: ' + esc(src.label) + '">';
+  function validateDinner(p, s) {
+    if (s.dinner != null && p.dinners[s.dinner] && !dinnerAllowed(p.dinners[s.dinner], s)) s.dinner = null;
+  }
+  // effective per-person price of an activity given current lodging perks
+  function effPrice(p, s, a) {
+    var lodg = lodgById(p, s.lodgingId);
+    if (lodg.perks && Object.prototype.hasOwnProperty.call(lodg.perks, a.id)) return lodg.perks[a.id];
+    return a.price;
   }
 
   /* ---------- cost ---------- */
@@ -632,13 +683,13 @@ var DATA = {
     ["sat", "sun", "mon"].forEach(function (k) {
       s.days[k].forEach(function (id) {
         var a = actById(p, id);
-        if (a) act += a.price;
+        if (a) act += effPrice(p, s, a);
       });
     });
     var dinner = s.dinner != null && p.dinners[s.dinner] ? p.dinners[s.dinner].price : 0;
     var transport = s.transport.reduce(function (x, y) { return x + y; }, 0);
-    var perPerson = transport + act + dinner + s.lodging / 2;
-    return { act: act, dinner: dinner, transport: transport, lodging: s.lodging, perPerson: perPerson, couple: perPerson * 2 };
+    var perPerson = transport + act + dinner + s.lodgingPrice / 2;
+    return { act: act, dinner: dinner, transport: transport, lodging: s.lodgingPrice, perPerson: perPerson, couple: perPerson * 2 };
   }
 
   /* ---------- renderers ---------- */
@@ -657,7 +708,16 @@ var DATA = {
     });
   }
 
-  function slotHtml(p, id, dayKey) {
+  function priceHtml(p, s, a) {
+    var eff = effPrice(p, s, a);
+    if (eff !== a.price) {
+      return '<s style="color:var(--ink-3);font-weight:400">' + yen(a.price) + "</s> " +
+        (eff === 0 ? '<span style="color:var(--ok)">宿泊者無料</span>' : yen(eff) + "<small>/人</small>");
+    }
+    return eff === 0 ? "無料" : yen(eff) + "<small>/人</small>";
+  }
+
+  function slotHtml(p, s, id, dayKey) {
     var a = actById(p, id);
     if (!a) return "";
     var st = a.days[dayKey];
@@ -665,8 +725,8 @@ var DATA = {
     return '<div class="slot">' +
       '<div class="sbody"><div class="sname">' + srcLink(a.source) + esc(a.name) + "</a>" + warn + "</div>" +
       '<div class="smeta">' + esc(a.duration) + (a.note ? " · " + esc(a.note) : "") + "</div></div>" +
-      '<div class="sprice">' + (a.price === 0 ? "無料" : yen(a.price) + "<small>/人</small>") + "</div>" +
-      '<button class="rm" data-rm="' + a.id + '" data-day="' + dayKey + '" aria-label="' + esc(a.name) + 'をDay ' + dayKey + 'から外す">×</button>' +
+      '<div class="sprice">' + priceHtml(p, s, a) + "</div>" +
+      '<button class="rm" data-rm="' + a.id + '" data-day="' + dayKey + '" aria-label="' + esc(a.name) + 'を10/' + dayKey + 'から外す">×</button>' +
       "</div>";
   }
 
@@ -691,7 +751,7 @@ var DATA = {
       }
 
       html += ids.length
-        ? ids.map(function (id) { return slotHtml(p, id, day.key); }).join("")
+        ? ids.map(function (id) { return slotHtml(p, s, id, day.key); }).join("")
         : '<div class="empty-day">まだ何も入っていません — 下の候補プールから「+10/' + day.d + '」で追加。</div>';
 
       if (day.key === "sun") {
@@ -700,10 +760,15 @@ var DATA = {
           '<select id="dinnerSel" aria-label="誕生日ディナーを選択">' +
           '<option value=""' + (s.dinner == null ? " selected" : "") + ">ディナーを選ぶ…</option>" +
           p.dinners.map(function (dn, i) {
-            return '<option value="' + i + '"' + (s.dinner === i ? " selected" : "") + ">" + esc(dn.name) + "(" + yen(dn.price) + "/人)</option>";
+            var ok = dinnerAllowed(dn, s);
+            var priceTxt = dn.price === 0 ? "宿泊プランに含む" : yen(dn.price) + "/人";
+            var lockTxt = ok ? "" : " — 要: " + dn.requires.map(function (lid) { return lodgById(p, lid).shortName; }).join("・") + "泊";
+            return '<option value="' + i + '"' + (s.dinner === i ? " selected" : "") + (ok ? "" : " disabled") + ">" +
+              esc(dn.name) + "(" + priceTxt + ")" + esc(lockTxt) + "</option>";
           }).join("") +
           "</select>" +
           (d ? '<div class="bmeta">' + esc(d.note) + " " + srcLink(d.source) + esc(d.source.label) + " ↗</a></div>" : "") +
+          '<div class="bmeta">宿泊一体型のディナー(灰色)は「費用の試算」で対象の宿を選ぶと選択できます。</div>' +
           "</div>";
       }
       html += "</div>";
@@ -732,6 +797,7 @@ var DATA = {
 
   function renderCost() {
     var p = plan(), s = pstate(), c = costs();
+    var lodg = lodgById(p, s.lodgingId);
     var el = document.getElementById("costbox");
     var html = "<h3>費用の試算</h3>" + '<div class="cost-rows">';
 
@@ -739,16 +805,30 @@ var DATA = {
       html += '<div class="crow"><span class="cl">' + esc(t.label) + ' <small>/人</small></span>' +
         '<input type="number" min="0" step="100" value="' + s.transport[i] + '" data-tr="' + i + '" aria-label="' + esc(t.label) + 'の金額"></div>';
     });
-    html += '<div class="crow"><span class="cl">宿泊(2人2泊)</span>' +
-      '<input type="number" min="0" step="1000" value="' + s.lodging + '" data-lodging aria-label="宿泊費"></div>';
+
+    html += '<div class="crow" style="display:block;padding-top:8px">' +
+      '<span class="cl" style="display:block;margin-bottom:4px">宿泊(2人2泊)</span>' +
+      '<select id="lodgingSel" style="width:100%;padding:7px 9px;border-radius:8px;border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);font-size:12.5px;font-weight:600" aria-label="宿を選択">' +
+      p.lodgings.map(function (l) {
+        return '<option value="' + l.id + '"' + (l.id === s.lodgingId ? " selected" : "") + ">【" + esc(l.grade) + "】" + esc(l.name) + "(" + yen(l.price) + ")</option>";
+      }).join("") +
+      "</select></div>";
+    html += '<div class="crow"><span class="cl">↳ 金額を調整</span>' +
+      '<input type="number" min="0" step="1000" value="' + s.lodgingPrice + '" data-lodging aria-label="宿泊費"></div>';
+    html += '<div class="crow" style="display:block;padding:2px 0 4px"><span class="cl" style="font-size:11px;line-height:1.6;display:block">' +
+      esc(lodg.range) + " · " + esc(lodg.mealNote) +
+      (lodg.perksNote ? " · " + esc(lodg.perksNote) : "") +
+      " " + srcLink(lodg.source, "src") + esc(lodg.source.label) + "</a></span></div>";
+
     html += '<div class="crow sub"><span class="cl">アクティビティ計 /人</span><span class="cv">' + yen(c.act) + "</span></div>";
-    html += '<div class="crow"><span class="cl">誕生日ディナー /人</span><span class="cv">' + (c.dinner ? yen(c.dinner) : "—") + "</span></div>";
+    html += '<div class="crow"><span class="cl">誕生日ディナー /人</span><span class="cv">' +
+      (s.dinner != null && c.dinner === 0 ? "宿泊込み" : c.dinner ? yen(c.dinner) : "—") + "</span></div>";
     html += "</div>";
     html += '<button class="reset" id="resetBtn">このプランを初期状態に戻す</button>';
     html += '<div class="ctotal"><div class="tl">2人合計(概算)</div>' +
       '<div class="tv">' + yen(c.couple) + "<small> /2人</small></div>" +
       '<div class="tp">1人あたり ' + yen(c.perPerson) + "</div></div>";
-    html += '<p class="cost-note">交通・宿泊は調査時点の概算(編集可)。宿の目安: ' + esc(p.lodging.label) + " " + esc(p.lodging.range) + " " + srcLink(p.lodging.source) + esc(p.lodging.source.label) + " ↗</a></p>";
+    html += '<p class="cost-note">交通・宿泊は調査時点の実勢からの概算(編集可)。宿を替えると宿泊一体型ディナーや宿泊者特典(例: ベネッセハウス泊でミュージアム無料)も連動します。</p>';
     el.innerHTML = html;
 
     Array.prototype.forEach.call(el.querySelectorAll("input[data-tr]"), function (inp) {
@@ -760,18 +840,20 @@ var DATA = {
     });
     var lg = el.querySelector("input[data-lodging]");
     lg.addEventListener("input", function () {
-      pstate().lodging = Number(lg.value) || 0;
+      pstate().lodgingPrice = Number(lg.value) || 0;
       save();
       updateTotals();
     });
+    el.querySelector("#lodgingSel").addEventListener("change", function () {
+      var s2 = pstate(), p2 = plan();
+      s2.lodgingId = this.value;
+      s2.lodgingPrice = lodgById(p2, this.value).price;
+      validateDinner(p2, s2);
+      save();
+      renderTimeline(); renderCost(); renderPool();
+    });
     el.querySelector("#resetBtn").addEventListener("click", function () {
-      var p2 = plan();
-      state.plans[p2.id] = {
-        days: { sat: p2.defaults.sat.slice(), sun: p2.defaults.sun.slice(), mon: p2.defaults.mon.slice() },
-        dinner: p2.defaults.dinner,
-        lodging: p2.lodging.price,
-        transport: p2.transport.map(function (t) { return t.price; })
-      };
+      state.plans[plan().id] = freshPlanState(plan());
       save();
       renderAll();
     });
@@ -820,7 +902,7 @@ var DATA = {
       return '<article class="card' + (inAny ? " in" : "") + '">' +
         '<div class="chead"><div class="cname">' + srcLink(a.source) + esc(a.name) + "</a></div>" +
         '<span class="cat c-' + a.category + '">' + CATS[a.category] + "</span></div>" +
-        '<div class="cprice">' + (a.price === 0 ? "無料" : yen(a.price) + "<small> /人</small>") +
+        '<div class="cprice">' + priceHtml(p, s, a) +
         (a.priceNote ? ' <small>' + esc(a.priceNote) + "</small>" : "") + "</div>" +
         '<div class="cnote">' + esc(a.duration) + " · " + esc(a.note) + "</div>" +
         '<div class="avail">' + avail + "</div>" +
@@ -842,7 +924,7 @@ var DATA = {
 
   function renderFoot() {
     document.getElementById("footNote").innerHTML =
-      "料金・営業情報は2026年7月時点の調査(各カードの公式リンク参照)。「要確認」は予約時に公式へ確認を。曜日判定の根拠: " +
+      "料金・営業・宿泊情報は2026年7月時点の調査(各カードの公式リンク参照)。宿泊は実勢価格帯からの概算で、実際の予約額を入力欄に上書きして確定できます。「要確認」は予約時に公式へ確認を。曜日判定の根拠: " +
       '<a href="https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html" target="_blank" rel="noopener">内閣府 国民の祝日</a>(10/5は祝日でない月曜) · ' +
       '直島の月曜休館は <a href="https://benesse-artsite.jp/calendar/" target="_blank" rel="noopener">ベネッセアートサイト直島 開館カレンダー</a>。' +
       "選択内容はこのブラウザに自動保存されます。";
