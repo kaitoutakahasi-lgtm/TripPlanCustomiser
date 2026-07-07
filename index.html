@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>10月3–5日 旅プラン比較ボード</title>
+<title>10月3–5日 旅プランスタジオ</title>
 </head>
 <body>
 <style>
@@ -18,7 +18,7 @@
     --line-strong: #b9b4a2;
     --accent: #c98f0a;
     --accent-strong: #a37205;
-    --accent-soft: #f6e7bd;
+    --accent-soft: #f8ecc9;
     --ok: #1f7a57;
     --ok-bg: #e0f0e8;
     --ng: #bb4046;
@@ -31,994 +31,835 @@
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --paper: #12172a;
-      --surface: #1a2138;
-      --surface-2: #212a46;
-      --ink: #eceef5;
-      --ink-2: #b7bdd0;
-      --ink-3: #868da8;
-      --line: #313a5a;
-      --line-strong: #485174;
-      --accent: #e9b83f;
-      --accent-strong: #f2ca62;
-      --accent-soft: #3b321a;
-      --ok: #5cc496;
-      --ok-bg: #1d3b31;
-      --ng: #ec8a8e;
-      --ng-bg: #45262a;
-      --warn: #dcae4d;
-      --warn-bg: #3b3218;
+      --paper: #12172a; --surface: #1a2138; --surface-2: #212a46;
+      --ink: #eceef5; --ink-2: #b7bdd0; --ink-3: #868da8;
+      --line: #313a5a; --line-strong: #485174;
+      --accent: #e9b83f; --accent-strong: #f2ca62; --accent-soft: #3b321a;
+      --ok: #5cc496; --ok-bg: #1d3b31;
+      --ng: #ec8a8e; --ng-bg: #45262a;
+      --warn: #dcae4d; --warn-bg: #3b3218;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
     }
   }
   :root[data-theme="light"] {
-    --paper: #f7f5ef;
-    --surface: #fffefb;
-    --surface-2: #f0ede4;
-    --ink: #1c2340;
-    --ink-2: #4a5068;
-    --ink-3: #7d8299;
-    --line: #dcd8ca;
-    --line-strong: #b9b4a2;
-    --accent: #c98f0a;
-    --accent-strong: #a37205;
-    --accent-soft: #f6e7bd;
-    --ok: #1f7a57;
-    --ok-bg: #e0f0e8;
-    --ng: #bb4046;
-    --ng-bg: #f8e5e5;
-    --warn: #96650d;
-    --warn-bg: #f5ecd6;
+    --paper: #f7f5ef; --surface: #fffefb; --surface-2: #f0ede4;
+    --ink: #1c2340; --ink-2: #4a5068; --ink-3: #7d8299;
+    --line: #dcd8ca; --line-strong: #b9b4a2;
+    --accent: #c98f0a; --accent-strong: #a37205; --accent-soft: #f8ecc9;
+    --ok: #1f7a57; --ok-bg: #e0f0e8;
+    --ng: #bb4046; --ng-bg: #f8e5e5;
+    --warn: #96650d; --warn-bg: #f5ecd6;
     --shadow: 0 1px 2px rgba(28,35,64,.06), 0 10px 28px rgba(28,35,64,.08);
   }
   :root[data-theme="dark"] {
-    --paper: #12172a;
-    --surface: #1a2138;
-    --surface-2: #212a46;
-    --ink: #eceef5;
-    --ink-2: #b7bdd0;
-    --ink-3: #868da8;
-    --line: #313a5a;
-    --line-strong: #485174;
-    --accent: #e9b83f;
-    --accent-strong: #f2ca62;
-    --accent-soft: #3b321a;
-    --ok: #5cc496;
-    --ok-bg: #1d3b31;
-    --ng: #ec8a8e;
-    --ng-bg: #45262a;
-    --warn: #dcae4d;
-    --warn-bg: #3b3218;
+    --paper: #12172a; --surface: #1a2138; --surface-2: #212a46;
+    --ink: #eceef5; --ink-2: #b7bdd0; --ink-3: #868da8;
+    --line: #313a5a; --line-strong: #485174;
+    --accent: #e9b83f; --accent-strong: #f2ca62; --accent-soft: #3b321a;
+    --ok: #5cc496; --ok-bg: #1d3b31;
+    --ng: #ec8a8e; --ng-bg: #45262a;
+    --warn: #dcae4d; --warn-bg: #3b3218;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px rgba(0,0,0,.35);
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
   body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 15px;
-    line-height: 1.75;
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); font-size: 14.5px; line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
   a { color: inherit; }
   button { font-family: inherit; }
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
+  input { font-family: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
 
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
 
-  /* ---------- hero ---------- */
-  .hero { border-bottom: 1px solid var(--line); padding: 56px 0 40px; }
+  /* ---------- header ---------- */
+  .top { border-bottom: 1px solid var(--line); padding: 30px 0 0; }
   .eyebrow {
-    font-size: 11px;
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: var(--accent-strong);
-    font-weight: 700;
-    margin: 0 0 14px;
+    font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--accent-strong); font-weight: 700; margin: 0 0 8px;
   }
   h1 {
-    font-family: var(--serif);
-    font-size: clamp(30px, 5vw, 46px);
-    font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: .02em;
-    margin: 0 0 10px;
-    text-wrap: balance;
+    font-family: var(--serif); font-size: clamp(24px, 4vw, 34px);
+    font-weight: 600; line-height: 1.35; letter-spacing: .02em;
+    margin: 0 0 6px; text-wrap: balance;
   }
-  .hero p.lede { color: var(--ink-2); max-width: 40em; margin: 0 0 28px; }
-
-  .datestrip { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
-  .datecard {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 12px 18px;
-    min-width: 132px;
-    box-shadow: var(--shadow);
-  }
-  .datecard .dnum {
-    font-family: var(--serif);
-    font-size: 26px;
-    font-variant-numeric: tabular-nums;
-    line-height: 1.2;
-  }
-  .datecard .dow { font-size: 12px; color: var(--ink-2); letter-spacing: .08em; }
-  .datecard.mon { border-color: var(--ng); }
-  .datecard.mon .dow strong { color: var(--ng); }
+  .top .meta { color: var(--ink-2); font-size: 12.5px; margin: 0 0 18px; }
+  .top .meta strong { color: var(--ink); }
   .bday {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .12em;
-    color: #221a04;
-    background: var(--accent);
-    border-radius: 99px;
-    padding: 1px 9px;
-    margin-left: 6px;
-    vertical-align: 2px;
+    display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    color: #221a04; background: var(--accent); border-radius: 99px;
+    padding: 1px 8px; margin: 0 2px; vertical-align: 1px;
   }
-  :root[data-theme="dark"] .bday { color: #221a04; }
 
-  .verdict {
-    display: grid;
-    grid-template-columns: 4px 1fr;
-    gap: 18px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: var(--shadow);
+  /* ---------- plan tabs ---------- */
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+  .tab {
+    border: 1px solid var(--line); border-bottom: none;
+    background: var(--surface-2); color: var(--ink-2);
+    border-radius: 10px 10px 0 0; padding: 10px 20px 8px;
+    font-size: 13.5px; font-weight: 700; cursor: pointer;
+    position: relative; top: 1px;
   }
-  .verdict .bar { background: var(--ng); }
-  .verdict .body { padding: 18px 22px; }
-  .verdict h2 {
-    font-family: var(--serif);
-    font-size: 19px;
-    margin: 0 0 6px;
-    line-height: 1.5;
-    text-wrap: balance;
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] {
+    background: var(--surface); color: var(--ink);
+    border-color: var(--line-strong);
+    box-shadow: inset 0 3px 0 var(--accent);
   }
-  .verdict p { margin: 0; color: var(--ink-2); font-size: 13.5px; max-width: 56em; }
+  .tab .tsub { display: block; font-size: 10px; font-weight: 400; color: var(--ink-3); letter-spacing: .06em; }
 
-  .srcs { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px 14px; }
-  .src {
-    font-size: 12px;
-    color: var(--ink-2);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line-strong);
-    padding-bottom: 1px;
-    white-space: nowrap;
-  }
-  .src::after { content: " ↗"; color: var(--accent-strong); font-size: 11px; }
-  .src:hover { color: var(--accent-strong); border-color: var(--accent-strong); }
+  /* ---------- layout ---------- */
+  .stage { padding: 26px 0 60px; }
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: start; }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
 
-  /* ---------- sections ---------- */
-  section { padding: 52px 0 8px; }
-  .sec-head { margin-bottom: 24px; }
-  .sec-head .kicker {
-    font-size: 11px;
-    letter-spacing: .2em;
-    color: var(--ink-3);
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 6px;
+  .panel {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; box-shadow: var(--shadow);
   }
-  .sec-head h2 {
-    font-family: var(--serif);
-    font-size: clamp(22px, 3.2vw, 30px);
-    font-weight: 600;
-    margin: 0 0 6px;
-    text-wrap: balance;
-  }
-  .sec-head p { margin: 0; color: var(--ink-2); font-size: 13.5px; max-width: 48em; }
 
-  /* ---------- status chips ---------- */
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11.5px;
-    font-weight: 700;
-    border-radius: 99px;
-    padding: 1.5px 10px;
-    white-space: nowrap;
-    letter-spacing: .04em;
-  }
-  .chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none; }
-  .chip.open { color: var(--ok); background: var(--ok-bg); }
-  .chip.open::before { background: var(--ok); }
-  .chip.closed { color: var(--ng); background: var(--ng-bg); }
-  .chip.closed::before { background: var(--ng); }
-  .chip.check { color: var(--warn); background: var(--warn-bg); }
-  .chip.check::before { background: var(--warn); }
+  /* ---------- timeline ---------- */
+  .plan-intro { padding: 16px 20px; border-bottom: 1px solid var(--line); }
+  .plan-intro h2 { font-family: var(--serif); font-size: 20px; margin: 0 0 4px; font-weight: 600; }
+  .plan-intro p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
 
-  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 0 0 18px; align-items: center; }
-  .legend .note { font-size: 12px; color: var(--ink-3); }
+  .day { padding: 14px 20px 10px; }
+  .day + .day { border-top: 1px solid var(--line); }
+  .dhead { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .dhead .dd { font-family: var(--serif); font-size: 17px; font-variant-numeric: tabular-nums; }
+  .dhead .dw { font-size: 11.5px; color: var(--ink-3); font-weight: 700; letter-spacing: .08em; }
+  .dhead .dnote { font-size: 11px; color: var(--ink-3); margin-left: auto; }
+  .dwarn {
+    font-size: 11.5px; color: var(--warn); background: var(--warn-bg);
+    border-radius: 8px; padding: 6px 12px; margin: 6px 0;
+  }
 
-  /* ---------- plan selector ---------- */
-  .plan-picker { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
-  .ptoggle {
-    border: 1px solid var(--line-strong);
-    background: var(--surface);
-    color: var(--ink-2);
-    border-radius: 99px;
-    padding: 8px 18px;
-    font-size: 13.5px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .15s ease;
+  .slot {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 0;
   }
-  .ptoggle:hover { border-color: var(--accent-strong); color: var(--ink); }
-  .ptoggle[aria-pressed="true"] {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--paper);
+  .slot + .slot { border-top: 1px dashed var(--line); }
+  .slot .sbody { flex: 1; min-width: 0; }
+  .slot .sname { font-size: 13.5px; font-weight: 700; line-height: 1.5; }
+  .slot .sname a { text-decoration: none; border-bottom: 1px dotted var(--line-strong); }
+  .slot .sname a:hover { color: var(--accent-strong); border-color: var(--accent-strong); }
+  .slot .sname a::after { content: "↗"; font-size: 10px; color: var(--accent-strong); margin-left: 3px; }
+  .slot .smeta { font-size: 11px; color: var(--ink-3); }
+  .slot .sprice { font-size: 12.5px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; padding-top: 1px; }
+  .slot .sprice small { color: var(--ink-3); font-weight: 400; }
+  .rm {
+    border: 1px solid var(--line); background: transparent; color: var(--ink-3);
+    width: 24px; height: 24px; border-radius: 7px; cursor: pointer;
+    font-size: 13px; line-height: 1; flex: none; margin-top: 2px;
   }
-  :root[data-theme="dark"] .ptoggle[aria-pressed="true"],
-  .ptoggle[aria-pressed="true"] { box-shadow: var(--shadow); }
-  .picker-hint { font-size: 12px; color: var(--ink-3); margin: -12px 0 20px; }
+  .rm:hover { color: var(--ng); border-color: var(--ng); }
+  .empty-day { font-size: 12px; color: var(--ink-3); padding: 8px 0; font-style: normal; }
 
-  /* ---------- plan columns ---------- */
-  .plan-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
-  .plan-col {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
+  /* birthday slot */
+  .bslot {
+    margin: 10px 0 6px; border: 1px solid var(--accent);
+    background: linear-gradient(0deg, var(--accent-soft), var(--accent-soft));
+    border-radius: 12px; padding: 12px 16px;
   }
-  .plan-col header { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); }
-  .plan-col .parea { font-size: 11px; letter-spacing: .16em; color: var(--accent-strong); font-weight: 700; }
-  .plan-col h3 { font-family: var(--serif); font-size: 20px; margin: 4px 0 8px; font-weight: 600; }
-  .risk-row { display: flex; gap: 8px; flex-wrap: wrap; }
-  .risk {
-    font-size: 11.5px;
-    font-weight: 700;
-    border-radius: 6px;
-    padding: 2px 9px;
-    font-variant-numeric: tabular-nums;
+  .bslot .btitle { font-size: 11px; font-weight: 700; letter-spacing: .16em; color: var(--accent-strong); margin-bottom: 6px; }
+  .bslot select {
+    width: 100%; padding: 8px 10px; border-radius: 8px;
+    border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+    font-size: 13px; font-weight: 600;
   }
-  .risk.r-ok { color: var(--ok); background: var(--ok-bg); }
-  .risk.r-ng { color: var(--ng); background: var(--ng-bg); }
-  .risk.r-warn { color: var(--warn); background: var(--warn-bg); }
+  .bslot .bmeta { font-size: 11.5px; color: var(--ink-2); margin-top: 6px; }
+  .bslot .bmeta a { color: var(--accent-strong); }
 
-  .plan-day { padding: 14px 20px 6px; }
-  .plan-day + .plan-day { border-top: 1px dashed var(--line); }
-  .plan-day .dhead {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--ink-3);
-    font-weight: 700;
-    letter-spacing: .06em;
-    margin-bottom: 8px;
-    font-variant-numeric: tabular-nums;
+  /* ---------- cost panel ---------- */
+  .costbox { position: sticky; top: 14px; }
+  .costbox h3 {
+    font-family: var(--serif); font-size: 16px; font-weight: 600;
+    margin: 0; padding: 14px 18px 10px; border-bottom: 1px solid var(--line);
   }
-  .plan-day .dhead .dd { font-family: var(--serif); font-size: 15px; color: var(--ink); }
-  .spot {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 7px 0;
+  .cost-rows { padding: 10px 18px 4px; }
+  .crow { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 5px 0; font-size: 12.5px; }
+  .crow .cl { color: var(--ink-2); }
+  .crow .cv { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .crow input {
+    width: 90px; text-align: right; padding: 3px 6px;
+    border: 1px solid var(--line-strong); border-radius: 7px;
+    background: var(--paper); color: var(--ink);
+    font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums;
   }
-  .spot + .spot { border-top: 1px solid var(--line); }
-  .spot .sname { font-size: 13.5px; font-weight: 600; line-height: 1.5; }
-  .spot .snote { display: block; font-size: 11.5px; color: var(--ink-3); font-weight: 400; }
-  .spot .sname a {
-    text-decoration: none;
-    border-bottom: 1px dotted var(--line-strong);
+  .crow.sub { border-top: 1px dashed var(--line); margin-top: 4px; padding-top: 8px; }
+  .ctotal {
+    margin-top: 8px; padding: 12px 18px 14px;
+    border-top: 1px solid var(--line-strong); background: var(--surface-2);
+    border-radius: 0 0 14px 14px;
   }
-  .spot .sname a:hover { color: var(--accent-strong); border-color: var(--accent-strong); }
-  .spot .sname a::after { content: "↗"; font-size: 10px; color: var(--accent-strong); margin-left: 3px; }
-  .plan-col .pfoot { padding: 12px 20px 16px; font-size: 12px; color: var(--ink-2); background: var(--surface-2); border-top: 1px solid var(--line); }
+  .ctotal .tl { font-size: 11px; letter-spacing: .14em; color: var(--ink-3); font-weight: 700; }
+  .ctotal .tv { font-family: var(--serif); font-size: 26px; font-variant-numeric: tabular-nums; line-height: 1.3; }
+  .ctotal .tv small { font-size: 13px; color: var(--ink-2); font-family: var(--sans); }
+  .ctotal .tp { font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .cost-note { font-size: 10.5px; color: var(--ink-3); padding: 8px 18px 12px; margin: 0; }
+  .reset {
+    margin: 0 18px 14px; border: 1px solid var(--line-strong); background: transparent;
+    color: var(--ink-2); border-radius: 8px; padding: 5px 12px; font-size: 11.5px; cursor: pointer;
+  }
+  .reset:hover { color: var(--ng); border-color: var(--ng); }
 
-  /* ---------- simulator ---------- */
-  .sim {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-    padding: 26px 26px 22px;
-  }
-  .seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
-  .seg button {
-    border: none;
-    background: var(--surface);
-    color: var(--ink-2);
-    padding: 9px 22px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    font-variant-numeric: tabular-nums;
-  }
-  .seg button + button { border-left: 1px solid var(--line); }
-  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-  .sim-verdict {
-    border-radius: 10px;
-    padding: 14px 18px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 18px;
-    line-height: 1.7;
-  }
-  .sim-verdict.v-ok { background: var(--ok-bg); color: var(--ok); }
-  .sim-verdict.v-ng { background: var(--ng-bg); color: var(--ng); }
-  .sim-verdict small { display: block; font-weight: 400; color: var(--ink-2); font-size: 12px; margin-top: 2px; }
-  .sim-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
-  .sim-card { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; background: var(--paper); }
-  .sim-card .mname { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-  .sim-card .mtime { font-size: 11.5px; color: var(--ink-3); margin-top: 6px; }
-  .sim-note { font-size: 12px; color: var(--ink-3); margin: 16px 0 0; }
-
-  /* ---------- matrix ---------- */
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  /* ---------- pool ---------- */
+  .pool-head { margin: 30px 0 14px; }
+  .pool-head h2 { font-family: var(--serif); font-size: 21px; margin: 0 0 4px; font-weight: 600; }
+  .pool-head p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
+  .cat-filters { display: flex; gap: 7px; flex-wrap: wrap; margin: 14px 0 16px; }
   .fbtn {
-    border: 1px solid var(--line-strong);
-    background: var(--surface);
-    color: var(--ink-2);
-    border-radius: 99px;
-    padding: 6px 16px;
-    font-size: 12.5px;
-    font-weight: 600;
-    cursor: pointer;
+    border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink-2);
+    border-radius: 99px; padding: 5px 14px; font-size: 12px; font-weight: 600; cursor: pointer;
   }
   .fbtn:hover { border-color: var(--accent-strong); color: var(--ink); }
   .fbtn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #221a04; }
-  .table-scroll {
-    overflow-x: auto;
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background: var(--surface);
-    box-shadow: var(--shadow);
-  }
-  table { border-collapse: collapse; width: 100%; min-width: 780px; }
-  thead th {
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    text-align: left;
-    padding: 14px 16px 10px;
-    border-bottom: 1px solid var(--line-strong);
-    background: var(--surface-2);
-    white-space: nowrap;
-  }
-  tbody td { padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 13px; }
-  tbody tr:last-child td { border-bottom: none; }
-  td.fname { font-weight: 700; min-width: 180px; }
-  td.fname .farea { display: block; font-size: 10.5px; color: var(--accent-strong); letter-spacing: .12em; font-weight: 700; margin-bottom: 1px; }
-  td.frule { color: var(--ink-2); font-size: 12px; max-width: 260px; line-height: 1.65; }
-  td.fday { white-space: nowrap; }
-  td.fsrc { white-space: nowrap; font-size: 12px; }
 
-  /* ---------- recommendations ---------- */
-  .rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
-  .rec {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 18px 20px;
-    box-shadow: var(--shadow);
+  .pool { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px 16px 12px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 7px;
   }
-  .rec .rtag {
-    display: inline-block;
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    border-radius: 4px;
-    padding: 1px 8px;
-    margin-bottom: 10px;
+  .card.in { border-color: var(--accent); }
+  .card .chead { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+  .card .cname { font-size: 13.5px; font-weight: 700; line-height: 1.45; }
+  .card .cname a { text-decoration: none; border-bottom: 1px dotted var(--line-strong); }
+  .card .cname a:hover { color: var(--accent-strong); border-color: var(--accent-strong); }
+  .card .cname a::after { content: "↗"; font-size: 10px; color: var(--accent-strong); margin-left: 3px; }
+  .cat {
+    font-size: 9.5px; font-weight: 700; letter-spacing: .1em;
+    border-radius: 4px; padding: 1px 7px; white-space: nowrap; flex: none; margin-top: 2px;
+    background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line);
   }
-  .rec .rtag.must { background: var(--ng-bg); color: var(--ng); }
-  .rec .rtag.should { background: var(--warn-bg); color: var(--warn); }
-  .rec .rtag.info { background: var(--ok-bg); color: var(--ok); }
-  .rec h3 { font-size: 14.5px; margin: 0 0 6px; font-weight: 700; line-height: 1.55; }
-  .rec p { margin: 0; font-size: 12.5px; color: var(--ink-2); }
+  .cat.c-cycling, .cat.c-marine { background: var(--ok-bg); color: var(--ok); border-color: transparent; }
+  .cat.c-food { background: var(--accent-soft); color: var(--accent-strong); border-color: transparent; }
+  .card .cprice { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .card .cprice small { font-size: 10.5px; color: var(--ink-3); font-weight: 400; }
+  .card .cnote { font-size: 11.5px; color: var(--ink-2); line-height: 1.6; flex: 1; }
+  .avail { display: flex; gap: 5px; }
+  .av {
+    font-size: 10px; font-weight: 700; border-radius: 5px; padding: 1px 7px;
+    font-variant-numeric: tabular-nums;
+  }
+  .av.open { background: var(--ok-bg); color: var(--ok); }
+  .av.closed { background: var(--ng-bg); color: var(--ng); }
+  .av.check { background: var(--warn-bg); color: var(--warn); }
+  .addrow { display: flex; gap: 6px; }
+  .addbtn {
+    flex: 1; border: 1px solid var(--line-strong); background: var(--paper); color: var(--ink-2);
+    border-radius: 8px; padding: 5px 0; font-size: 11.5px; font-weight: 700; cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .addbtn:hover:not(:disabled) { border-color: var(--accent-strong); color: var(--ink); }
+  .addbtn:disabled { opacity: .35; cursor: not-allowed; }
+  .addbtn.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
-  .caveats {
-    margin-top: 40px;
-    border-top: 1px solid var(--line);
-    padding-top: 24px;
-  }
-  .caveats h3 { font-family: var(--serif); font-size: 17px; margin: 0 0 10px; }
-  .caveats ul { margin: 0; padding-left: 1.3em; color: var(--ink-2); font-size: 12.5px; }
-  .caveats li { margin-bottom: 6px; }
-
+  /* ---------- footer ---------- */
   footer.page {
-    margin-top: 56px;
-    border-top: 1px solid var(--line);
-    padding: 24px 0 48px;
-    font-size: 12px;
-    color: var(--ink-3);
+    border-top: 1px solid var(--line); margin-top: 40px;
+    padding: 20px 0 44px; font-size: 11.5px; color: var(--ink-3);
   }
+  footer.page a { color: var(--ink-2); }
 
   @media (max-width: 640px) {
-    .hero { padding-top: 40px; }
-    section { padding-top: 40px; }
-    .sim { padding: 18px; }
+    .tab { padding: 8px 12px 6px; font-size: 12px; }
+    .day, .plan-intro { padding-left: 14px; padding-right: 14px; }
   }
 </style>
 
 <div class="wrap">
-
-  <header class="hero">
-    <p class="eyebrow">Couple Trip · Closure Check · 2026.10.03 – 10.05</p>
-    <h1>10月3–5日、どこへ行く？<br>休館日チェック済み・旅プラン比較ボード</h1>
-    <p class="lede">2026年10月3〜5日の3連泊候補、4エリアのプランを「その日、ちゃんと開いているか」で比較できます。各施設の判定には信頼できる情報源へのリンク付き。</p>
-
-    <div class="datestrip" role="list">
-      <div class="datecard" role="listitem">
-        <div class="dnum">10.3</div>
-        <div class="dow"><strong>土曜日</strong> · Day 1</div>
-      </div>
-      <div class="datecard" role="listitem">
-        <div class="dnum">10.4</div>
-        <div class="dow"><strong>日曜日</strong> · Day 2</div>
-      </div>
-      <div class="datecard mon" role="listitem">
-        <div class="dnum">10.5</div>
-        <div class="dow"><strong>月曜日</strong> · Day 3<span class="bday">誕生日</span></div>
-      </div>
-    </div>
-
-    <div class="verdict">
-      <div class="bar"></div>
-      <div class="body">
-        <h2>10月5日は「祝日ではない、ふつうの月曜日」。直島の主要3館はこの日休館です。</h2>
-        <p>2026年のスポーツの日は10月12日（第2月曜）。10月5日は平日扱いの月曜のため、月曜休館の地中美術館・李禹煥美術館・直島新美術館はそのまま休館になります（ベネッセハウス ミュージアムのみ無休）。誕生日のDay 3に直島をハイライトにする計画は成立しません。</p>
-        <div class="srcs">
-          <a class="src" href="https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html" target="_blank" rel="noopener">内閣府「国民の祝日について」</a>
-          <a class="src" href="https://benesse-artsite.jp/calendar/" target="_blank" rel="noopener">ベネッセアートサイト直島 開館カレンダー</a>
-          <a class="src" href="https://naoshima.net/" target="_blank" rel="noopener">直島町観光協会</a>
-        </div>
-      </div>
-    </div>
+  <header class="top">
+    <p class="eyebrow">Trip Plan Studio · 2026.10.03 sat – 10.05 mon</p>
+    <h1>10月3–5日 旅プランスタジオ</h1>
+    <p class="meta">2泊3日・カップル旅。<strong>10/5(月)は誕生日</strong><span class="bday">Day 3</span>で昼過ぎ帰路 → 誕生日ディナーは<strong>Day 2の夜</strong>に。アクティビティを差し替えると日程と費用がその場で変わります。</p>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="プラン切り替え"></nav>
   </header>
 
-  <section id="plans">
-    <div class="sec-head">
-      <p class="kicker">Compare Plans</p>
-      <h2>4エリアのプランを並べて比較する</h2>
-      <p>比較したいプランを選ぶと、日別の行程と「休館・要確認」のリスクが並んで表示されます。施設名をクリックすると公式情報源が開きます。</p>
+  <main class="stage">
+    <div class="cols">
+      <div class="panel" id="timeline"></div>
+      <aside class="panel costbox" id="costbox" aria-live="polite"></aside>
     </div>
 
-    <div class="legend">
-      <span class="chip open">営業</span>
-      <span class="chip closed">休館</span>
-      <span class="chip check">要確認</span>
-      <span class="note">判定はすべて2026年10月3日（土）〜5日（月）の曜日ベース</span>
+    <div class="pool-head">
+      <h2>アクティビティ候補プール</h2>
+      <p>「+ Day」で日程に追加(もう一度押すと外す)。休館・催行不可の日はボタンが無効になります。営業判定は 10/3(土)・10/4(日)・10/5(月) の曜日ベース、各カードに情報源リンク付き。</p>
     </div>
+    <div class="cat-filters" id="catFilters" role="group" aria-label="カテゴリで絞り込み"></div>
+    <div class="pool" id="pool"></div>
+  </main>
 
-    <div class="plan-picker" id="planPicker" role="group" aria-label="比較するプランの選択"></div>
-    <p class="picker-hint">タップで表示/非表示を切り替え（複数選択可）</p>
-
-    <div class="plan-grid" id="planGrid"></div>
-  </section>
-
-  <section id="naoshima-sim">
-    <div class="sec-head">
-      <p class="kicker">Naoshima Simulator</p>
-      <h2>直島に行くなら、どの日？</h2>
-      <p>訪問日を切り替えると、直島の各美術館が開いているかをその場で判定します。</p>
-    </div>
-    <div class="sim">
-      <div class="seg" id="simSeg" role="group" aria-label="直島の訪問日を選択"></div>
-      <div id="simVerdict" class="sim-verdict" aria-live="polite"></div>
-      <div class="sim-grid" id="simGrid"></div>
-      <p class="sim-note">地中美術館・直島新美術館はオンライン日時指定予約制（2か月前の第2金曜 10:00 発売）。10月1日からは冬季時間に切り替わり、最終入館が早まります。出典：<a class="src" href="https://benesse-artsite.jp/art/chichu.html" target="_blank" rel="noopener">地中美術館</a> <a class="src" href="https://benesse-artsite.jp/art/lee-ufan.html" target="_blank" rel="noopener">李禹煥美術館</a> <a class="src" href="https://benesse-artsite.jp/calendar/" target="_blank" rel="noopener">開館カレンダー</a></p>
-    </div>
-  </section>
-
-  <section id="matrix">
-    <div class="sec-head">
-      <p class="kicker">Opening Calendar</p>
-      <h2>全施設の営業カレンダー（10/3–10/5）</h2>
-      <p>エリアで絞り込めます。「休館ルール」列が判定根拠、右端が情報源です。</p>
-    </div>
-    <div class="filters" id="areaFilters" role="group" aria-label="エリアで絞り込み"></div>
-    <div class="table-scroll">
-      <table>
-        <thead>
-          <tr>
-            <th>施設</th>
-            <th>休館ルール</th>
-            <th>10/3 土</th>
-            <th>10/4 日</th>
-            <th>10/5 月</th>
-            <th>情報源</th>
-          </tr>
-        </thead>
-        <tbody id="matrixBody"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="recs">
-    <div class="sec-head">
-      <p class="kicker">Action List</p>
-      <h2>予約前にやること</h2>
-    </div>
-    <div class="rec-grid">
-      <div class="rec">
-        <span class="rtag must">最重要</span>
-        <h3>直島は10/5（月）を避け、10/3（土）か10/4（日）に置く</h3>
-        <p>どうしても10/5に瀬戸内にいる場合は、無休のベネッセハウス ミュージアム＋屋外アート（草間彌生のかぼちゃ等）、栗林公園・掬月亭に切り替える。</p>
-      </div>
-      <div class="rec">
-        <span class="rtag must">最重要</span>
-        <h3>地中美術館・直島新美術館の日時指定予約を先に押さえる</h3>
-        <p>オンライン予約は2か月前の第2金曜10:00発売。行く日が決まったら即予約（<a class="src" href="https://benesse-artsite.jp/calendar/" target="_blank" rel="noopener">開館カレンダー</a>）。</p>
-      </div>
-      <div class="rec">
-        <span class="rtag should">要確認</span>
-        <h3>瑞泉酒造の見学は日曜（10/4）可否を電話確認</h3>
-        <p>公式の見学案内に日曜の記載がなく、定休日情報も情報源間で食い違いあり。TEL 098-884-1968。不可なら無休の首里琉染などへ振替（<a class="src" href="https://www.zuisen.co.jp/" target="_blank" rel="noopener">瑞泉酒造</a>）。</p>
-      </div>
-      <div class="rec">
-        <span class="rtag should">要確認</span>
-        <h3>モビーディック号の運航日を予約時に確認</h3>
-        <p>不定期で月に数回の運休日あり。10月〜3月はサンセット便が17:00出港・18:45帰港に繰り上がるため、当日の行程と時間調整を（<a class="src" href="https://www.westmarine.co.jp/" target="_blank" rel="noopener">ウエストマリン</a>）。</p>
-      </div>
-      <div class="rec">
-        <span class="rtag info">代替あり</span>
-        <h3>月曜（10/5）に休む施設の代替を用意</h3>
-        <p>薩摩切子の工場見学（月曜休）→ 磯工芸館ショップで鑑賞・購入。砥部焼伝統産業会館（月曜休）→ 砥部焼陶芸館（水曜休なので月曜は営業）。</p>
-      </div>
-      <div class="rec">
-        <span class="rtag info">代替あり</span>
-        <h3>指宿白水館・水口酒造は日付を決めたら直接確認</h3>
-        <p>白水館は不定期の休館日を公式告知（外来砂むしは15:00–18:00）。水口酒造の道後ビール工場見学は予約制（<a class="src" href="https://www.hakusuikan.co.jp/" target="_blank" rel="noopener">指宿白水館</a>）。</p>
-      </div>
-    </div>
-
-    <div class="caveats">
-      <h3>留意点</h3>
-      <ul>
-        <li>曜日そのもの（10/5＝月曜、スポーツの日＝10/12）は内閣府・政府広報を含む複数の一次情報で確定。</li>
-        <li>直島新美術館は「不定休あり」。臨時休館（2026年11/24〜12/12の展示替え休館が告知済み）は10月の対象外だが、旅行直前に<a class="src" href="https://benesse-artsite.jp/calendar/" target="_blank" rel="noopener">公式カレンダー</a>を再確認。</li>
-        <li>瑞泉酒造の定休日は情報源により記載が食い違うため、最新の公式サイトと電話確認を優先。</li>
-        <li>予約制・不定休の施設（モビーディック号・水口酒造など）は、必ず各施設の直近の告知で最終確認を。</li>
-      </ul>
-    </div>
-  </section>
-
-  <footer class="page wrap-inner">
-    2026年7月時点の調査（曜日確定＋施設休館日チェック）をもとに作成。営業時間・休館日は変更されることがあります — 予約・訪問直前に各リンク先の公式情報でご確認ください。
+  <footer class="page">
+    <span id="footNote"></span>
   </footer>
 </div>
 
 <script>
-(function () {
-  "use strict";
-
-  var DAYS = [
-    { d: 3, dow: "土", label: "10/3（土）" },
-    { d: 4, dow: "日", label: "10/4（日）" },
-    { d: 5, dow: "月", label: "10/5（月）" }
-  ];
-
-  var AREAS = {
-    setouchi: "瀬戸内・直島",
-    kagoshima: "鹿児島・指宿",
-    dogo: "道後・松山",
-    okinawa: "沖縄・那覇"
-  };
-
-  // status: "open" | "closed" | "check"
-  var FACILITIES = {
-    chichu: {
-      name: "地中美術館", area: "setouchi",
-      rule: "月曜休館（祝日なら開館・翌日休）。10/5は祝日でない月曜のため休館",
-      status: { 3: "open", 4: "open", 5: "closed" },
-      time: "冬季時間 10:00–17:00（最終入館16:00）・日時指定予約制",
-      source: { label: "benesse-artsite.jp", url: "https://benesse-artsite.jp/art/chichu.html" }
-    },
-    leeufan: {
-      name: "李禹煥美術館", area: "setouchi",
-      rule: "月曜休館（祝日なら開館・翌日休）",
-      status: { 3: "open", 4: "open", 5: "closed" },
-      time: "冬季時間 10:00–17:00（最終入館16:30）",
-      source: { label: "benesse-artsite.jp", url: "https://benesse-artsite.jp/art/lee-ufan.html" }
-    },
-    nnmoa: {
-      name: "直島新美術館", area: "setouchi",
-      rule: "月曜休館（祝日なら翌日休）＋不定休あり",
-      status: { 3: "open", 4: "open", 5: "closed" },
-      time: "10:00–16:30（最終入館16:00）・日時指定予約制",
-      source: { label: "benesse-artsite.jp", url: "https://benesse-artsite.jp/calendar/" }
-    },
-    benesse: {
-      name: "ベネッセハウス ミュージアム", area: "setouchi",
-      rule: "年中無休（8:00–21:00）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      time: "8:00–21:00・無休",
-      source: { label: "benesse-artsite.jp", url: "https://benesse-artsite.jp/art/benessehouse-museum.html" }
-    },
-    ritsurin: {
-      name: "栗林公園", area: "setouchi",
-      rule: "年中無休",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "栗林公園公式", url: "https://www.my-kagawa.jp/ritsurin" }
-    },
-    kikugetsu: {
-      name: "掬月亭（栗林公園内）", area: "setouchi",
-      rule: "年末年始（12/29–31）のみ休。9:00–16:30（L.O.16:00）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "栗林公園公式", url: "https://www.my-kagawa.jp/ritsurin" }
-    },
-    senganen: {
-      name: "仙巌園", area: "kagoshima",
-      rule: "年中無休（3月第1日曜のみ休園）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "senganen.jp", url: "https://www.senganen.jp/" }
-    },
-    isoshop: {
-      name: "磯工芸館（薩摩切子ショップ）", area: "kagoshima",
-      rule: "登録有形文化財。ショップは月曜も開館",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "仙巌園・島津興業", url: "https://www.senganen.jp/" }
-    },
-    kiriko: {
-      name: "薩摩切子 工場見学", area: "kagoshima",
-      rule: "毎週月曜・第3日曜休（祝日は翌日振替）。第3日曜は10/18で今回は無関係",
-      status: { 3: "open", 4: "open", 5: "closed" },
-      source: { label: "仙巌園・島津興業（TEL 099-247-2111）", url: "https://www.senganen.jp/" }
-    },
-    saraku: {
-      name: "砂むし会館「砂楽」", area: "kagoshima",
-      rule: "無休（7・12月にメンテ休あり）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "砂楽公式", url: "https://sa-raku.sakura.ne.jp/" }
-    },
-    hakusuikan: {
-      name: "指宿白水館 砂むし温泉", area: "kagoshima",
-      rule: "固定休なし・不定期の休館日を公式告知。外来入浴 15:00–18:00",
-      status: { 3: "check", 4: "check", 5: "check" },
-      source: { label: "hakusuikan.co.jp", url: "https://www.hakusuikan.co.jp/" }
-    },
-    dogohonkan: {
-      name: "道後温泉本館", area: "dogo",
-      rule: "無休（年末の大掃除休のみ）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "dogo.jp", url: "https://dogo.jp/" }
-    },
-    asuka: {
-      name: "飛鳥乃湯泉", area: "dogo",
-      rule: "無休（年1回臨時休館あり）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "dogo.jp", url: "https://dogo.jp/" }
-    },
-    tsubaki: {
-      name: "椿の湯", area: "dogo",
-      rule: "無休（年末大掃除のみ）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "dogo.jp", url: "https://dogo.jp/" }
-    },
-    tobetogei: {
-      name: "砥部焼陶芸館", area: "dogo",
-      rule: "毎週水曜・元日休（水曜が祝日なら翌木曜）→ 土日月とも影響なし",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "砥部町観光協会", url: "https://www.tobe-kanko.jp/" }
-    },
-    tobedensan: {
-      name: "砥部焼伝統産業会館", area: "dogo",
-      rule: "月曜休（祝日は翌日）・年末年始。※陶芸館とは別施設",
-      status: { 3: "open", 4: "open", 5: "closed" },
-      source: { label: "砥部町公式", url: "https://www.town.tobe.ehime.jp/" }
-    },
-    sosaku: {
-      name: "砥部町陶芸創作館", area: "dogo",
-      rule: "木曜休 → 影響なし",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "砥部町公式", url: "https://www.town.tobe.ehime.jp/" }
-    },
-    minakuchi: {
-      name: "水口酒造（道後ビール工場見学）", area: "dogo",
-      rule: "見学は予約制（5–10月は道後ビール工場見学）",
-      status: { 3: "check", 4: "check", 5: "check" },
-      source: { label: "水口酒造", url: "https://www.dogobeer.jp/" }
-    },
-    shurijo: {
-      name: "首里城公園", area: "okinawa",
-      rule: "無休（休みは7月第1水曜とその翌日の一部施設のみ）。正殿一般公開は2026/11/23予定",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "oki-park.jp", url: "https://oki-park.jp/shurijo/" }
-    },
-    zuisen: {
-      name: "瑞泉酒造（酒蔵見学）", area: "okinawa",
-      rule: "定休「祝日 その他」。見学案内に日曜の記載なし → 10/4は見学不可の可能性",
-      status: { 3: "open", 4: "check", 5: "open" },
-      time: "見学 9:00–17:00（平日最終16:30／土最終16:00）・要電話確認 098-884-1968",
-      source: { label: "zuisen.co.jp", url: "https://www.zuisen.co.jp/" }
-    },
-    ikutouen: {
-      name: "育陶園（やちむん体験）", area: "okinawa",
-      rule: "本店・やちむん道場は1/1–2のみ休（Kamany等一部店舗は水曜休 → 影響なし）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "ikutouen.com", url: "https://www.ikutouen.com/" }
-    },
-    ryusen: {
-      name: "首里琉染（紅型・サンゴ染め体験）", area: "okinawa",
-      rule: "年中無休 9:00–18:00（体験は9:30/11:00/12:30/14:00/15:30開始）",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "shuri-ryusen.com", url: "https://www.shuri-ryusen.com/" }
-    },
-    makishi: {
-      name: "第一牧志公設市場", area: "okinawa",
-      rule: "毎月第4日曜休（12月除く）。10/4は第1日曜なので通常営業",
-      status: { 3: "open", 4: "open", 5: "open" },
-      source: { label: "kosetsu-ichiba.jp", url: "https://kosetsu-ichiba.jp/" }
-    },
-    mobydick: {
-      name: "モビーディック号（サンセットクルーズ）", area: "okinawa",
-      rule: "不定期で月数回の運休日あり。10–3月はサンセット便17:00出港",
-      status: { 3: "check", 4: "check", 5: "check" },
-      source: { label: "ウエストマリン", url: "https://www.westmarine.co.jp/" }
-    }
-  };
-
-  var PLANS = [
+var DATA = {
+  plans: [
     {
       id: "setouchi",
       name: "瀬戸内アートの旅",
-      area: "瀬戸内・直島 / 高松",
-      days: {
-        3: [
-          { f: "chichu", note: "土曜は開館。日時指定予約を最優先で" },
-          { f: "leeufan" },
-          { f: "nnmoa" }
-        ],
-        4: [
-          { f: "benesse", note: "屋外アート（かぼちゃ等）とあわせて" },
-          { f: "ritsurin" },
-          { f: "kikugetsu", note: "庭園を眺めて抹茶を" }
-        ],
-        5: [
-          { f: "benesse", note: "無休。誕生日の朝アートに" },
-          { f: "ritsurin", note: "年中無休" }
-        ]
+      sub: "直島・高松",
+      intro: "月曜休館が多い直島アートはDay 1〜2に集約し、誕生日のDay 3は無休の栗林公園で朝を締める構成。地中美術館・直島新美術館は日時指定予約制(2か月前の第2金曜10:00発売)なので日程確定後すぐ予約を。",
+      activities: [
+        { id: "cycle", name: "直島レンタサイクル(おうぎや・電動)", category: "cycling", price: 1500, priceNote: "電動1日1,500円", durH: 4, duration: "半日〜1日",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "年中無休8:00–18:00。予約は公式フォームのみ、繁忙期は事前予約推奨",
+          source: { label: "おうぎや公式", url: "https://ougiya-naoshima.jp/rental.html" } },
+        { id: "chichu", name: "地中美術館", category: "art", price: 2700, priceNote: "土日オンライン2,700円(平日2,500円)", durH: 2, duration: "約2時間",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "月曜休館。日時指定予約制で完売時は当日券なし。10月は最終入館16:00",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/art/chichu.html" } },
+        { id: "leeufan", name: "李禹煥美術館", category: "art", price: 1200, priceNote: "オンライン1,200円", durH: 1, duration: "約1時間",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "月曜休館。地中美術館とセットで巡りやすい立地",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/art/lee-ufan.html" } },
+        { id: "nnmoa", name: "直島新美術館", category: "art", price: 1500, priceNote: "オンライン1,500円", durH: 1.5, duration: "約1.5時間",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "月曜休館+不定休あり。本村地区で家プロジェクトと同日に回りやすい",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/art/nnmoa.html" } },
+        { id: "arthouse", name: "家プロジェクト(本村・共通チケット)", category: "art", price: 1200, priceNote: "オンライン1,200円(きんざ別・完全予約制)", durH: 2.5, duration: "約2〜3時間",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "月曜休館。古民家を丸ごと作品化した7軒を街歩きしながら巡る",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/art/arthouse.html" } },
+        { id: "ando", name: "ANDO MUSEUM", category: "art", price: 600, priceNote: "オンライン600円", durH: 0.5, duration: "約30分",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "月曜休館。本村の古民家×安藤忠雄建築、家プロジェクトと同エリア",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/art/ando-museum.html" } },
+        { id: "benesse", name: "ベネッセハウス ミュージアム", category: "art", price: 1300, priceNote: "オンライン1,300円・宿泊者無料", durH: 1.5, duration: "約1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "年中無休8:00–21:00 — 月曜(誕生日)朝に開いている唯一の直島美術館",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/art/benessehouse-museum.html" } },
+        { id: "sento", name: "直島銭湯「I♡湯」", category: "onsen", price: 660, priceNote: "", durH: 1, duration: "約1時間",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "月曜定休。13:00–21:00・予約不要、宮浦港徒歩2分でフェリー待ちにも",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/art/naoshimasento.html" } },
+        { id: "sup", name: "女木島 SUP体験(高松港から船20分)", category: "marine", price: 6000, priceNote: "2.5時間 6,000円〜(目安)", durH: 2.5, duration: "約2.5時間",
+          days: { sat: "check", sun: "check", mon: "check" }, note: "開催期間4〜11月で10月実施可。要予約・海況次第のため開催日は要確認",
+          source: { label: "VELTRA(女木島SUP)", url: "https://www.veltra.com/jp/japan/kagawa/a/180017" } },
+        { id: "ritsurin", name: "栗林公園", category: "sight", price: 500, priceNote: "", durH: 1.5, duration: "約1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "年中無休・10月は6:00開園 — 月曜帰路前の朝散歩に最適",
+          source: { label: "栗林公園公式", url: "https://www.my-kagawa.jp/ritsuringarden/feature/ritsuringarden/guide" } },
+        { id: "kikugetsu", name: "掬月亭 抹茶セット(栗林公園内)", category: "food", price: 800, priceNote: "抹茶+菓子800円(入園料別)", durH: 0.7, duration: "約40分",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "9:00–16:30・予約不要。大茶屋から庭園を眺めて一服",
+          source: { label: "料亭二蝶(掬月亭)", url: "https://www.2chou.jp/news/ritsurin-kikugetsu/" } }
+      ],
+      dinners: [
+        { name: "日本料理 一扇(ベネッセハウス内・会席)", price: 16000, note: "会席「潮」16,000円。夕食はベネッセハウス宿泊者限定 — 直島泊にする場合の第一候補。",
+          source: { label: "ベネッセアートサイト直島", url: "https://benesse-artsite.jp/stay/benessehouse/restaurant.html" } },
+        { name: "オーベルジュ ドゥ オオイシ(高松・フレンチ)", price: 13200, note: "ディナー13,200円〜。記念日申告でケーキサービスあり、要予約。",
+          source: { label: "公式サイト", url: "https://www.auberge-de-oishi.jp/" } },
+        { name: "ビストロ ミューザンミュー(高松・フレンチ)", price: 8800, note: "記念日向けシェフ厳選コース8,800円。2日前までに要予約。",
+          source: { label: "公式サイト", url: "https://www.bistro-demieux-en-mieux.com/course.html" } }
+      ],
+      defaults: { sat: ["chichu", "leeufan", "sento"], sun: ["cycle", "arthouse", "nnmoa"], mon: ["ritsurin", "kikugetsu"], dinner: 2 },
+      lodging: {
+        label: "高松市内ホテル(2人2泊 約4〜8万円)。直島泊ならベネッセハウスで2泊23万円〜",
+        range: "", price: 60000,
+        source: { label: "JTB ベネッセハウス", url: "https://www.jtb.co.jp/kokunai-hotel/htl/7540001/plan/" }
       },
-      foot: "月曜休の三館（地中・李禹煥・新美術館）をDay 1に前倒しした推奨構成。誕生日のDay 3は無休の施設だけで組んでいます。"
+      transport: [
+        { label: "東京⇔高松 往復", price: 32000, note: "早割で2〜3.5万円/人" },
+        { label: "高松⇔直島 フェリー往復", price: 1360, note: "四国汽船 片道680円・約50分" }
+      ]
     },
     {
       id: "kagoshima",
       name: "鹿児島・指宿 温泉旅",
-      area: "鹿児島・指宿",
-      days: {
-        3: [
-          { f: "senganen" },
-          { f: "kiriko", note: "工場見学は月曜休なので初日に" },
-          { f: "isoshop" }
-        ],
-        4: [
-          { f: "saraku", note: "名物の砂むし温泉" },
-          { f: "hakusuikan", note: "外来砂むしは15:00–18:00" }
-        ],
-        5: [
-          { f: "senganen", note: "誕生日は桜島を望む庭園で" },
-          { f: "isoshop", note: "ショップは月曜も開館" }
-        ]
+      sub: "仙巌園・砂むし温泉",
+      intro: "薩摩切子の工場見学(月曜休)はDay 1の鹿児島市内で。Day 2は観光特急で指宿へ渡り、砂むし温泉とサイクリング、夜は宿の会席でお祝い。誕生日の朝は開聞岳を望む絶景で締める。",
+      activities: [
+        { id: "senganen", name: "仙巌園(御殿・尚古集成館込み)", category: "sight", price: 1600, priceNote: "共通券", durH: 2, duration: "約2時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "年中無休。桜島を築山に見立てた島津家別邸庭園、御殿ガイド付き",
+          source: { label: "仙巌園公式", url: "https://www.senganen.jp/about/" } },
+        { id: "kiriko", name: "薩摩切子 工場見学(磯工芸館)", category: "craft", price: 0, priceNote: "見学無料", durH: 0.7, duration: "約40分",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "月曜・第3日曜は見学不可(10/4は第1日曜でOK)。仙巌園に隣接",
+          source: { label: "島津興業 磯工芸館", url: "https://satsumakiriko.co.jp/pages/isokougeikan" } },
+        { id: "saraku", name: "砂むし会館「砂楽」砂むし温泉", category: "onsen", price: 1500, priceNote: "浴衣込セット", durH: 1.3, duration: "約1〜1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "8:30–21:00・10月に休館予定なし。世界的にも珍しい天然砂むし",
+          source: { label: "砂楽公式", url: "https://www.ibusuki-saraku.jp/ja" } },
+        { id: "iburin", name: "指宿レンタサイクル「いぶりん」(電動)", category: "cycling", price: 2000, priceNote: "電動2時間2,000円〜", durH: 3, duration: "約2〜4時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "指宿駅前で借りて池田湖・長崎鼻方面へ。公式モデルコースあり",
+          source: { label: "いぶすき観光ネット", url: "https://www.ibusuki.or.jp/tourism/course/post-80/" } },
+        { id: "sakucycle", name: "桜島レンタサイクル(クロスバイク)", category: "cycling", price: 3300, priceNote: "3時間3,300円", durH: 3.5, duration: "約3〜4時間",
+          days: { sat: "check", sun: "check", mon: "check" }, note: "桜島ビジターセンター発着。実施しない日もあるため事前確認を",
+          source: { label: "桜島レンタサイクル公式", url: "https://cycling-sakurajima.com/rental/" } },
+        { id: "chirin", name: "知林ヶ島 シーカヤック&シュノーケリング(休暇村指宿)", category: "marine", price: 7700, priceNote: "シュノーケル単体3,850円", durH: 2, duration: "約2時間",
+          days: { sat: "check", sun: "check", mon: "check" }, note: "例年10月中旬まで開催。潮位で時間が変わるため3日前までに電話予約",
+          source: { label: "休暇村指宿", url: "https://www.qkamura.or.jp/ibusuki/activity/" } },
+        { id: "kayak", name: "錦江湾シーカヤック3時間ツアー", category: "marine", price: 9000, priceNote: "", durH: 3, duration: "約3時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "海上から桜島を望む定番ツアー。通年開催・要予約、10月はベストシーズン",
+          source: { label: "かごしまカヤックス公式", url: "https://k-kayaks.com/" } },
+        { id: "sakferry", name: "桜島フェリー+湯之平展望所", category: "sight", price: 500, priceNote: "フェリー往復500円・展望所無料", durH: 4, duration: "約半日",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "フェリーは24時間運航・片道15分。標高373mから錦江湾を一望",
+          source: { label: "鹿児島市 桜島フェリー", url: "https://www.city.kagoshima.lg.jp/sakurajima-ferry/unchin/unchin.html" } },
+        { id: "tamatebako", name: "観光特急「指宿のたまて箱」(片道)", category: "sight", price: 2950, priceNote: "運賃+指定席特急料金", durH: 1, duration: "約55分",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "全車指定席・1日3往復。海側席は1か月前10時発売と同時に予約を",
+          source: { label: "JR九州", url: "https://www.jrkyushu.co.jp/trains/ibusukinotamatebako/" } },
+        { id: "chiran", name: "知覧武家屋敷庭園群", category: "sight", price: 530, priceNote: "", durH: 1.5, duration: "約1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "「薩摩の小京都」。年中無休9:00–17:00、指宿と市内の中間立ち寄りに",
+          source: { label: "知覧武家屋敷庭園公式", url: "https://chiran-bukeyashiki.com/pages/26/" } },
+        { id: "nagasakibana", name: "長崎鼻・池田湖(開聞岳ビュー)", category: "sight", price: 0, priceNote: "見学無料", durH: 1.5, duration: "約1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "薩摩半島最南端の岬と九州最大の湖。月曜午前の絶景ドライブに",
+          source: { label: "いぶすき観光ネット", url: "https://www.ibusuki.or.jp/tourism/course/folder19938/folder19947/index.html" } }
+      ],
+      dinners: [
+        { name: "指宿白水館 季節の和食会席(宿泊プラン夕食)", price: 12000, note: "1泊2食プランの夕食。記念日ケーキ・祝い膳の別注も相談可、移動不要でDay 2夜に最適。",
+          source: { label: "指宿白水館公式", url: "https://www.hakusuikan.co.jp/plan/" } },
+        { name: "Restaurant Nori(天文館・新薩摩料理フレンチ)", price: 10000, note: "コース5,500円/10,000円。日曜夜も営業、記念日プレート対応あり。",
+          source: { label: "一休.comレストラン", url: "https://restaurant.ikyu.com/120050" } },
+        { name: "イルチプレッソ(天文館・イタリアン)", price: 12100, note: "記念日向けロッシーニ風コース12,100円。月曜定休だが10/4(日)は営業。",
+          source: { label: "公式サイト", url: "https://www.ilcipresso.jp/anniversary.html" } }
+      ],
+      defaults: { sat: ["senganen", "kiriko", "tamatebako"], sun: ["saraku", "iburin"], mon: ["nagasakibana"], dinner: 0 },
+      lodging: {
+        label: "指宿白水館(1泊2食2名30,800円〜)。市内1泊+指宿1泊の分割も可",
+        range: "", price: 90000,
+        source: { label: "指宿白水館公式", url: "https://www.hakusuikan.co.jp/plan/" }
       },
-      foot: "薩摩切子の工場見学（月曜休）をDay 1に配置。それ以外は3日間とも致命的な休みなし。"
+      transport: [
+        { label: "東京⇔鹿児島 往復", price: 30000, note: "早割・スカイマーク等で2万円台も" },
+        { label: "鹿児島中央⇔指宿 往復", price: 2340, note: "普通列車。たまて箱利用は+特急料金" }
+      ]
     },
     {
       id: "dogo",
       name: "道後・松山 湯めぐり旅",
-      area: "道後・松山 / 砥部",
-      days: {
-        3: [
-          { f: "dogohonkan" },
-          { f: "asuka" }
-        ],
-        4: [
-          { f: "tobedensan", note: "月曜休なので日曜のうちに" },
-          { f: "tobetogei" },
-          { f: "sosaku" }
-        ],
-        5: [
-          { f: "dogohonkan", note: "誕生日の朝湯。三湯とも無休" },
-          { f: "tobetogei", note: "水曜休なので月曜は営業" },
-          { f: "minakuchi", note: "工場見学は要予約" }
-        ]
+      sub: "道後温泉・砥部焼",
+      intro: "道後の三湯は無休なので誕生日の朝湯もOK。坊っちゃん列車は土日のみ運行なのでDay 1に。Day 2は砥部焼の絵付けと湯めぐりでゆったり過ごし、夜は個室フレンチでお祝い。",
+      activities: [
+        { id: "honkan", name: "道後温泉本館(神の湯)", category: "onsen", price: 700, priceNote: "霊の湯個室は2,500円", durH: 1, duration: "約1時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "6:00–23:00・無休 — 誕生日(月曜)の朝湯に",
+          source: { label: "道後温泉公式", url: "https://www.dogo.or.jp/time/" } },
+        { id: "asuka", name: "道後温泉別館 飛鳥乃湯泉", category: "onsen", price: 610, priceNote: "2階個室休憩は1,690円", durH: 1.3, duration: "約1〜1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "無休。浴衣とお茶菓子付きの個室休憩プランがカップル向き",
+          source: { label: "道後温泉公式", url: "https://www.dogo.or.jp/time/" } },
+        { id: "tsubaki", name: "椿の湯", category: "onsen", price: 500, priceNote: "", durH: 0.7, duration: "約40分",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "本館より空いていて安い地元湯。無休で朝湯のはしごに",
+          source: { label: "道後温泉公式", url: "https://www.dogo.or.jp/time/" } },
+        { id: "tobe", name: "砥部焼陶芸館 絵付け・ろくろ体験", category: "craft", price: 2000, priceNote: "絵付け400円〜・ろくろ2,000円〜", durH: 1.5, duration: "約30分〜2時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "水曜休なので土日月とも営業。絵付けは予約不要、ろくろは電話予約",
+          source: { label: "砥部焼陶芸館", url: "https://www.togeikan.com/trial_class.html" } },
+        { id: "shimanami", name: "しまなみ海道サイクリング(今治起点・日帰り)", category: "cycling", price: 3000, priceNote: "レンタサイクル1日3,000円(電動4,000円)", durH: 6, duration: "約4〜7時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "松山から今治へ電車約40分。来島海峡大橋の往復だけでも絶景",
+          source: { label: "しまなみジャパン", url: "https://shimanami-cycle.or.jp/rental/rental" } },
+        { id: "gogoshima", name: "興居島 SUP・シーカヤック体験", category: "marine", price: 4000, priceNote: "2時間4,000円〜+フェリー代", durH: 2.5, duration: "約2時間+船10分",
+          days: { sat: "check", sun: "check", mon: "check" }, note: "開催はGW〜10月。3週間前までに要予約・最少催行2名",
+          source: { label: "松山 里島めぐり", url: "https://www.ritoumeguri.com/event/44625.php" } },
+        { id: "matsuyamajo", name: "松山城(ロープウェイ+天守)", category: "sight", price: 1040, priceNote: "天守520円+往復520円", durH: 2, duration: "約2時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "現存12天守から瀬戸内海を一望。休城日は12月のみ",
+          source: { label: "松山城公式", url: "https://www.matsuyamajo.jp/guide/" } },
+        { id: "botchan", name: "坊っちゃん列車", category: "sight", price: 1300, priceNote: "一乗車", durH: 0.5, duration: "約30分",
+          days: { sat: "open", sun: "open", mon: "closed" }, note: "運行は土日祝のみ — 10/5(月)は運休。予約不可・定員36名",
+          source: { label: "伊予鉄", url: "https://www.iyotetsu.co.jp/botchan/" } },
+        { id: "haikara", name: "道後ハイカラ通り・圓満寺 散策", category: "sight", price: 0, priceNote: "食べ歩き代別", durH: 1.5, duration: "約1〜2時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "お結び玉の圓満寺は恋愛成就スポット。浴衣散歩と食べ歩きに",
+          source: { label: "道後温泉公式", url: "https://www.dogo.or.jp/" } },
+        { id: "minakuchi", name: "水口酒造 蔵元見学(道後ビール)", category: "food", price: 0, priceNote: "要予約・試飲代別", durH: 0.8, duration: "約40分〜1時間",
+          days: { sat: "open", sun: "closed", mon: "open" }, note: "見学受入は月〜土(日曜不可)。道後唯一の造り酒屋",
+          source: { label: "水口酒造公式", url: "https://www.dogobeer.jp/" } },
+        { id: "nikitatsu", name: "にきたつ庵 昼膳+道後ビール飲み比べ", category: "food", price: 3000, priceNote: "昼膳2,000円前後+飲み比べ約1,000円(目安)", durH: 1.3, duration: "約1〜1.5時間",
+          days: { sat: "open", sun: "open", mon: "check" }, note: "水口酒造直営の懐石料理店。ランチ11:00–14:00、定休日は要確認",
+          source: { label: "水口酒造公式", url: "https://www.dogobeer.jp/" } }
+      ],
+      dinners: [
+        { name: "別邸朧月夜 部屋食・個室会席(宿泊者向け)", price: 20000, note: "全室露天風呂付きの宿で部屋食の瀬戸内会席。記念日ケーキの手配も相談可 — Day 2をこの宿にする場合の選択肢。",
+          source: { label: "別邸朧月夜公式", url: "https://www.oborozukiyo.jp/" } },
+        { name: "キングオブダイニング(道後山の手ホテル・フレンチ)", price: 8000, note: "英国調ホテル内フレンチ、コース6,000円〜。個室・記念日サプライズ対応、温泉街から徒歩圏。",
+          source: { label: "記念日ディナー特集", url: "https://anniversarys-mag.jp/201902" } },
+        { name: "にきたつ庵 夜の会席コース", price: 6000, note: "コース3,240円〜(目安5,000〜8,000円)。道後ビール・利き酒と合わせた和のお祝いに。個室は予約時に相談。",
+          source: { label: "水口酒造公式", url: "https://www.dogobeer.jp/" } }
+      ],
+      defaults: { sat: ["matsuyamajo", "botchan", "haikara"], sun: ["tobe", "asuka"], mon: ["honkan", "minakuchi"], dinner: 1 },
+      lodging: {
+        label: "道後の中堅温泉宿(2人2泊6〜10万円)。道後舘・ふなや2食付は1泊38,500円〜、別邸朧月夜は1泊約10万円",
+        range: "", price: 90000,
+        source: { label: "JTB 道後舘プラン", url: "https://www.jtb.co.jp/kokunai-hotel/htl/7461045/plan/" }
       },
-      foot: "道後の三湯はすべて無休。月曜休の砥部焼伝統産業会館だけDay 2に置けば成立します。"
+      transport: [
+        { label: "東京⇔松山 往復", price: 32000, note: "早割で2.5〜4万円/人" },
+        { label: "松山空港⇔道後 バス往復", price: 2400, note: "片道1,200円・約40分" }
+      ]
     },
     {
       id: "okinawa",
-      name: "沖縄・那覇 街歩き旅",
-      area: "沖縄・那覇 / 首里",
-      days: {
-        3: [
-          { f: "zuisen", note: "見学は土曜OK（最終受付16:00）" },
-          { f: "shurijo" }
-        ],
-        4: [
-          { f: "makishi", note: "10/4は第1日曜なので営業" },
-          { f: "ikutouen", note: "やちむん通り散策と" }
-        ],
-        5: [
-          { f: "ryusen", note: "サンゴ染め体験（無休）" },
-          { f: "mobydick", note: "誕生日ディナーはサンセットクルーズ" }
-        ]
+      name: "沖縄・那覇 街歩きと海",
+      sub: "首里・慶良間",
+      intro: "10月の沖縄は水温25〜27℃でまだ泳げるシーズン。瑞泉酒造は日曜休なのでDay 1(土)に。Day 2は慶良間でシュノーケルして夜はサンセットディナークルーズ、誕生日の朝は海沿いをシェアサイクルで流す。",
+      activities: [
+        { id: "kerama", name: "慶良間 半日ボートシュノーケリング(那覇発)", category: "marine", price: 8000, priceNote: "6,000〜8,500円・便により変動", durH: 4, duration: "約4時間(半日)",
+          days: { sat: "open", sun: "open", mon: "check" }, note: "10月も通常開催・水温25〜27℃。台風時欠航あり、月曜は帰路便と要調整",
+          source: { label: "セルリアンブルー", url: "https://www.cerulean-blue.co.jp/en/snorkel/15849" } },
+        { id: "aocave", name: "青の洞窟(真栄田岬)シュノーケリング", category: "marine", price: 4500, priceNote: "貸切ツアー4,500円/人", durH: 2.5, duration: "約2〜2.5時間+移動",
+          days: { sat: "open", sun: "open", mon: "check" }, note: "通年開催。那覇から車1時間強、北風・台風時は不可",
+          source: { label: "ナチュラルブルー", url: "https://www.natural-blue.net/service/snorkel" } },
+        { id: "churachari", name: "ちゅらチャリ(シェアサイクル)で波の上へ", category: "cycling", price: 1000, priceNote: "30分220円・半日利用の目安", durH: 1.5, duration: "約1〜3時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "市内100か所超のポートで乗り捨て可。国際通り〜波の上〜首里の散走に",
+          source: { label: "ちゅらチャリ公式", url: "https://docomo-cycle.jp/okinawa/price" } },
+        { id: "shurijo", name: "首里城公園(有料区域)", category: "sight", price: 400, priceNote: "", durH: 1.5, duration: "約1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "8時開園で月曜午前にも◎。正殿復元の「見せる復興」を見学",
+          source: { label: "首里城公園公式", url: "https://oki-park.jp/shurijo/info/14/" } },
+        { id: "ryusen", name: "首里琉染 サンゴ染め体験", category: "craft", price: 3850, priceNote: "材料費込", durH: 0.9, duration: "約50分",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "年中無休・要予約。約100種のサンゴから選んで染めるペア人気の体験",
+          source: { label: "首里琉染公式", url: "https://www.shuri-ryusen.com/course/sango.html" } },
+        { id: "ikutouen", name: "育陶園やちむん道場 シーサー作り", category: "craft", price: 4400, priceNote: "ろくろは4,950円・送料別", durH: 1.3, duration: "約60〜90分",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "壺屋の老舗窯元。作品は1〜2.5か月後に郵送 — 誕生日の記念品向き",
+          source: { label: "育陶園公式", url: "https://www.ikutouen.com/yachimun-dojo/" } },
+        { id: "zuisen", name: "瑞泉酒造 酒蔵見学(古酒試飲付き)", category: "sight", price: 0, priceNote: "見学・試飲無料、要申込", durH: 0.6, duration: "約30〜40分",
+          days: { sat: "open", sun: "closed", mon: "open" }, note: "日曜・祝日は閉蔵 — 土曜(最終受付16:00)か月曜午前に。首里城から徒歩圏",
+          source: { label: "瑞泉酒造公式", url: "https://www.zuisen.co.jp/factory" } },
+        { id: "naminoue", name: "波の上ビーチ(那覇市内)", category: "marine", price: 0, priceNote: "シャワー・ロッカー代別", durH: 1.5, duration: "約1〜2時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "遊泳期間は10/31まで(9:00–18:00)・ライフガード常駐。市内から自転車圏",
+          source: { label: "波の上うみそら公園公式", url: "https://www.naminouebeach.jp/guidance/beach/" } },
+        { id: "makishi", name: "第一牧志公設市場「持ち上げ」", category: "food", price: 2500, priceNote: "調理代550円+食材代の目安", durH: 1.5, duration: "約1.5時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "1階で買った魚介を2階食堂で調理してもらう名物システム。10/4(第1日曜)は営業",
+          source: { label: "第一牧志公設市場公式", url: "https://www.makishi-public-market.jp/about/howto/" } },
+        { id: "gangala", name: "ガンガラーの谷 ガイドツアー", category: "sight", price: 2500, priceNote: "前日17時までの予約推奨", durH: 1.4, duration: "約1時間20分",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "亜熱帯の森を歩くツアー。出発10:00/12:00/14:00/16:00 — 月曜は10時回なら可",
+          source: { label: "ガンガラーの谷公式", url: "https://gangala.com/about/" } },
+        { id: "okiworld", name: "おきなわワールド(玉泉洞)", category: "sight", price: 2000, priceNote: "WEB前売1,900円", durH: 2.5, duration: "約2〜3時間",
+          days: { sat: "open", sun: "open", mon: "open" }, note: "年中無休9:00–17:30。ガンガラーの谷の向かいでセットで回れる",
+          source: { label: "おきなわワールド公式", url: "https://www.gyokusendo.co.jp/okinawaworld/fee/" } }
+      ],
+      dinners: [
+        { name: "モビーディック号 サンセットディナークルーズ", price: 7000, note: "乗船+ディナー込み(WEB割6,700円)。10月は17:15出航〜18:45帰港・ライブ演奏付き。不定期運休あり — 10/4(日)の運航要確認。",
+          source: { label: "リウボウ旅行サービス", url: "https://rts21.co.jp/tour_options/view/dinnercruise-1st" } },
+        { name: "鉄板焼 まつ尾(那覇国際通り)", price: 15000, note: "目安。もとぶ牛・県産和牛の鉄板焼。記念日プレート対応のアニバーサリープランあり、日曜夜も営業。",
+          source: { label: "一休.comレストラン", url: "https://restaurant.ikyu.com/area/okinawa/001/0203/05/t-scene369/" } },
+        { name: "琉球料理と琉球舞踊 四つ竹 久米店", price: 8000, note: "目安。琉球舞踊を鑑賞しながら琉球会席。沖縄らしい記念日向けの一軒。",
+          source: { label: "記念日レストラン特集", url: "https://oiwai.anny.gift/celebrations/birthday-naha-okinawa" } }
+      ],
+      defaults: { sat: ["shurijo", "zuisen", "makishi"], sun: ["kerama", "ryusen"], mon: ["churachari"], dinner: 0 },
+      lodging: {
+        label: "ハイアットリージェンシー那覇(2人2泊4.5〜7万円)。手頃なシティホテルなら2〜3.6万円",
+        range: "", price: 55000,
+        source: { label: "じゃらん ハイアット那覇", url: "https://www.jalan.net/yad373185/plan/" }
       },
-      foot: "月曜休の施設が無いのが強み。瑞泉酒造（日曜NG可能性）を土曜に、クルーズは運航日確認を。"
+      transport: [
+        { label: "東京⇔那覇 往復", price: 35000, note: "ANA/JAL早割3〜4.5万円、LCCなら2〜2.5万円" },
+        { label: "ゆいレール等 市内移動", price: 1000, note: "24時間フリー乗車券1,000円" }
+      ]
     }
+  ]
+};
+
+(function () {
+  "use strict";
+
+  var DAYS = [
+    { key: "sat", d: 3, dow: "土", label: "Day 1", note: "終日" },
+    { key: "sun", d: 4, dow: "日", label: "Day 2", note: "終日 + 夜は誕生日前夜ディナー" },
+    { key: "mon", d: 5, dow: "月", label: "Day 3 誕生日", note: "昼過ぎ帰路 — 午前のみ" }
   ];
+  var MON_LIMIT_H = 3.5;
+  var CATS = {
+    all: "すべて",
+    cycling: "サイクリング",
+    marine: "マリン",
+    art: "アート",
+    craft: "ものづくり",
+    sight: "観光",
+    onsen: "温泉",
+    food: "食"
+  };
+  var STATUS_TXT = { open: "OK", closed: "休", check: "要確認" };
+  var LS_KEY = "tripstudio-v1";
 
-  var STATUS_LABEL = { open: "営業", closed: "休館", check: "要確認" };
+  /* ---------- state ---------- */
+  function defaultState() {
+    var s = { tab: DATA.plans[0].id, plans: {} };
+    DATA.plans.forEach(function (p) {
+      s.plans[p.id] = {
+        days: { sat: p.defaults.sat.slice(), sun: p.defaults.sun.slice(), mon: p.defaults.mon.slice() },
+        dinner: p.defaults.dinner,
+        lodging: p.lodging.price,
+        transport: p.transport.map(function (t) { return t.price; })
+      };
+    });
+    return s;
+  }
 
+  var state = defaultState();
+  try {
+    var saved = JSON.parse(localStorage.getItem(LS_KEY) || "null");
+    if (saved && saved.plans) {
+      if (saved.tab && DATA.plans.some(function (p) { return p.id === saved.tab; })) state.tab = saved.tab;
+      DATA.plans.forEach(function (p) {
+        var sp = saved.plans[p.id];
+        if (!sp) return;
+        var cur = state.plans[p.id];
+        ["sat", "sun", "mon"].forEach(function (k) {
+          if (Array.isArray(sp.days && sp.days[k])) {
+            cur.days[k] = sp.days[k].filter(function (id) { return actById(p, id); });
+          }
+        });
+        if (typeof sp.dinner === "number" && p.dinners[sp.dinner]) cur.dinner = sp.dinner;
+        if (typeof sp.lodging === "number") cur.lodging = sp.lodging;
+        if (Array.isArray(sp.transport)) {
+          sp.transport.forEach(function (v, i) { if (typeof v === "number" && i < cur.transport.length) cur.transport[i] = v; });
+        }
+      });
+    }
+  } catch (e) { /* corrupt storage -> defaults */ }
+
+  function save() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+  }
+
+  function plan() { return DATA.plans.filter(function (p) { return p.id === state.tab; })[0]; }
+  function pstate() { return state.plans[state.tab]; }
+  function actById(p, id) {
+    return p.activities.filter(function (a) { return a.id === id; })[0] || null;
+  }
+
+  var catFilter = "all";
+
+  /* ---------- helpers ---------- */
   function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
     });
   }
-
-  function chip(status) {
-    return '<span class="chip ' + status + '">' + STATUS_LABEL[status] + "</span>";
+  function yen(n) { return "¥" + Math.round(n).toLocaleString("ja-JP"); }
+  function srcLink(src, cls) {
+    return '<a class="' + (cls || "") + '" href="' + esc(src.url) + '" target="_blank" rel="noopener" title="出典: ' + esc(src.label) + '">';
   }
 
-  /* ---------- plan comparison ---------- */
-  var selectedPlans = { setouchi: true, kagoshima: false, dogo: false, okinawa: true };
+  /* ---------- cost ---------- */
+  function costs() {
+    var p = plan(), s = pstate();
+    var act = 0;
+    ["sat", "sun", "mon"].forEach(function (k) {
+      s.days[k].forEach(function (id) {
+        var a = actById(p, id);
+        if (a) act += a.price;
+      });
+    });
+    var dinner = s.dinner != null && p.dinners[s.dinner] ? p.dinners[s.dinner].price : 0;
+    var transport = s.transport.reduce(function (x, y) { return x + y; }, 0);
+    var perPerson = transport + act + dinner + s.lodging / 2;
+    return { act: act, dinner: dinner, transport: transport, lodging: s.lodging, perPerson: perPerson, couple: perPerson * 2 };
+  }
 
-  function planRisk(plan) {
-    var closed = 0, check = 0, total = 0;
+  /* ---------- renderers ---------- */
+  function renderTabs() {
+    var el = document.getElementById("tabs");
+    el.innerHTML = DATA.plans.map(function (p) {
+      return '<button class="tab" role="tab" data-plan="' + p.id + '" aria-selected="' + (p.id === state.tab) + '">' +
+        esc(p.name) + '<span class="tsub">' + esc(p.sub) + "</span></button>";
+    }).join("");
+    Array.prototype.forEach.call(el.querySelectorAll(".tab"), function (btn) {
+      btn.addEventListener("click", function () {
+        state.tab = btn.getAttribute("data-plan");
+        save();
+        renderAll();
+      });
+    });
+  }
+
+  function slotHtml(p, id, dayKey) {
+    var a = actById(p, id);
+    if (!a) return "";
+    var st = a.days[dayKey];
+    var warn = st === "check" ? ' <span class="av check">要確認</span>' : "";
+    return '<div class="slot">' +
+      '<div class="sbody"><div class="sname">' + srcLink(a.source) + esc(a.name) + "</a>" + warn + "</div>" +
+      '<div class="smeta">' + esc(a.duration) + (a.note ? " · " + esc(a.note) : "") + "</div></div>" +
+      '<div class="sprice">' + (a.price === 0 ? "無料" : yen(a.price) + "<small>/人</small>") + "</div>" +
+      '<button class="rm" data-rm="' + a.id + '" data-day="' + dayKey + '" aria-label="' + esc(a.name) + 'をDay ' + dayKey + 'から外す">×</button>' +
+      "</div>";
+  }
+
+  function renderTimeline() {
+    var p = plan(), s = pstate();
+    var html = '<div class="plan-intro"><h2>' + esc(p.name) + "</h2><p>" + esc(p.intro) + "</p></div>";
+
     DAYS.forEach(function (day) {
-      (plan.days[day.d] || []).forEach(function (item) {
-        total++;
-        var st = FACILITIES[item.f].status[day.d];
-        if (st === "closed") closed++;
-        if (st === "check") check++;
-      });
-    });
-    return { closed: closed, check: check, total: total };
-  }
+      var ids = s.days[day.key];
+      html += '<div class="day"><div class="dhead"><span class="dd">10.' + day.d + "</span>" +
+        '<span class="dw">' + day.dow + "曜 · " + day.label + "</span>" +
+        '<span class="dnote">' + day.note + "</span></div>";
 
-  function renderPicker() {
-    var el = document.getElementById("planPicker");
-    el.innerHTML = PLANS.map(function (p) {
-      var on = !!selectedPlans[p.id];
-      return '<button type="button" class="ptoggle" data-plan="' + p.id + '" aria-pressed="' + on + '">' + esc(p.name) + "</button>";
-    }).join("");
-    Array.prototype.forEach.call(el.querySelectorAll(".ptoggle"), function (btn) {
+      if (day.key === "mon") {
+        var h = ids.reduce(function (sum, id) {
+          var a = actById(p, id);
+          return sum + (a ? a.durH : 0);
+        }, 0);
+        if (h > MON_LIMIT_H) {
+          html += '<div class="dwarn">Day 3は昼過ぎ出発 — 選択中の所要 約' + h.toFixed(1).replace(/\.0$/, "") + "時間は詰め込みすぎかも。午前で回れる約" + MON_LIMIT_H + "時間以内が目安。</div>";
+        }
+      }
+
+      html += ids.length
+        ? ids.map(function (id) { return slotHtml(p, id, day.key); }).join("")
+        : '<div class="empty-day">まだ何も入っていません — 下の候補プールから「+10/' + day.d + '」で追加。</div>';
+
+      if (day.key === "sun") {
+        var d = s.dinner != null ? p.dinners[s.dinner] : null;
+        html += '<div class="bslot"><div class="btitle">DAY 2 NIGHT — 誕生日前夜ディナー(日付が変わる瞬間にお祝い)</div>' +
+          '<select id="dinnerSel" aria-label="誕生日ディナーを選択">' +
+          '<option value=""' + (s.dinner == null ? " selected" : "") + ">ディナーを選ぶ…</option>" +
+          p.dinners.map(function (dn, i) {
+            return '<option value="' + i + '"' + (s.dinner === i ? " selected" : "") + ">" + esc(dn.name) + "(" + yen(dn.price) + "/人)</option>";
+          }).join("") +
+          "</select>" +
+          (d ? '<div class="bmeta">' + esc(d.note) + " " + srcLink(d.source) + esc(d.source.label) + " ↗</a></div>" : "") +
+          "</div>";
+      }
+      html += "</div>";
+    });
+
+    var el = document.getElementById("timeline");
+    el.innerHTML = html;
+
+    Array.prototype.forEach.call(el.querySelectorAll(".rm"), function (btn) {
       btn.addEventListener("click", function () {
-        var id = btn.getAttribute("data-plan");
-        var count = Object.keys(selectedPlans).filter(function (k) { return selectedPlans[k]; }).length;
-        if (selectedPlans[id] && count === 1) return; // keep at least one visible
-        selectedPlans[id] = !selectedPlans[id];
-        renderPicker();
-        renderPlans();
+        var id = btn.getAttribute("data-rm"), day = btn.getAttribute("data-day");
+        var arr = pstate().days[day];
+        var i = arr.indexOf(id);
+        if (i >= 0) arr.splice(i, 1);
+        save();
+        renderTimeline(); renderCost(); renderPool();
       });
+    });
+    var sel = el.querySelector("#dinnerSel");
+    if (sel) sel.addEventListener("change", function () {
+      pstate().dinner = sel.value === "" ? null : Number(sel.value);
+      save();
+      renderTimeline(); renderCost();
     });
   }
 
-  function renderPlans() {
-    var grid = document.getElementById("planGrid");
-    var visible = PLANS.filter(function (p) { return selectedPlans[p.id]; });
-    grid.innerHTML = visible.map(function (p) {
-      var risk = planRisk(p);
-      var riskHtml =
-        (risk.closed === 0 && risk.check === 0
-          ? '<span class="risk r-ok">休館ヒット 0件</span>'
-          : (risk.closed > 0 ? '<span class="risk r-ng">休館 ' + risk.closed + "件</span>" : "") +
-            (risk.check > 0 ? '<span class="risk r-warn">要確認 ' + risk.check + "件</span>" : "")) +
-        '<span class="risk r-ok">立寄り ' + risk.total + "件</span>";
+  function renderCost() {
+    var p = plan(), s = pstate(), c = costs();
+    var el = document.getElementById("costbox");
+    var html = "<h3>費用の試算</h3>" + '<div class="cost-rows">';
 
-      var daysHtml = DAYS.map(function (day) {
-        var items = (p.days[day.d] || []).map(function (item) {
-          var f = FACILITIES[item.f];
-          var st = f.status[day.d];
-          return '<div class="spot">' +
-            '<div class="sname"><a href="' + f.source.url + '" target="_blank" rel="noopener" title="出典: ' + esc(f.source.label) + '">' + esc(f.name) + "</a>" +
-            (item.note ? '<span class="snote">' + esc(item.note) + "</span>" : "") +
-            "</div>" + chip(st) + "</div>";
-        }).join("");
-        var bday = day.d === 5 ? '<span class="bday">誕生日</span>' : "";
-        return '<div class="plan-day"><div class="dhead"><span class="dd">10.' + day.d + "</span><span>" + day.dow + "曜 · Day " + (day.d - 2) + "</span>" + bday + "</div>" + items + "</div>";
-      }).join("");
+    p.transport.forEach(function (t, i) {
+      html += '<div class="crow"><span class="cl">' + esc(t.label) + ' <small>/人</small></span>' +
+        '<input type="number" min="0" step="100" value="' + s.transport[i] + '" data-tr="' + i + '" aria-label="' + esc(t.label) + 'の金額"></div>';
+    });
+    html += '<div class="crow"><span class="cl">宿泊(2人2泊)</span>' +
+      '<input type="number" min="0" step="1000" value="' + s.lodging + '" data-lodging aria-label="宿泊費"></div>';
+    html += '<div class="crow sub"><span class="cl">アクティビティ計 /人</span><span class="cv">' + yen(c.act) + "</span></div>";
+    html += '<div class="crow"><span class="cl">誕生日ディナー /人</span><span class="cv">' + (c.dinner ? yen(c.dinner) : "—") + "</span></div>";
+    html += "</div>";
+    html += '<button class="reset" id="resetBtn">このプランを初期状態に戻す</button>';
+    html += '<div class="ctotal"><div class="tl">2人合計(概算)</div>' +
+      '<div class="tv">' + yen(c.couple) + "<small> /2人</small></div>" +
+      '<div class="tp">1人あたり ' + yen(c.perPerson) + "</div></div>";
+    html += '<p class="cost-note">交通・宿泊は調査時点の概算(編集可)。宿の目安: ' + esc(p.lodging.label) + " " + esc(p.lodging.range) + " " + srcLink(p.lodging.source) + esc(p.lodging.source.label) + " ↗</a></p>";
+    el.innerHTML = html;
 
-      return '<article class="plan-col">' +
-        "<header>" +
-        '<div class="parea">' + esc(p.area) + "</div>" +
-        "<h3>" + esc(p.name) + "</h3>" +
-        '<div class="risk-row">' + riskHtml + "</div>" +
-        "</header>" +
-        daysHtml +
-        '<div class="pfoot">' + esc(p.foot) + "</div>" +
-        "</article>";
-    }).join("");
-  }
-
-  /* ---------- Naoshima simulator ---------- */
-  var NAOSHIMA = ["chichu", "leeufan", "nnmoa", "benesse"];
-  var simDay = 5;
-
-  function renderSim() {
-    var seg = document.getElementById("simSeg");
-    seg.innerHTML = DAYS.map(function (day) {
-      return '<button type="button" data-day="' + day.d + '" aria-pressed="' + (day.d === simDay) + '">' + day.label + "</button>";
-    }).join("");
-    Array.prototype.forEach.call(seg.querySelectorAll("button"), function (btn) {
-      btn.addEventListener("click", function () {
-        simDay = Number(btn.getAttribute("data-day"));
-        renderSim();
+    Array.prototype.forEach.call(el.querySelectorAll("input[data-tr]"), function (inp) {
+      inp.addEventListener("input", function () {
+        pstate().transport[Number(inp.getAttribute("data-tr"))] = Number(inp.value) || 0;
+        save();
+        updateTotals();
       });
     });
-
-    var closedCount = NAOSHIMA.filter(function (id) { return FACILITIES[id].status[simDay] === "closed"; }).length;
-    var v = document.getElementById("simVerdict");
-    if (closedCount === 0) {
-      v.className = "sim-verdict v-ok";
-      v.innerHTML = "10月" + simDay + "日は4館すべて開館 — この日に直島を置けます。<small>地中美術館・直島新美術館はオンライン日時指定予約が必要です。</small>";
-    } else {
-      v.className = "sim-verdict v-ng";
-      v.innerHTML = "10月" + simDay + "日（月）は主要" + closedCount + "館が休館 — 誕生日の直島観光は成立しません。<small>開いているのはベネッセハウス ミュージアム（無休）と屋外作品のみ。10/3か10/4への前倒しを。</small>";
-    }
-
-    document.getElementById("simGrid").innerHTML = NAOSHIMA.map(function (id) {
-      var f = FACILITIES[id];
-      return '<div class="sim-card">' +
-        '<div class="mname">' + esc(f.name) + "</div>" +
-        chip(f.status[simDay]) +
-        (f.time ? '<div class="mtime">' + esc(f.time) + "</div>" : "") +
-        "</div>";
-    }).join("");
+    var lg = el.querySelector("input[data-lodging]");
+    lg.addEventListener("input", function () {
+      pstate().lodging = Number(lg.value) || 0;
+      save();
+      updateTotals();
+    });
+    el.querySelector("#resetBtn").addEventListener("click", function () {
+      var p2 = plan();
+      state.plans[p2.id] = {
+        days: { sat: p2.defaults.sat.slice(), sun: p2.defaults.sun.slice(), mon: p2.defaults.mon.slice() },
+        dinner: p2.defaults.dinner,
+        lodging: p2.lodging.price,
+        transport: p2.transport.map(function (t) { return t.price; })
+      };
+      save();
+      renderAll();
+    });
   }
 
-  /* ---------- matrix ---------- */
-  var areaFilter = "all";
+  function updateTotals() {
+    var c = costs();
+    var el = document.getElementById("costbox");
+    el.querySelector(".tv").innerHTML = yen(c.couple) + "<small> /2人</small>";
+    el.querySelector(".tp").textContent = "1人あたり " + yen(c.perPerson);
+  }
 
-  function renderFilters() {
-    var el = document.getElementById("areaFilters");
-    var opts = [["all", "すべて"]].concat(Object.keys(AREAS).map(function (k) { return [k, AREAS[k]]; }));
-    el.innerHTML = opts.map(function (o) {
-      return '<button type="button" class="fbtn" data-area="' + o[0] + '" aria-pressed="' + (areaFilter === o[0]) + '">' + o[1] + "</button>";
+  function renderCatFilters() {
+    var el = document.getElementById("catFilters");
+    el.innerHTML = Object.keys(CATS).map(function (k) {
+      return '<button class="fbtn" data-cat="' + k + '" aria-pressed="' + (catFilter === k) + '">' + CATS[k] + "</button>";
     }).join("");
     Array.prototype.forEach.call(el.querySelectorAll(".fbtn"), function (btn) {
       btn.addEventListener("click", function () {
-        areaFilter = btn.getAttribute("data-area");
-        renderFilters();
-        renderMatrix();
+        catFilter = btn.getAttribute("data-cat");
+        renderCatFilters();
+        renderPool();
       });
     });
   }
 
-  function renderMatrix() {
-    var rows = Object.keys(FACILITIES).filter(function (id) {
-      return areaFilter === "all" || FACILITIES[id].area === areaFilter;
-    }).map(function (id) {
-      var f = FACILITIES[id];
-      return "<tr>" +
-        '<td class="fname"><span class="farea">' + esc(AREAS[f.area]) + "</span>" + esc(f.name) + "</td>" +
-        '<td class="frule">' + esc(f.rule) + "</td>" +
-        '<td class="fday">' + chip(f.status[3]) + "</td>" +
-        '<td class="fday">' + chip(f.status[4]) + "</td>" +
-        '<td class="fday">' + chip(f.status[5]) + "</td>" +
-        '<td class="fsrc"><a class="src" href="' + f.source.url + '" target="_blank" rel="noopener">' + esc(f.source.label) + "</a></td>" +
-        "</tr>";
+  function renderPool() {
+    var p = plan(), s = pstate();
+    var el = document.getElementById("pool");
+    el.innerHTML = p.activities.filter(function (a) {
+      return catFilter === "all" || a.category === catFilter;
+    }).map(function (a) {
+      var inAny = ["sat", "sun", "mon"].some(function (k) { return s.days[k].indexOf(a.id) >= 0; });
+      var btns = DAYS.map(function (day) {
+        var st = a.days[day.key];
+        var on = s.days[day.key].indexOf(a.id) >= 0;
+        var dis = st === "closed" ? " disabled" : "";
+        return '<button class="addbtn' + (on ? " on" : "") + '" data-add="' + a.id + '" data-day="' + day.key + '"' + dis +
+          ' aria-pressed="' + on + '" aria-label="' + esc(a.name) + "を10/" + day.d + "に" + (on ? "から外す" : "追加") + '">' +
+          (on ? "✓ " : "+ ") + "10/" + day.d + "</button>";
+      }).join("");
+      var avail = DAYS.map(function (day) {
+        var st = a.days[day.key];
+        return '<span class="av ' + st + '">' + day.d + "日 " + STATUS_TXT[st] + "</span>";
+      }).join("");
+      return '<article class="card' + (inAny ? " in" : "") + '">' +
+        '<div class="chead"><div class="cname">' + srcLink(a.source) + esc(a.name) + "</a></div>" +
+        '<span class="cat c-' + a.category + '">' + CATS[a.category] + "</span></div>" +
+        '<div class="cprice">' + (a.price === 0 ? "無料" : yen(a.price) + "<small> /人</small>") +
+        (a.priceNote ? ' <small>' + esc(a.priceNote) + "</small>" : "") + "</div>" +
+        '<div class="cnote">' + esc(a.duration) + " · " + esc(a.note) + "</div>" +
+        '<div class="avail">' + avail + "</div>" +
+        '<div class="addrow">' + btns + "</div>" +
+        "</article>";
+    }).join("");
+
+    Array.prototype.forEach.call(el.querySelectorAll(".addbtn"), function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-add"), day = btn.getAttribute("data-day");
+        var arr = pstate().days[day];
+        var i = arr.indexOf(id);
+        if (i >= 0) arr.splice(i, 1); else arr.push(id);
+        save();
+        renderTimeline(); renderCost(); renderPool();
+      });
     });
-    document.getElementById("matrixBody").innerHTML = rows.join("");
   }
 
-  renderPicker();
-  renderPlans();
-  renderSim();
-  renderFilters();
-  renderMatrix();
+  function renderFoot() {
+    document.getElementById("footNote").innerHTML =
+      "料金・営業情報は2026年7月時点の調査(各カードの公式リンク参照)。「要確認」は予約時に公式へ確認を。曜日判定の根拠: " +
+      '<a href="https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html" target="_blank" rel="noopener">内閣府 国民の祝日</a>(10/5は祝日でない月曜) · ' +
+      '直島の月曜休館は <a href="https://benesse-artsite.jp/calendar/" target="_blank" rel="noopener">ベネッセアートサイト直島 開館カレンダー</a>。' +
+      "選択内容はこのブラウザに自動保存されます。";
+  }
+
+  function renderAll() {
+    renderTabs();
+    renderTimeline();
+    renderCost();
+    renderCatFilters();
+    renderPool();
+  }
+
+  renderAll();
+  renderFoot();
 })();
+
 </script>
 
 </body>
