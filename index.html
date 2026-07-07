@@ -572,12 +572,24 @@ var DATA = {
         names: { TAK: "高松", NAO: "直島", MEG: "女木島", APT: "高松空港" },
         local: 15, arrival: "TAK", airport: "APT",
         travel: { "TAK|NAO": 80, "TAK|MEG": 40, "NAO|MEG": 110, "TAK|APT": 45, "NAO|APT": 130, "MEG|APT": 90 },
-        travelNote: "高松⇔直島はフェリー約50分+港での待ち・移動込みの目安"
+        travelNote: "高松⇔直島はフェリー約50分+待ち込み目安。フェリーは1日5便・高松発最終17時台(以降は旅客高速船のみ) — 帰路の便を事前確認"
       },
       meals: {
-        lunch1: { label: "高松で讃岐うどんランチ", price: 1000, zone: "TAK", note: "中野うどん学校の実食で兼ねるのも◎(目安)" },
-        dinner1: { label: "高松市内で海鮮・骨付鳥(目安)", price: 3500, note: "宿を2食付にするとプラン込みに自動切替" },
-        lunch2: { label: "直島 本村の島カフェ(目安)", price: 1500, note: "" },
+        lunch1: { label: "高松で讃岐うどんランチ", price: 1000, zone: "TAK", note: "中野うどん学校の実食で兼ねるのも◎",
+          options: [
+            { name: "手打十段うどんバカ一代", price: 700, note: "土曜営業(定休は元日のみ)・6:00〜18:00通し。名物は釜バターうどん", source: { label: "公式サイト", url: "http://www.udonbakaichidai.co.jp/" } },
+            { name: "めりけんや 高松駅前店", price: 500, note: "土曜営業(休みは1/1のみ)・7:00〜20:00、高松駅徒歩1分", source: { label: "公式サイト", url: "https://merikenya.com/index.php/merikenyashop/takamatsuekimae" } }
+          ] },
+        dinner1: { label: "高松市内で夕食(目安)", price: 3500, note: "宿を2食付にするとプラン込みに自動切替",
+          options: [
+            { name: "骨付鳥 一鶴 高松店", price: 2500, note: "土曜営業(定休は火曜)・土日祝11:00〜23:00。ひなどり約1,200円+ドリンク", source: { label: "一鶴公式", url: "https://www.ikkaku.co.jp/takamatsu/info.html" } },
+            { name: "天勝 本店(瀬戸内海鮮)", price: 5000, note: "土曜営業(年中無休)・17:00〜21:00。創業1866年、ディナー4,000〜6,000円", source: { label: "食べログ", url: "https://tabelog.com/kagawa/A3701/A370101/37000448/" } }
+          ] },
+        lunch2: { label: "直島 本村の島カフェ(目安)", price: 1500, note: "",
+          options: [
+            { name: "玄米心食 あいすなお", price: 1200, note: "日曜営業(定休は月曜)・11:00〜15:00。家プロジェクト至近の古民家ごはん", source: { label: "公式サイト", url: "http://aisunao.jp/restraunt-aisunao.html" } },
+            { name: "maimai(直島バーガー)", price: 1000, note: "日曜含め11:00〜17:00だが不定休 — 直前確認推奨。ハマチカツの直島バーガー", source: { label: "食べログ", url: "https://tabelog.com/kagawa/A3701/A370103/37005337/" } }
+          ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "ベネッセハウスの朝食は約3,000円/人(別料金)" }
       },
       defaults: {
@@ -617,7 +629,7 @@ var DATA = {
         "雨リスク★2 — 10月の台風接近は九州南部0.5個(平年)、砂むし温泉は屋根付きで雨天OK",
         "薩摩切子の工場見学(月曜休)はDay 1に配置済み。本格カット体験なら空港側・霧島の弟子丸を",
         "白水館2泊(2食付)なら誕生日前夜の会席が宿泊プランに含まれる — 記念日ワイン付きプランも",
-        "誕生日の朝は開聞岳を望む長崎鼻・池田湖の絶景ドライブ(空港へは早発を)"
+        "誕生日の朝は開聞岳ビューの絶景ドライブ — 指宿→空港は直行バス約2時間・本数少(最終15時台)なので早発必須"
       ],
       intro: "Day 1は鹿児島市内(仙巌園・薩摩切子)を巡ってから指宿・白水館へ。砂むし温泉と元禄風呂、夜は宿の会席でお祝いするゴージャス温泉旅。市内泊と組み合わせて宿代を調整することもできます。",
       activities: [
@@ -679,15 +691,27 @@ var DATA = {
         names: { KAG: "鹿児島市内", IBU: "指宿", KIR: "霧島", MIY: "美山", CHI: "知覧", SAK: "桜島", APT: "鹿児島空港" },
         local: 15, arrival: "KAG", airport: "APT",
         travel: { "KAG|IBU": 75, "KAG|KIR": 60, "KAG|MIY": 40, "KAG|CHI": 60, "KAG|SAK": 25, "KAG|APT": 50,
-          "IBU|KIR": 120, "IBU|MIY": 80, "IBU|CHI": 40, "IBU|SAK": 90, "IBU|APT": 100,
+          "IBU|KIR": 120, "IBU|MIY": 80, "IBU|CHI": 40, "IBU|SAK": 90, "IBU|APT": 125,
           "KIR|MIY": 60, "KIR|CHI": 100, "KIR|SAK": 70, "KIR|APT": 15,
           "MIY|CHI": 45, "MIY|SAK": 50, "MIY|APT": 50, "CHI|SAK": 75, "CHI|APT": 70, "SAK|APT": 60 },
-        travelNote: "鹿児島中央⇔指宿は特急たまて箱で約55分+駅移動の目安。指宿⇔空港は約1時間40分 — Day 3は早発を"
+        travelNote: "鹿児島中央⇔指宿は特急たまて箱(1日3往復・全席指定・要予約)約55分+駅移動。指宿→空港の直行バスは乗車約117分・概ね2時間に1本(最終15時台) — Day 3は早発必須"
       },
       meals: {
-        lunch1: { label: "天文館で黒豚ランチ(目安)", price: 2500, zone: "KAG", note: "" },
-        dinner1: { label: "指宿・鹿児島で夕食(目安)", price: 3500, note: "白水館泊ならプラン込みに自動切替" },
-        lunch2: { label: "指宿で昼食・温たまらん丼など(目安)", price: 1500, note: "" },
+        lunch1: { label: "天文館で黒豚ランチ(目安)", price: 2500, zone: "KAG", note: "",
+          options: [
+            { name: "黒かつ亭 天文館店", price: 1300, note: "土曜ランチ営業11:00〜15:30(定休は年末年始のみ)。黒豚とんかつ約1,100〜1,500円", source: { label: "黒かつ亭公式", url: "https://www.kurokatutei.net/tenmonkan/tenmonkan_lunch.html" } },
+            { name: "いちにいさん 天文館店", price: 1500, note: "無休・ランチ11:00〜15:00。そばつゆ黒豚しゃぶ約1,000〜1,600円", source: { label: "食べログ", url: "https://tabelog.com/kagoshima/A4601/A460101/46000026/" } }
+          ] },
+        dinner1: { label: "指宿・鹿児島で夕食(目安)", price: 3500, note: "白水館泊ならプラン込みに自動切替",
+          options: [
+            { name: "味彩むさし(指宿)", price: 3500, note: "土曜夜営業18:00〜22:00(定休は水曜・第2木曜)。郷土料理・創作居酒屋", source: { label: "食べログ", url: "https://tabelog.com/kagoshima/A4601/A460102/46002659/" } },
+            { name: "さつま黒豚と郷土料理 青葉(指宿駅前)", price: 2500, note: "土曜夜営業17:30〜21:30(定休は水曜)。温たまらん丼1,180円・黒豚しゃぶ2,780円", source: { label: "青葉公式", url: "https://aoba-ibusuki.com/menu-lunch/" } }
+          ] },
+        lunch2: { label: "指宿で昼食(目安)", price: 1500, note: "",
+          options: [
+            { name: "市営 唐船峡そうめん流し", price: 1500, note: "年中無休・10月は11:00〜15:30。そうめん約700円〜A定食2,000円、池田湖方面と好相性", source: { label: "いぶすき観光ネット", url: "https://www.ibusuki.or.jp/eat/somen/ibusukicity/" } },
+            { name: "青葉 ランチ(温たまらん丼)", price: 1180, note: "日曜ランチ営業11:00〜14:30(定休は水曜)。名物温たまらん丼1,180円・週末は行列", source: { label: "青葉公式", url: "https://aoba-ibusuki.com/menu-lunch/" } }
+          ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "" }
       },
       defaults: {
@@ -789,9 +813,21 @@ var DATA = {
         travelNote: "道後⇔松山市内は市内電車約20分。砥部へは車・バス約30〜40分"
       },
       meals: {
-        lunch1: { label: "松山で鯛めしランチ(目安)", price: 2000, zone: "MAT", note: "" },
-        dinner1: { label: "道後・松山で夕食(目安)", price: 3500, note: "大和屋本店泊ならプラン込みに自動切替" },
-        lunch2: { label: "砥部・道後で昼食(目安)", price: 1500, note: "" },
+        lunch1: { label: "松山で鯛めしランチ(目安)", price: 2000, zone: "MAT", note: "",
+          options: [
+            { name: "松山鯛めし 秋嘉 本店", price: 2300, note: "土曜営業(定休は火曜)。松山鯛めし(炊き込み)と宇和島鯛めし(生卵ダレ)の両方を提供", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38011850/" } },
+            { name: "郷土料理 かどや 大街道店", price: 1900, note: "土曜営業(休みは1/1のみ)・ランチ11:00〜15:00。宇和島鯛めし約1,900円。ANAクラウンプラザB1に移転済み", source: { label: "かどや公式", url: "https://www.kadoya-taimeshi.com/kadoyamanage/shoplist/kadoyaokaido/" } }
+          ] },
+        dinner1: { label: "道後・松山で夕食(目安)", price: 3500, note: "大和屋本店泊ならプラン込みに自動切替",
+          options: [
+            { name: "おいでん家 道後店", price: 3500, note: "土曜夜営業17:30〜23:00(不定休 — 電話確認推奨 089-931-6161)。あぶり鯛めしが人気、本館至近", source: { label: "おいでん家公式", url: "https://oidenka.jimdofree.com/" } },
+            { name: "道後BEER BAR(道後麦酒館)", price: 3000, note: "土曜営業(定休は水曜)・夜17:00〜21:00LO。道後温泉本館向かいの地ビール店", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38000200/" } }
+          ] },
+        lunch2: { label: "砥部・道後で昼食(目安)", price: 1500, note: "",
+          options: [
+            { name: "カフェ&ギャラリー もえぎの(砥部)", price: 1300, note: "日曜営業(営業は金土日11:00〜17:00)。窯元エリアのログハウスカフェ・砥部焼ギャラリー併設", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38013605/" } },
+            { name: "鍋焼きうどん ことり(松山)", price: 1000, note: "日曜営業10:00〜14:00頃・売切れ終い(定休は水曜)。1949年創業、鍋焼きうどん700円", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38000037/" } }
+          ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "" }
       },
       defaults: {
@@ -897,9 +933,21 @@ var DATA = {
         travelNote: "首里へはゆいレール+徒歩の目安。真栄田岬(青の洞窟)へは車で約1時間強"
       },
       meals: {
-        lunch1: { label: "国際通りで沖縄そば(目安)", price: 1200, zone: "NAH", note: "" },
-        dinner1: { label: "牧志市場「持ち上げ」or 居酒屋(目安)", price: 3000, note: "" },
-        lunch2: { label: "首里そば・市場で昼食(目安)", price: 1200, note: "" },
+        lunch1: { label: "那覇で沖縄そば(目安)", price: 1200, zone: "NAH", note: "",
+          options: [
+            { name: "OKINAWA SOBA EIBUN(壺屋)", price: 1200, note: "定休なしで土曜営業・11:00〜20:00だが売切れ次第終了 — 早めに。※首里そばは日曜定休+売切れ終いのため今回は非推奨", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47017975/" } },
+            { name: "田舎 公設市場南店", price: 500, note: "無休で土曜営業・10:00頃〜18:00頃。ソーキそば480円の名物安うま店", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47000179/" } }
+          ] },
+        dinner1: { label: "那覇で夕食(目安)", price: 3000, note: "",
+          options: [
+            { name: "うりずん 安里本店", price: 3000, note: "年中無休・17:30〜24:00。1972年創業の琉球料理居酒屋、ドゥル天発祥", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47000019/" } },
+            { name: "第一牧志公設市場「持ち上げ」", price: 3000, note: "土曜営業(定休は第4日曜)。調理代550円/人+食材代で実勢2,500〜3,500円、調理LO19:45なので早めの夕食向き", source: { label: "市場公式", url: "https://www.makishi-public-market.jp/" } }
+          ] },
+        lunch2: { label: "那覇で昼食(目安)", price: 1200, note: "",
+          options: [
+            { name: "ポーたま 牧志市場店", price: 500, note: "年中無休・7:00〜20:00 — シュノーケル帰港後の13時でもOK。ポーたま390円〜", source: { label: "ポーたま公式", url: "https://porktamago.com/shop/001-mks/" } },
+            { name: "ジャッキーステーキハウス", price: 3500, note: "日曜営業(定休は水曜)・11:00〜22:00。テンダーロインM 4,200円、価格改定あり得るため要確認", source: { label: "公式サイト", url: "https://steak.co.jp/" } }
+          ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "" }
       },
       defaults: {
@@ -989,7 +1037,7 @@ var DATA = {
     return { t: "act", id: id, dur: dur, buf: DEFAULT_BUF, tvl: null };
   }
   function mkMealEntry(slot) {
-    return { t: "meal", slot: slot, dur: MEAL_DUR[slot] || 60, buf: DEFAULT_BUF, tvl: null, customPrice: null };
+    return { t: "meal", slot: slot, dur: MEAL_DUR[slot] || 60, buf: DEFAULT_BUF, tvl: null, sel: 0, customPrice: null };
   }
   function freshPlanState(p) {
     var sched = {};
@@ -1022,7 +1070,7 @@ var DATA = {
   function validEntry(p, e) {
     if (!e || typeof e !== "object") return false;
     if (e.t === "act") return !!actById(p, e.id);
-    if (e.t === "meal") return !!MEAL_DUR[e.slot];
+    if (e.t === "meal") { if (typeof e.sel !== "number") e.sel = 0; return !!MEAL_DUR[e.slot]; }
     return e.t === "bday";
   }
 
@@ -1096,9 +1144,16 @@ var DATA = {
     }
     return false;
   }
+  function mealOptions(p, slot) {
+    var cfg = p.meals[slot];
+    return (cfg && cfg.options) || [];
+  }
   function mealPrice(p, s, dayKey, e) {
     if (mealIncluded(p, s, dayKey, e.slot)) return 0;
-    return e.customPrice != null ? e.customPrice : p.meals[e.slot].price;
+    if (e.customPrice != null) return e.customPrice;
+    var opts = mealOptions(p, e.slot);
+    if (typeof e.sel === "number" && opts[e.sel]) return opts[e.sel].price;
+    return p.meals[e.slot].price;
   }
 
   /* ---------- cost ---------- */
@@ -1345,21 +1400,33 @@ var DATA = {
     var cfg = p.meals[e.slot];
     var included = mealIncluded(p, s, dayKey, e.slot);
     var price = mealPrice(p, s, dayKey, e);
-    var label, note;
+    var opts = mealOptions(p, e.slot);
+    var selOpt = !included && e.customPrice == null && typeof e.sel === "number" ? opts[e.sel] : null;
+    var body;
     if (included) {
       var night = e.slot === "dinner1" ? "sat" : dayKey === "sun" ? "sat" : "sun";
-      label = lodgById(p, s.lodging[night]).shortName + "の" + MEAL_NAME[e.slot] + "(宿泊プランに含む)";
-      note = "2食付/朝食付プランのため追加費用なし";
+      body = '<div class="iname">' + esc(lodgById(p, s.lodging[night]).shortName + "の" + MEAL_NAME[e.slot] + "(宿泊プランに含む)") + "</div>" +
+        '<div class="idesc">2食付/朝食付プランのため追加費用なし</div>';
+    } else if (opts.length) {
+      var selHtml = '<select class="mealsel" data-mealsel data-day="' + dayKey + '" data-idx="' + idx + '" aria-label="店を選択">' +
+        opts.map(function (o, i) {
+          return '<option value="' + i + '"' + (e.customPrice == null && e.sel === i ? " selected" : "") + ">" +
+            esc(o.name) + "(" + yen(o.price) + "/人)</option>";
+        }).join("") +
+        '<option value="custom"' + (e.customPrice != null ? " selected" : "") + ">カスタム(自由入力)</option>" +
+        "</select>";
+      body = '<div class="iname">' + selHtml + "</div>" +
+        '<div class="idesc">' + esc(selOpt ? selOpt.note : (cfg.note || "金額は右の欄で自由に調整")) +
+        (selOpt && selOpt.source ? ' <a href="' + esc(selOpt.source.url) + '" target="_blank" rel="noopener">' + esc(selOpt.source.label) + " ↗</a>" : "") +
+        "</div>";
     } else {
-      label = cfg.label;
-      note = cfg.note || "金額は目安 — 行きたい店に合わせて右の欄を書き換え";
+      body = '<div class="iname">' + esc(cfg.label) + "</div>" +
+        '<div class="idesc">' + esc(cfg.note || "金額は目安 — 行きたい店に合わせて右の欄を書き換え") + "</div>";
     }
     return '<div class="item meal">' +
       '<div class="trange">' + toHM(tm.st) + "<br>|<br>" + toHM(tm.en) + "</div>" +
       '<div class="mealtag">' + MEAL_NAME[e.slot] + "</div>" +
-      '<div class="ibody">' +
-      '<div class="iname">' + esc(label) + "</div>" +
-      '<div class="idesc">' + esc(note) + "</div>" +
+      '<div class="ibody">' + body +
       '<div class="imeta">' + durEditor(dayKey, idx, e.dur) + "</div></div>" +
       '<div class="iprice">' +
       (included ? '<span class="free">¥0</span>' :
@@ -1483,6 +1550,20 @@ var DATA = {
       inp.addEventListener("change", function () {
         var e = pstate().sched[inp.getAttribute("data-day")][Number(inp.getAttribute("data-idx"))];
         e.customPrice = Math.max(0, Number(inp.value) || 0);
+        save(); refresh();
+      });
+    });
+    Array.prototype.forEach.call(el.querySelectorAll("select[data-mealsel]"), function (sel2) {
+      sel2.addEventListener("change", function () {
+        var e = pstate().sched[sel2.getAttribute("data-day")][Number(sel2.getAttribute("data-idx"))];
+        if (sel2.value === "custom") {
+          var opts = mealOptions(plan(), e.slot);
+          var base = (typeof e.sel === "number" && opts[e.sel]) ? opts[e.sel].price : plan().meals[e.slot].price;
+          e.customPrice = base;
+        } else {
+          e.sel = Number(sel2.value);
+          e.customPrice = null;
+        }
         save(); refresh();
       });
     });
