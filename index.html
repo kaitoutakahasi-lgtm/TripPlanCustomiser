@@ -185,6 +185,11 @@
   }
   .dayctl .dend { font-weight: 800; color: var(--ok); font-variant-numeric: tabular-nums; margin-left: auto; }
   .dayctl .dend.over { color: var(--ng); }
+  .optbtn {
+    border: 1px solid var(--link); color: var(--link); background: none;
+    border-radius: 7px; padding: 3px 10px; font-size: 10.5px; font-weight: 800; cursor: pointer;
+  }
+  .optbtn:hover { background: rgba(37,99,196,.08); }
 
   .item {
     display: flex; gap: 10px; align-items: center;
@@ -1178,20 +1183,23 @@ var DATA = {
     if (e.t === "bday") { var z2 = lodgById(p, s.lodging.sun).zone; return { zin: z2, zout: z2 }; }
     return { zin: curZone, zout: curZone };
   }
-  // full day route: rows aligned to entries + tail (return to lodging / airport)
-  function computeTimes(s, dayKey) {
-    var p = plan();
+  // simulator over an arbitrary entry list; ignoreTvl drops manual travel overrides
+  function simulateDay(p, s, dayKey, entries, ignoreTvl) {
     var startZone = dayKey === "sat" ? p.geo.arrival : lodgById(p, s.lodging[dayKey === "sun" ? "sat" : "sun"]).zone;
     var endZone = dayKey === "mon" ? p.geo.airport : lodgById(p, s.lodging[dayKey]).zone;
     var t = toMin(s.dayStart[dayKey]);
     var cur = startZone;
-    var rows = s.sched[dayKey].map(function (e, i) {
+    var travelSum = 0;
+    var lunchStarts = [];
+    var rows = entries.map(function (e, i) {
       var z = entryZones(p, s, dayKey, e, cur);
       var autoTravel = i === 0 && z.zin === cur ? 0 : travelTime(p, cur, z.zin);
-      var travel = e.tvl != null ? e.tvl : autoTravel;
+      var travel = (!ignoreTvl && e.tvl != null) ? e.tvl : autoTravel;
       var slack = e.buf || 0;
       var st = t + travel + slack;
       var en = st + (e.dur || 0);
+      travelSum += travel;
+      if (e.t === "meal" && e.slot.indexOf("lunch") === 0) lunchStarts.push(st);
       var row = { st: st, en: en, travel: travel, autoTravel: autoTravel, slack: slack, from: cur, to: z.zin };
       t = en;
       cur = z.zout;
@@ -1199,11 +1207,90 @@ var DATA = {
     });
     var tailTravel = rows.length ? travelTime(p, cur, endZone) : 0;
     if (cur === endZone) tailTravel = rows.length ? Math.min(tailTravel, p.geo.local) : 0;
+    travelSum += tailTravel;
     return {
       rows: rows,
       end: t + tailTravel,
+      travelSum: travelSum,
+      lunchStarts: lunchStarts,
       tail: { travel: tailTravel, from: cur, to: endZone, isAirport: dayKey === "mon" }
     };
+  }
+  function computeTimes(s, dayKey) {
+    return simulateDay(plan(), s, dayKey, s.sched[dayKey], false);
+  }
+
+  /* ---------- manual "smart sort" (button-triggered) ---------- */
+  function permutations(arr) {
+    if (arr.length <= 1) return [arr.slice()];
+    var out = [];
+    arr.forEach(function (x, i) {
+      var rest = arr.slice(0, i).concat(arr.slice(i + 1));
+      permutations(rest).forEach(function (perm) { out.push([x].concat(perm)); });
+    });
+    return out;
+  }
+  function greedyOrder(p, s, dayKey, acts) {
+    var cur = dayKey === "sat" ? p.geo.arrival : lodgById(p, s.lodging[dayKey === "sun" ? "sat" : "sun"]).zone;
+    var pool = acts.slice(), out = [];
+    while (pool.length) {
+      var bi = 0, bt = Infinity;
+      pool.forEach(function (e, i) {
+        var act = actById(p, e.id);
+        var zin = (act && (act.zoneIn || act.zone)) || cur;
+        var tv = travelTime(p, cur, zin);
+        if (tv < bt) { bt = tv; bi = i; }
+      });
+      var pick = pool.splice(bi, 1)[0];
+      var pa = actById(p, pick.id);
+      cur = (pa && pa.zone) || cur;
+      out.push(pick);
+    }
+    return out;
+  }
+  function scoreDay(p, s, dayKey, entries) {
+    var sim = simulateDay(p, s, dayKey, entries, true);
+    var limit = toMin(s.dayEnd[dayKey]);
+    var pen = 0;
+    sim.lunchStarts.forEach(function (st) {
+      if (st < 690) pen += (690 - st);        // lunch before 11:30
+      else if (st > 810) pen += (st - 810);   // lunch after 13:30
+    });
+    var overflow = Math.max(0, sim.end - limit);
+    return sim.travelSum + pen + overflow * 3;
+  }
+  function optimizeDay(dayKey) {
+    var p = plan(), s = pstate();
+    var entries = s.sched[dayKey];
+    var breakfast = entries.filter(function (e) { return e.t === "meal" && e.slot === "breakfast"; });
+    var lunches = entries.filter(function (e) { return e.t === "meal" && e.slot.indexOf("lunch") === 0; });
+    var dinner1 = entries.filter(function (e) { return e.t === "meal" && e.slot === "dinner1"; });
+    var bday = entries.filter(function (e) { return e.t === "bday"; });
+    var acts = entries.filter(function (e) { return e.t === "act"; });
+
+    var orders = acts.length <= 7 ? permutations(acts) : [greedyOrder(p, s, dayKey, acts)];
+    var best = null, bestScore = Infinity;
+    orders.forEach(function (perm) {
+      var base = breakfast.concat(perm);
+      var candidates = [];
+      if (lunches.length) {
+        // try every insertion point for the lunch block (after breakfast)
+        for (var pos = breakfast.length; pos <= base.length; pos++) {
+          candidates.push(base.slice(0, pos).concat(lunches, base.slice(pos)));
+        }
+      } else {
+        candidates.push(base);
+      }
+      candidates.forEach(function (cand) {
+        var full = cand.concat(dinner1, bday);
+        var sc = scoreDay(p, s, dayKey, full);
+        if (sc < bestScore) { bestScore = sc; best = full; }
+      });
+    });
+    if (best) {
+      best.forEach(function (e) { e.tvl = null; }); // recompute travel for the new route
+      s.sched[dayKey] = best;
+    }
   }
 
   function durEditor(dayKey, idx, dur) {
@@ -1327,6 +1414,7 @@ var DATA = {
         '<label>開始 <input type="time" step="900" value="' + esc(s.dayStart[day.key]) + '" data-daystart="' + day.key + '"></label>' +
         '<label>' + (day.key === "mon" ? "空港着リミット" : "宿着リミット") + ' <input type="time" step="900" value="' + esc(s.dayEnd[day.key]) + '" data-dayend="' + day.key + '"></label>' +
         '<span class="dend' + (over > 0 ? " over" : "") + '">' + (day.key === "mon" ? "空港着 " : "宿着 ") + toHM(endMin) + (over > 0 ? " · " + over + "分オーバー" : " · 余裕" + (limitMin - endMin) + "分") + "</span>" +
+        '<button class="optbtn" data-opt="' + day.key + '" title="移動時間と食事時間帯を考慮して並べ替え">最適順にソート</button>' +
         "</div>";
 
       if (day.key !== "mon") html += lodgingRowHtml(p, s, NIGHTS[day.key === "sat" ? 0 : 1]);
@@ -1413,6 +1501,12 @@ var DATA = {
     Array.prototype.forEach.call(el.querySelectorAll("[data-adder]"), function (btn) {
       btn.addEventListener("click", function () {
         document.getElementById("poolCard").scrollIntoView({ block: "start" });
+      });
+    });
+    Array.prototype.forEach.call(el.querySelectorAll("[data-opt]"), function (btn) {
+      btn.addEventListener("click", function () {
+        optimizeDay(btn.getAttribute("data-opt"));
+        save(); refresh();
       });
     });
     Array.prototype.forEach.call(el.querySelectorAll("[data-go-lodg]"), function (btn) {
