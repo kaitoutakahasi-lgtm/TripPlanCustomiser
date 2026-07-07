@@ -343,6 +343,18 @@
   .addbtn:disabled { opacity: .3; cursor: not-allowed; }
   .addbtn.on { background: var(--primary); border-color: var(--primary); color: #fff; }
 
+  /* food candidates */
+  .foods { padding: 12px 18px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .frow {
+    border: 1px solid var(--line); border-radius: 12px; background: var(--card);
+    padding: 10px 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: var(--shadow);
+  }
+  .frow .fhead { display: flex; align-items: baseline; gap: 8px; }
+  .frow .fname { font-size: 12.5px; font-weight: 700; line-height: 1.4; }
+  .frow .fprice { margin-left: auto; font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .frow .fprice small { font-size: 9.5px; color: var(--ink-3); font-weight: 600; }
+  .frow .fnote { font-size: 10.5px; color: var(--ink-2); line-height: 1.55; }
+
   /* lodging candidates */
   .lodgs { padding: 12px 18px 18px; display: flex; flex-direction: column; gap: 12px; }
   .lcard {
@@ -482,6 +494,10 @@
       <div class="filters" id="catFilters" role="group" aria-label="カテゴリ絞り込み"></div>
       <div class="pool" id="pool"></div>
     </section>
+    <section class="card" id="foodCard">
+      <div class="card-head"><h2>食事候補</h2><span class="sub">土日の営業を確認済み / ボタンでスロットへ割当</span></div>
+      <div class="foods" id="foodPool"></div>
+    </section>
     <section class="card" id="lodgCard">
       <div class="card-head"><h2>宿泊候補</h2><span class="sub">タップで切り替え(2人2泊の概算)</span></div>
       <div class="lodgs" id="lodgings"></div>
@@ -581,23 +597,37 @@ var DATA = {
         travelNote: "高松⇔直島はフェリー約50分+待ち込み目安。フェリーは1日5便・高松発最終17時台(以降は旅客高速船のみ) — 帰路の便を事前確認"
       },
       meals: {
-        lunch1: { label: "高松で讃岐うどんランチ", price: 1000, zone: "TAK", note: "中野うどん学校の実食で兼ねるのも◎",
+        lunch1: { label: "高松で讃岐うどんランチ", price: 1000, zone: "TAK", rest: "bakaichidai", note: "中野うどん学校の実食で兼ねるのも◎",
           options: [
             { name: "手打十段うどんバカ一代", price: 700, note: "土曜営業(定休は元日のみ)・6:00〜18:00通し。名物は釜バターうどん", source: { label: "公式サイト", url: "http://www.udonbakaichidai.co.jp/" } },
             { name: "めりけんや 高松駅前店", price: 500, note: "土曜営業(休みは1/1のみ)・7:00〜20:00、高松駅徒歩1分", source: { label: "公式サイト", url: "https://merikenya.com/index.php/merikenyashop/takamatsuekimae" } }
           ] },
-        dinner1: { label: "高松市内で夕食(目安)", price: 3500, note: "宿を2食付にするとプラン込みに自動切替",
+        dinner1: { label: "高松市内で夕食(目安)", price: 3500, rest: "ikkaku", note: "宿を2食付にするとプラン込みに自動切替",
           options: [
             { name: "骨付鳥 一鶴 高松店", price: 2500, note: "土曜営業(定休は火曜)・土日祝11:00〜23:00。ひなどり約1,200円+ドリンク", source: { label: "一鶴公式", url: "https://www.ikkaku.co.jp/takamatsu/info.html" } },
             { name: "天勝 本店(瀬戸内海鮮)", price: 5000, note: "土曜営業(年中無休)・17:00〜21:00。創業1866年、ディナー4,000〜6,000円", source: { label: "食べログ", url: "https://tabelog.com/kagawa/A3701/A370101/37000448/" } }
           ] },
-        lunch2: { label: "直島 本村の島カフェ(目安)", price: 1500, note: "",
+        lunch2: { label: "直島 本村の島カフェ(目安)", price: 1500, rest: "aisunao", note: "",
           options: [
             { name: "玄米心食 あいすなお", price: 1200, note: "日曜営業(定休は月曜)・11:00〜15:00。家プロジェクト至近の古民家ごはん", source: { label: "公式サイト", url: "http://aisunao.jp/restraunt-aisunao.html" } },
             { name: "maimai(直島バーガー)", price: 1000, note: "日曜含め11:00〜17:00だが不定休 — 直前確認推奨。ハマチカツの直島バーガー", source: { label: "食べログ", url: "https://tabelog.com/kagawa/A3701/A370103/37005337/" } }
           ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "ベネッセハウスの朝食は約3,000円/人(別料金)" }
       },
+      restaurants: [
+        { id: "bakaichidai", zone: "TAK", meals: ["lunch"], name: "手打十段うどんバカ一代", price: 700,
+          note: "土曜営業(定休は元日のみ)・6:00〜18:00通し。名物は釜バターうどん", source: { label: "公式サイト", url: "http://www.udonbakaichidai.co.jp/" } },
+        { id: "merikenya", zone: "TAK", meals: ["lunch"], name: "めりけんや 高松駅前店", price: 500,
+          note: "土曜営業(休みは1/1のみ)・7:00〜20:00、高松駅徒歩1分", source: { label: "公式サイト", url: "https://merikenya.com/index.php/merikenyashop/takamatsuekimae" } },
+        { id: "aisunao", zone: "NAO", meals: ["lunch"], name: "玄米心食 あいすなお(直島)", price: 1200,
+          note: "日曜営業(定休は月曜)・11:00〜15:00。家プロジェクト至近の古民家ごはん", source: { label: "公式サイト", url: "http://aisunao.jp/restraunt-aisunao.html" } },
+        { id: "maimai", zone: "NAO", meals: ["lunch"], name: "maimai 直島バーガー", price: 1000,
+          note: "11:00〜17:00だが不定休 — 直前確認推奨。ハマチカツの直島バーガー", source: { label: "食べログ", url: "https://tabelog.com/kagawa/A3701/A370103/37005337/" } },
+        { id: "ikkaku", zone: "TAK", meals: ["dinner"], name: "骨付鳥 一鶴 高松店", price: 2500,
+          note: "土曜営業(定休は火曜)・土日祝11:00〜23:00。ひなどり約1,200円+ドリンク", source: { label: "一鶴公式", url: "https://www.ikkaku.co.jp/takamatsu/info.html" } },
+        { id: "tenkatsu", zone: "TAK", meals: ["dinner"], name: "天勝 本店(瀬戸内海鮮)", price: 5000,
+          note: "土曜営業(年中無休)・17:00〜21:00。創業1866年", source: { label: "食べログ", url: "https://tabelog.com/kagawa/A3701/A370101/37000448/" } }
+      ],
       defaults: {
         sched: {
           sat: ["@lunch1", "chichu", "leeufan", "sento", "@dinner1"],
@@ -703,23 +733,37 @@ var DATA = {
         travelNote: "鹿児島中央⇔指宿は特急たまて箱(1日3往復・全席指定・要予約)約55分+駅移動。指宿→空港の直行バスは乗車約117分・概ね2時間に1本(最終15時台) — Day 3は早発必須"
       },
       meals: {
-        lunch1: { label: "天文館で黒豚ランチ(目安)", price: 2500, zone: "KAG", note: "",
+        lunch1: { label: "天文館で黒豚ランチ(目安)", price: 2500, zone: "KAG", rest: "kurokatsutei", note: "",
           options: [
             { name: "黒かつ亭 天文館店", price: 1300, note: "土曜ランチ営業11:00〜15:30(定休は年末年始のみ)。黒豚とんかつ約1,100〜1,500円", source: { label: "黒かつ亭公式", url: "https://www.kurokatutei.net/tenmonkan/tenmonkan_lunch.html" } },
             { name: "いちにいさん 天文館店", price: 1500, note: "無休・ランチ11:00〜15:00。そばつゆ黒豚しゃぶ約1,000〜1,600円", source: { label: "食べログ", url: "https://tabelog.com/kagoshima/A4601/A460101/46000026/" } }
           ] },
-        dinner1: { label: "指宿・鹿児島で夕食(目安)", price: 3500, note: "白水館泊ならプラン込みに自動切替",
+        dinner1: { label: "指宿・鹿児島で夕食(目安)", price: 3500, rest: "musashi", note: "白水館泊ならプラン込みに自動切替",
           options: [
             { name: "味彩むさし(指宿)", price: 3500, note: "土曜夜営業18:00〜22:00(定休は水曜・第2木曜)。郷土料理・創作居酒屋", source: { label: "食べログ", url: "https://tabelog.com/kagoshima/A4601/A460102/46002659/" } },
             { name: "さつま黒豚と郷土料理 青葉(指宿駅前)", price: 2500, note: "土曜夜営業17:30〜21:30(定休は水曜)。温たまらん丼1,180円・黒豚しゃぶ2,780円", source: { label: "青葉公式", url: "https://aoba-ibusuki.com/menu-lunch/" } }
           ] },
-        lunch2: { label: "指宿で昼食(目安)", price: 1500, note: "",
+        lunch2: { label: "指宿で昼食(目安)", price: 1500, rest: "tosenkyo", note: "",
           options: [
             { name: "市営 唐船峡そうめん流し", price: 1500, note: "年中無休・10月は11:00〜15:30。そうめん約700円〜A定食2,000円、池田湖方面と好相性", source: { label: "いぶすき観光ネット", url: "https://www.ibusuki.or.jp/eat/somen/ibusukicity/" } },
             { name: "青葉 ランチ(温たまらん丼)", price: 1180, note: "日曜ランチ営業11:00〜14:30(定休は水曜)。名物温たまらん丼1,180円・週末は行列", source: { label: "青葉公式", url: "https://aoba-ibusuki.com/menu-lunch/" } }
           ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "" }
       },
+      restaurants: [
+        { id: "kurokatsutei", zone: "KAG", meals: ["lunch"], name: "黒かつ亭 天文館店", price: 1300,
+          note: "土曜ランチ営業11:00〜15:30(定休は年末年始のみ)。黒豚とんかつ", source: { label: "黒かつ亭公式", url: "https://www.kurokatutei.net/tenmonkan/tenmonkan_lunch.html" } },
+        { id: "ichiniisan", zone: "KAG", meals: ["lunch"], name: "いちにいさん 天文館店", price: 1500,
+          note: "無休・ランチ11:00〜15:00。そばつゆ黒豚しゃぶ", source: { label: "食べログ", url: "https://tabelog.com/kagoshima/A4601/A460101/46000026/" } },
+        { id: "tosenkyo", zone: "IBU", meals: ["lunch"], name: "市営 唐船峡そうめん流し", price: 1500,
+          note: "年中無休・10月は11:00〜15:30。池田湖・長崎鼻方面と好相性", source: { label: "いぶすき観光ネット", url: "https://www.ibusuki.or.jp/eat/somen/ibusukicity/" } },
+        { id: "aoba_l", zone: "IBU", meals: ["lunch"], name: "青葉 ランチ(温たまらん丼)", price: 1180,
+          note: "日曜ランチ営業11:00〜14:30(定休は水曜)。週末は行列", source: { label: "青葉公式", url: "https://aoba-ibusuki.com/menu-lunch/" } },
+        { id: "musashi", zone: "IBU", meals: ["dinner"], name: "味彩むさし(指宿)", price: 3500,
+          note: "土曜夜営業18:00〜22:00(定休は水曜・第2木曜)。郷土料理・創作居酒屋", source: { label: "食べログ", url: "https://tabelog.com/kagoshima/A4601/A460102/46002659/" } },
+        { id: "aoba_d", zone: "IBU", meals: ["dinner"], name: "青葉(指宿駅前・夕食)", price: 2500,
+          note: "土曜夜営業17:30〜21:30(定休は水曜)。黒豚しゃぶ2,780円", source: { label: "青葉公式", url: "https://aoba-ibusuki.com/menu-lunch/" } }
+      ],
       defaults: {
         sched: {
           sat: ["@lunch1", "senganen", "kiriko", "tamatebako", "@dinner1"],
@@ -819,23 +863,37 @@ var DATA = {
         travelNote: "道後⇔松山市内は市内電車約20分。砥部へは車・バス約30〜40分"
       },
       meals: {
-        lunch1: { label: "松山で鯛めしランチ(目安)", price: 2000, zone: "MAT", note: "",
+        lunch1: { label: "松山で鯛めしランチ(目安)", price: 2000, zone: "MAT", rest: "akiyoshi", note: "",
           options: [
             { name: "松山鯛めし 秋嘉 本店", price: 2300, note: "土曜営業(定休は火曜)。松山鯛めし(炊き込み)と宇和島鯛めし(生卵ダレ)の両方を提供", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38011850/" } },
             { name: "郷土料理 かどや 大街道店", price: 1900, note: "土曜営業(休みは1/1のみ)・ランチ11:00〜15:00。宇和島鯛めし約1,900円。ANAクラウンプラザB1に移転済み", source: { label: "かどや公式", url: "https://www.kadoya-taimeshi.com/kadoyamanage/shoplist/kadoyaokaido/" } }
           ] },
-        dinner1: { label: "道後・松山で夕食(目安)", price: 3500, note: "大和屋本店泊ならプラン込みに自動切替",
+        dinner1: { label: "道後・松山で夕食(目安)", price: 3500, rest: "oidenka", note: "大和屋本店泊ならプラン込みに自動切替",
           options: [
             { name: "おいでん家 道後店", price: 3500, note: "土曜夜営業17:30〜23:00(不定休 — 電話確認推奨 089-931-6161)。あぶり鯛めしが人気、本館至近", source: { label: "おいでん家公式", url: "https://oidenka.jimdofree.com/" } },
             { name: "道後BEER BAR(道後麦酒館)", price: 3000, note: "土曜営業(定休は水曜)・夜17:00〜21:00LO。道後温泉本館向かいの地ビール店", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38000200/" } }
           ] },
-        lunch2: { label: "砥部・道後で昼食(目安)", price: 1500, note: "",
+        lunch2: { label: "砥部・道後で昼食(目安)", price: 1500, rest: "moegino", note: "",
           options: [
             { name: "カフェ&ギャラリー もえぎの(砥部)", price: 1300, note: "日曜営業(営業は金土日11:00〜17:00)。窯元エリアのログハウスカフェ・砥部焼ギャラリー併設", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38013605/" } },
             { name: "鍋焼きうどん ことり(松山)", price: 1000, note: "日曜営業10:00〜14:00頃・売切れ終い(定休は水曜)。1949年創業、鍋焼きうどん700円", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38000037/" } }
           ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "" }
       },
+      restaurants: [
+        { id: "akiyoshi", zone: "MAT", meals: ["lunch"], name: "松山鯛めし 秋嘉 本店", price: 2300,
+          note: "土曜営業(定休は火曜)。松山鯛めし(炊き込み)と宇和島鯛めし(生卵ダレ)の両方", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38011850/" } },
+        { id: "kadoya", zone: "MAT", meals: ["lunch"], name: "郷土料理 かどや 大街道店", price: 1900,
+          note: "土曜営業(休みは1/1のみ)・ランチ11:00〜15:00。宇和島鯛めし。ANAクラウンプラザB1に移転済み", source: { label: "かどや公式", url: "https://www.kadoya-taimeshi.com/kadoyamanage/shoplist/kadoyaokaido/" } },
+        { id: "moegino", zone: "TOB", meals: ["lunch"], name: "カフェ&ギャラリー もえぎの(砥部)", price: 1300,
+          note: "日曜営業(金土日11:00〜17:00)。窯元エリアのログハウスカフェ", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38013605/" } },
+        { id: "kotori", zone: "MAT", meals: ["lunch"], name: "鍋焼きうどん ことり", price: 1000,
+          note: "日曜営業10:00〜14:00頃・売切れ終い(定休は水曜)。1949年創業", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38000037/" } },
+        { id: "oidenka", zone: "DOG", meals: ["dinner"], name: "おいでん家 道後店", price: 3500,
+          note: "土曜夜営業17:30〜23:00(不定休 — 電話確認推奨)。あぶり鯛めしが人気、本館至近", source: { label: "おいでん家公式", url: "https://oidenka.jimdofree.com/" } },
+        { id: "dogobeer", zone: "DOG", meals: ["dinner"], name: "道後BEER BAR(道後麦酒館)", price: 3000,
+          note: "土曜営業(定休は水曜)・夜17:00〜21:00LO。道後温泉本館向かいの地ビール店", source: { label: "食べログ", url: "https://tabelog.com/ehime/A3801/A380101/38000200/" } }
+      ],
       defaults: {
         sched: {
           sat: ["@lunch1", "matsuyamajo", "botchan", "haikara", "@dinner1"],
@@ -939,23 +997,37 @@ var DATA = {
         travelNote: "首里へはゆいレール+徒歩の目安。真栄田岬(青の洞窟)へは車で約1時間強"
       },
       meals: {
-        lunch1: { label: "那覇で沖縄そば(目安)", price: 1200, zone: "NAH", note: "",
+        lunch1: { label: "那覇で沖縄そば(目安)", price: 1200, zone: "NAH", rest: "eibun", note: "",
           options: [
             { name: "OKINAWA SOBA EIBUN(壺屋)", price: 1200, note: "定休なしで土曜営業・11:00〜20:00だが売切れ次第終了 — 早めに。※首里そばは日曜定休+売切れ終いのため今回は非推奨", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47017975/" } },
             { name: "田舎 公設市場南店", price: 500, note: "無休で土曜営業・10:00頃〜18:00頃。ソーキそば480円の名物安うま店", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47000179/" } }
           ] },
-        dinner1: { label: "那覇で夕食(目安)", price: 3000, note: "",
+        dinner1: { label: "那覇で夕食(目安)", price: 3000, rest: "urizun", note: "",
           options: [
             { name: "うりずん 安里本店", price: 3000, note: "年中無休・17:30〜24:00。1972年創業の琉球料理居酒屋、ドゥル天発祥", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47000019/" } },
             { name: "第一牧志公設市場「持ち上げ」", price: 3000, note: "土曜営業(定休は第4日曜)。調理代550円/人+食材代で実勢2,500〜3,500円、調理LO19:45なので早めの夕食向き", source: { label: "市場公式", url: "https://www.makishi-public-market.jp/" } }
           ] },
-        lunch2: { label: "那覇で昼食(目安)", price: 1200, note: "",
+        lunch2: { label: "那覇で昼食(目安)", price: 1200, rest: "potama", note: "",
           options: [
             { name: "ポーたま 牧志市場店", price: 500, note: "年中無休・7:00〜20:00 — シュノーケル帰港後の13時でもOK。ポーたま390円〜", source: { label: "ポーたま公式", url: "https://porktamago.com/shop/001-mks/" } },
             { name: "ジャッキーステーキハウス", price: 3500, note: "日曜営業(定休は水曜)・11:00〜22:00。テンダーロインM 4,200円、価格改定あり得るため要確認", source: { label: "公式サイト", url: "https://steak.co.jp/" } }
           ] },
         breakfast: { label: "宿・ホテルの朝食", price: 1500, note: "" }
       },
+      restaurants: [
+        { id: "eibun", zone: "NAH", meals: ["lunch"], name: "OKINAWA SOBA EIBUN(壺屋)", price: 1200,
+          note: "定休なし・11:00〜20:00だが売切れ次第終了 — 早めに", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47017975/" } },
+        { id: "inaka", zone: "NAH", meals: ["lunch"], name: "田舎 公設市場南店", price: 500,
+          note: "無休・10:00頃〜18:00頃。ソーキそば480円", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47000179/" } },
+        { id: "potama", zone: "NAH", meals: ["lunch"], name: "ポーたま 牧志市場店", price: 500,
+          note: "年中無休・7:00〜20:00。シュノーケル帰港後でもOK", source: { label: "ポーたま公式", url: "https://porktamago.com/shop/001-mks/" } },
+        { id: "jacky", zone: "NAH", meals: ["lunch", "dinner"], name: "ジャッキーステーキハウス", price: 3500,
+          note: "日曜営業(定休は水曜)・11:00〜22:00。テンダーロインM 4,200円", source: { label: "公式サイト", url: "https://steak.co.jp/" } },
+        { id: "urizun", zone: "NAH", meals: ["dinner"], name: "うりずん 安里本店", price: 3000,
+          note: "年中無休・17:30〜24:00。1972年創業の琉球料理居酒屋", source: { label: "食べログ", url: "https://tabelog.com/okinawa/A4701/A470101/47000019/" } },
+        { id: "mochiage", zone: "NAH", meals: ["dinner"], name: "第一牧志公設市場「持ち上げ」", price: 3000,
+          note: "土曜営業(定休は第4日曜)。調理代550円/人+食材代、調理LO19:45", source: { label: "市場公式", url: "https://www.makishi-public-market.jp/" } }
+      ],
       defaults: {
         sched: {
           sat: ["@lunch1", "shurijo", "zuisen", "makishi", "@dinner1"],
@@ -1009,7 +1081,7 @@ var DATA = {
     craft: "ものづくり", sight: "観光", onsen: "温泉", food: "食"
   };
   var STATUS_TXT = { open: "OK", closed: "休", check: "要確認" };
-  var LS_KEY = "tripstudio-v6";
+  var LS_KEY = "tripstudio-v7";
 
   /* ---------- helpers ---------- */
   function esc(s) {
@@ -1029,6 +1101,13 @@ var DATA = {
   }
   function actById(p, id) { return p.activities.filter(function (a) { return a.id === id; })[0] || null; }
   function lodgById(p, id) { return p.lodgings.filter(function (l) { return l.id === id; })[0] || p.lodgings[0]; }
+  function restById(p, id) { return (p.restaurants || []).filter(function (r) { return r.id === id; })[0] || null; }
+  function slotTag(slot) { return slot === "dinner1" ? "dinner" : slot.indexOf("lunch") === 0 ? "lunch" : null; }
+  function restsForSlot(p, slot) {
+    var tag = slotTag(slot);
+    if (!tag) return [];
+    return (p.restaurants || []).filter(function (r) { return r.meals.indexOf(tag) >= 0; });
+  }
   function img(key) { return (typeof IMG !== "undefined" && IMG[key]) || null; }
   function imgTag(key, cls, alt) {
     var src = img(key);
@@ -1042,14 +1121,16 @@ var DATA = {
     var dur = a ? Math.max(15, Math.round(a.durH * 60 / 15) * 15) : 60;
     return { t: "act", id: id, dur: dur, buf: DEFAULT_BUF, tvl: null };
   }
-  function mkMealEntry(slot) {
-    return { t: "meal", slot: slot, dur: MEAL_DUR[slot] || 60, buf: DEFAULT_BUF, tvl: null, sel: 0, customPrice: null };
+  function mkMealEntry(slot, p) {
+    var rest = null;
+    if (p && p.meals[slot] && p.meals[slot].rest) rest = p.meals[slot].rest;
+    return { t: "meal", slot: slot, dur: MEAL_DUR[slot] || 60, buf: DEFAULT_BUF, tvl: null, rest: rest, customPrice: null };
   }
   function freshPlanState(p) {
     var sched = {};
     ["sat", "sun", "mon"].forEach(function (k) {
       sched[k] = p.defaults.sched[k].map(function (tok) {
-        return tok.charAt(0) === "@" ? mkMealEntry(tok.slice(1)) : mkActEntry(p, tok);
+        return tok.charAt(0) === "@" ? mkMealEntry(tok.slice(1), p) : mkActEntry(p, tok);
       });
     });
     sched.sun.push({ t: "bday", dur: 90, buf: 0, tvl: null });
@@ -1076,7 +1157,11 @@ var DATA = {
   function validEntry(p, e) {
     if (!e || typeof e !== "object") return false;
     if (e.t === "act") return !!actById(p, e.id);
-    if (e.t === "meal") { if (typeof e.sel !== "number") e.sel = 0; return !!MEAL_DUR[e.slot]; }
+    if (e.t === "meal") {
+      if (typeof e.rest === "undefined") e.rest = (p.meals[e.slot] && p.meals[e.slot].rest) || null;
+      if (e.rest && !restById(p, e.rest)) e.rest = null;
+      return !!MEAL_DUR[e.slot];
+    }
     return e.t === "bday";
   }
 
@@ -1150,15 +1235,11 @@ var DATA = {
     }
     return false;
   }
-  function mealOptions(p, slot) {
-    var cfg = p.meals[slot];
-    return (cfg && cfg.options) || [];
-  }
   function mealPrice(p, s, dayKey, e) {
     if (mealIncluded(p, s, dayKey, e.slot)) return 0;
     if (e.customPrice != null) return e.customPrice;
-    var opts = mealOptions(p, e.slot);
-    if (typeof e.sel === "number" && opts[e.sel]) return opts[e.sel].price;
+    var r = e.rest ? restById(p, e.rest) : null;
+    if (r) return r.price;
     return p.meals[e.slot].price;
   }
 
@@ -1231,6 +1312,8 @@ var DATA = {
       return { zin: (act && act.zoneIn) || z, zout: z };
     }
     if (e.t === "meal") {
+      var r = e.rest && !mealIncluded(p, s, dayKey, e.slot) && e.customPrice == null ? restById(p, e.rest) : null;
+      if (r && r.zone) return { zin: r.zone, zout: r.zone };
       if (e.slot === "dinner1") { var z1 = lodgById(p, s.lodging.sat).zone; return { zin: z1, zout: z1 }; }
       if (e.slot === "breakfast") {
         var night = dayKey === "sun" ? "sat" : "sun";
@@ -1238,7 +1321,7 @@ var DATA = {
         return { zin: zb, zout: zb };
       }
       var cfg = plan().meals[e.slot];
-      var zl = cfg && cfg.zone ? cfg.zone : curZone; // lunch2 etc: eat where you are
+      var zl = cfg && cfg.zone ? cfg.zone : curZone; // custom lunch: eat where you are
       return { zin: zl, zout: zl };
     }
     if (e.t === "bday") { var z2 = lodgById(p, s.lodging.sun).zone; return { zin: z2, zout: z2 }; }
@@ -1406,25 +1489,25 @@ var DATA = {
     var cfg = p.meals[e.slot];
     var included = mealIncluded(p, s, dayKey, e.slot);
     var price = mealPrice(p, s, dayKey, e);
-    var opts = mealOptions(p, e.slot);
-    var selOpt = !included && e.customPrice == null && typeof e.sel === "number" ? opts[e.sel] : null;
+    var pool = restsForSlot(p, e.slot);
+    var selRest = !included && e.customPrice == null && e.rest ? restById(p, e.rest) : null;
     var body;
     if (included) {
       var night = e.slot === "dinner1" ? "sat" : dayKey === "sun" ? "sat" : "sun";
       body = '<div class="iname">' + esc(lodgById(p, s.lodging[night]).shortName + "の" + MEAL_NAME[e.slot] + "(宿泊プランに含む)") + "</div>" +
         '<div class="idesc">2食付/朝食付プランのため追加費用なし</div>';
-    } else if (opts.length) {
+    } else if (pool.length) {
       var selHtml = '<select class="mealsel" data-mealsel data-day="' + dayKey + '" data-idx="' + idx + '" aria-label="店を選択">' +
-        opts.map(function (o, i) {
-          return '<option value="' + i + '"' + (e.customPrice == null && e.sel === i ? " selected" : "") + ">" +
-            esc(o.name) + "(" + yen(o.price) + "/人)</option>";
+        pool.map(function (r) {
+          return '<option value="' + r.id + '"' + (e.customPrice == null && e.rest === r.id ? " selected" : "") + ">" +
+            esc(r.name) + "(" + yen(r.price) + "/人 · " + esc(zoneName(p, r.zone)) + ")</option>";
         }).join("") +
         '<option value="custom"' + (e.customPrice != null ? " selected" : "") + ">カスタム(自由入力)</option>" +
         "</select>";
-      var descTxt = selOpt ? selOpt.note : (e.customPrice != null ? "自由入力 — 店名はメモへ、金額は右の欄で調整" : (cfg.note || "金額は右の欄で自由に調整"));
+      var descTxt = selRest ? selRest.note : (e.customPrice != null ? "自由入力 — 店名はメモへ、金額は右の欄で調整" : (cfg.note || "金額は右の欄で自由に調整"));
       body = '<div class="iname">' + selHtml + "</div>" +
         '<div class="idesc">' + esc(descTxt) +
-        (selOpt && selOpt.source ? ' <a href="' + esc(selOpt.source.url) + '" target="_blank" rel="noopener">' + esc(selOpt.source.label) + " ↗</a>" : "") +
+        (selRest && selRest.source ? ' <a href="' + esc(selRest.source.url) + '" target="_blank" rel="noopener">' + esc(selRest.source.label) + " ↗</a>" : "") +
         "</div>";
     } else {
       body = '<div class="iname">' + esc(cfg.label) + "</div>" +
@@ -1564,13 +1647,13 @@ var DATA = {
       sel2.addEventListener("change", function () {
         var e = pstate().sched[sel2.getAttribute("data-day")][Number(sel2.getAttribute("data-idx"))];
         if (sel2.value === "custom") {
-          var opts = mealOptions(plan(), e.slot);
-          var base = (typeof e.sel === "number" && opts[e.sel]) ? opts[e.sel].price : plan().meals[e.slot].price;
-          e.customPrice = base;
+          var r = e.rest ? restById(plan(), e.rest) : null;
+          e.customPrice = r ? r.price : plan().meals[e.slot].price;
         } else {
-          e.sel = Number(sel2.value);
+          e.rest = sel2.value;
           e.customPrice = null;
         }
+        e.tvl = null;
         save(); refresh();
       });
     });
@@ -1699,6 +1782,51 @@ var DATA = {
         var id = btn.getAttribute("data-add"), dayKey = btn.getAttribute("data-day");
         if (inDay(s2, dayKey, id)) removeFromDay(s2, dayKey, id);
         else addToDay(p2, s2, dayKey, id);
+        save(); refresh();
+      });
+    });
+  }
+
+  var MEAL_TARGETS = [
+    { slot: "lunch1", day: "sat", label: "Day1昼" },
+    { slot: "dinner1", day: "sat", label: "Day1夕" },
+    { slot: "lunch2", day: "sun", label: "Day2昼" }
+  ];
+  function findMealEntry(s, day, slot) {
+    var arr = s.sched[day];
+    for (var i = 0; i < arr.length; i++) if (arr[i].t === "meal" && arr[i].slot === slot) return arr[i];
+    return null;
+  }
+  function renderFoodPool() {
+    var p = plan(), s = pstate();
+    var el = document.getElementById("foodPool");
+    if (!el) return;
+    el.innerHTML = (p.restaurants || []).map(function (r) {
+      var btns = MEAL_TARGETS.filter(function (t) { return r.meals.indexOf(slotTag(t.slot)) >= 0; })
+        .map(function (t) {
+          var entry = findMealEntry(s, t.day, t.slot);
+          var included = mealIncluded(p, s, t.day, t.slot);
+          var on = !!entry && !included && entry.customPrice == null && entry.rest === r.id;
+          return '<button class="addbtn' + (on ? " on" : "") + '" data-frest="' + r.id + '" data-fslot="' + t.slot + '" data-fday="' + t.day + '"' +
+            (included ? ' disabled title="この食事は宿泊プランに含まれています"' : "") +
+            ' aria-pressed="' + on + '">' + (on ? "✓ " : "") + t.label + "</button>";
+        }).join("");
+      return '<div class="frow">' +
+        '<div class="fhead"><span class="fname">' + esc(r.name) + "</span>" +
+        '<span class="zchip">' + esc(zoneName(p, r.zone)) + "</span>" +
+        '<span class="fprice">' + yen(r.price) + "<small>/人</small></span></div>" +
+        '<div class="fnote">' + esc(r.note) + ' <a href="' + esc(r.source.url) + '" target="_blank" rel="noopener">' + esc(r.source.label) + " ↗</a></div>" +
+        '<div class="addrow">' + btns + "</div>" +
+        "</div>";
+    }).join("");
+    Array.prototype.forEach.call(el.querySelectorAll("[data-frest]"), function (btn) {
+      btn.addEventListener("click", function () {
+        var s2 = pstate();
+        var entry = findMealEntry(s2, btn.getAttribute("data-fday"), btn.getAttribute("data-fslot"));
+        if (!entry) return;
+        entry.rest = btn.getAttribute("data-frest");
+        entry.customPrice = null;
+        entry.tvl = null;
         save(); refresh();
       });
     });
@@ -1866,6 +1994,7 @@ var DATA = {
     renderTimeline();
     renderSummary();
     renderPool();
+    renderFoodPool();
     renderLodgings();
     var hb = document.getElementById("heroBudget");
     if (hb) hb.textContent = yen(costs().couple);
