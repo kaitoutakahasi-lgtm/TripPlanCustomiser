@@ -453,6 +453,16 @@
 
   @media (max-width: 700px) {
     .nav-right { display: none; }
+    .nav-inner { padding: 0 10px; gap: 0; min-height: 0; flex-wrap: wrap; }
+    .brand { font-size: 14.5px; padding: 7px 0 2px; gap: 7px; }
+    .brand svg { width: 17px; height: 17px; }
+    .plan-nav {
+      flex-wrap: nowrap; overflow-x: auto; width: 100%; order: 3;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .plan-nav::-webkit-scrollbar { display: none; }
+    .pnav { min-height: 40px; padding: 0 11px; font-size: 12px; white-space: nowrap; flex: 0 0 auto; }
+    .pnav[aria-selected="true"]::after { left: 8px; right: 8px; height: 2.5px; }
     .hero .himg { height: 180px; }
     .day { grid-template-columns: 44px minmax(0, 1fr); gap: 8px; }
     .item .thumb { width: 64px; height: 52px; }
@@ -5859,6 +5869,11 @@ var DATA = {
     el.innerHTML = DATA.plans.map(function (p) {
       return '<button class="pnav" role="tab" data-plan="' + p.id + '" aria-selected="' + (p.id === state.tab) + '">' + esc(p.name) + "</button>";
     }).join("");
+    // keep the active tab visible when the nav is a horizontal scroller (mobile)
+    if (el.scrollWidth > el.clientWidth) {
+      var sel = el.querySelector('.pnav[aria-selected="true"]');
+      if (sel) el.scrollLeft = Math.max(0, sel.offsetLeft - (el.clientWidth - sel.offsetWidth) / 2);
+    }
     Array.prototype.forEach.call(el.querySelectorAll(".pnav"), function (btn) {
       btn.addEventListener("click", function () {
         state.tab = btn.getAttribute("data-plan");
