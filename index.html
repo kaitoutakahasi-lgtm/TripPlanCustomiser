@@ -134,6 +134,7 @@
   .card-head { display: flex; align-items: center; gap: 10px; padding: 14px 18px 0; flex-wrap: wrap; }
   .card-head h2 { font-size: 16px; font-weight: 800; margin: 0; }
   .card-head .sub { font-size: 11px; color: var(--ink-3); }
+  .card-head .optall { margin-left: auto; }
 
   /* ---------- hero ---------- */
   .hero { border-radius: var(--r); overflow: hidden; position: relative; box-shadow: var(--shadow-lg); background: var(--nav); }
@@ -483,6 +484,7 @@
       <div class="card-head">
         <h2>旅程プラン(2泊3日)</h2>
         <span class="sub">10/5(月)は誕生日・昼過ぎ帰路 — ディナーはDay 2の夜に</span>
+        <button class="optbtn optall" id="optAllBtn" title="休館日・宿着/空港リミット・移動時間・昼食時間帯を考慮して、予定を3日間に振り分け直します">日またぎで最適化</button>
       </div>
       <div class="tl" id="timeline"></div>
     </section>
@@ -5976,6 +5978,106 @@ var DATA = {
     }
   }
 
+  /* ---------- cross-day optimize (button-triggered) ---------- */
+  function arrangeDayQuick(p, s, dayKey, fixedEntries, dayActs) {
+    var breakfast = fixedEntries.filter(function (e) { return e.t === "meal" && e.slot === "breakfast"; });
+    var lunches = fixedEntries.filter(function (e) { return e.t === "meal" && e.slot.indexOf("lunch") === 0; });
+    var tailFixed = fixedEntries.filter(function (e) { return (e.t === "meal" && e.slot === "dinner1") || e.t === "bday"; });
+    var perm = greedyOrder(p, s, dayKey, dayActs);
+    var base = breakfast.concat(perm);
+    var cands = [];
+    if (lunches.length) {
+      for (var pos = breakfast.length; pos <= base.length; pos++) cands.push(base.slice(0, pos).concat(lunches, base.slice(pos)));
+    } else {
+      cands.push(base);
+    }
+    var best = null, bestScore = Infinity;
+    cands.forEach(function (cand) {
+      var full = cand.concat(tailFixed);
+      var sc = scoreDay(p, s, dayKey, full);
+      if (sc < bestScore) { bestScore = sc; best = full; }
+    });
+    return { order: best, score: bestScore };
+  }
+
+  function optimizeAll() {
+    var p = plan(), s = pstate();
+    var days = ["sat", "sun", "mon"];
+    var fixed = {}, acts = [], current = [];
+    days.forEach(function (k, di) {
+      fixed[k] = s.sched[k].filter(function (e) { return e.t !== "act"; });
+      s.sched[k].forEach(function (e) { if (e.t === "act") { acts.push(e); current.push(di); } });
+    });
+    if (!acts.length) { days.forEach(optimizeDay); return; }
+
+    function allowed(e, k) {
+      var a = actById(p, e.id);
+      return !(a && a.days && a.days[k] === "closed");
+    }
+    function checkPen(e, k) {
+      var a = actById(p, e.id);
+      return a && a.days && a.days[k] === "check" ? 12 : 0;
+    }
+
+    var bestTotal = Infinity, bestAssign = null;
+    function evalAssign(assign) {
+      var buckets = { sat: [], sun: [], mon: [] };
+      var pen = 0;
+      for (var i = 0; i < acts.length; i++) {
+        var k = days[assign[i]];
+        if (!allowed(acts[i], k)) return Infinity;
+        pen += checkPen(acts[i], k);
+        buckets[k].push(acts[i]);
+      }
+      var total = pen;
+      for (var d = 0; d < days.length; d++) {
+        total += arrangeDayQuick(p, s, days[d], fixed[days[d]], buckets[days[d]]).score;
+        if (total >= bestTotal) return Infinity; // prune
+      }
+      return total;
+    }
+
+    if (acts.length <= 7) {
+      // exhaustive over all 3^n day assignments (≤2187), pruned against the best so far
+      var n = acts.length, count = Math.pow(3, n);
+      for (var c = 0; c < count; c++) {
+        var assign = [], x = c;
+        for (var i = 0; i < n; i++) { assign.push(x % 3); x = (x - (x % 3)) / 3; }
+        var t = evalAssign(assign);
+        if (t < bestTotal) { bestTotal = t; bestAssign = assign; }
+      }
+    } else {
+      // local search from the current layout: move one activity to another day while it improves
+      bestAssign = current.slice();
+      bestTotal = evalAssign(bestAssign);
+      var improved = true, guard = 0;
+      while (improved && guard++ < 30) {
+        improved = false;
+        for (var i2 = 0; i2 < acts.length; i2++) {
+          var keep = bestAssign[i2];
+          for (var d2 = 0; d2 < 3; d2++) {
+            if (d2 === keep) continue;
+            bestAssign[i2] = d2;
+            var t2 = evalAssign(bestAssign);
+            if (t2 < bestTotal) { bestTotal = t2; keep = d2; improved = true; }
+          }
+          bestAssign[i2] = keep;
+        }
+      }
+    }
+    if (!bestAssign || bestTotal === Infinity) { days.forEach(optimizeDay); return; }
+
+    // apply the assignment, then polish each day's order with the per-day optimizer
+    var buckets = { sat: [], sun: [], mon: [] };
+    acts.forEach(function (e, i) { buckets[days[bestAssign[i]]].push(e); });
+    days.forEach(function (k) {
+      var arr = arrangeDayQuick(p, s, k, fixed[k], buckets[k]);
+      s.sched[k] = arr.order || fixed[k].concat(buckets[k]);
+      s.sched[k].forEach(function (e) { e.tvl = null; });
+      optimizeDay(k);
+    });
+  }
+
   function durEditor(dayKey, idx, dur) {
     return '<label class="duredit"><input type="number" min="15" max="600" step="15" value="' + dur + '" data-dur data-day="' + dayKey + '" data-idx="' + idx + '" aria-label="所要時間(分)">分</label>';
   }
@@ -6547,6 +6649,12 @@ var DATA = {
     renderPoints();
     renderMemo();
   }
+
+  var optAllBtn = document.getElementById("optAllBtn");
+  if (optAllBtn) optAllBtn.addEventListener("click", function () {
+    optimizeAll();
+    save(); refresh();
+  });
 
   renderAll();
   renderFoot();
