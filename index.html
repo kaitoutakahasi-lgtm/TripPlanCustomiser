@@ -459,6 +459,49 @@
     font-size: 11px; color: var(--ink-3); line-height: 1.8;
   }
 
+  /* ---------- settings bar (date shift / price toggle) ---------- */
+  .settingsbar {
+    background: var(--card); border-bottom: 1px solid var(--line);
+  }
+  .settingsbar-inner {
+    max-width: 1480px; margin: 0 auto; padding: 8px 20px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 12px;
+  }
+  .sbfield { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+  .sbfield input[type="date"] {
+    border: 1px solid var(--line-strong); border-radius: 8px; padding: 4px 8px;
+    background: var(--bg); color: var(--ink); font-size: 12px; font-variant-numeric: tabular-nums;
+  }
+  .sbrange { font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .sbreset {
+    background: none; border: 1px solid var(--line-strong); border-radius: 8px;
+    padding: 4px 10px; font-size: 11.5px; color: var(--ink-2); cursor: pointer;
+  }
+  .sbreset:hover { background: var(--bg); }
+  .sbtoggle {
+    margin-left: auto; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+    background: none; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 5px 12px 5px 6px; font-size: 11.5px; font-weight: 700; color: var(--ink-2);
+  }
+  .sbtoggle .dot {
+    width: 15px; height: 15px; border-radius: 50%; background: var(--line-strong);
+    position: relative; transition: background .15s;
+  }
+  .sbtoggle[aria-pressed="true"] { color: var(--primary); border-color: var(--primary); }
+  .sbtoggle[aria-pressed="true"] .dot { background: var(--primary); }
+  .sbwarn {
+    flex-basis: 100%; font-size: 11px; color: #b5580f; background: rgba(244,150,47,.12);
+    border-radius: 8px; padding: 6px 10px; line-height: 1.6;
+  }
+  :root[data-theme="dark"] .sbwarn, .darkauto .sbwarn { color: #ffb872; background: rgba(244,150,47,.14); }
+
+  /* price-hide: blur every rendered amount and the raw price-edit inputs */
+  .price-hidden .money { filter: blur(6px); user-select: none; }
+  .price-hidden input[data-tr], .price-hidden input[data-lodging],
+  .price-hidden input[data-budget], .price-hidden input[data-mealprice] {
+    filter: blur(6px);
+  }
+
   @media (max-width: 700px) {
     .nav-right { display: none; }
     .nav-inner { padding: 0 10px; gap: 0; min-height: 0; flex-wrap: wrap; }
@@ -489,11 +532,15 @@
     </div>
     <nav class="plan-nav" id="planNav" aria-label="プラン切り替え"></nav>
     <div class="nav-right">
-      <span class="dates">2026.10.03(土) – 10.05(月)</span>
+      <span class="dates" id="navDates">2026.10.03(土) – 10.05(月)</span>
       <span class="savehint">自動保存</span>
     </div>
   </div>
 </header>
+
+<div class="settingsbar">
+  <div class="settingsbar-inner" id="settingsBar"></div>
+</div>
 
 <div class="layout">
   <main class="col-main">
@@ -6630,15 +6677,13 @@ var DATA = {
 (function () {
   "use strict";
 
-  var DAYS = [
-    { key: "sat", d: 3, dow: "土", label: "DAY 1", note: "空港着後スタート" },
-    { key: "sun", d: 4, dow: "日", label: "DAY 2", note: "夜は誕生日前夜ディナー", bdayEve: true },
-    { key: "mon", d: 5, dow: "月", label: "DAY 3", note: "誕生日 — 昼過ぎ帰路", bday: true }
-  ];
-  var NIGHTS = [
-    { key: "sat", no: 1, label: "1泊目(10/3)" },
-    { key: "sun", no: 2, label: "2泊目(10/4)" }
-  ];
+  var DAY_KEYS = ["sat", "sun", "mon"];
+  var NIGHT_KEYS = ["sat", "sun"];
+  var DAY_LABELS = ["DAY 1", "DAY 2", "DAY 3"];
+  var ORIGINAL_DOW = { sat: "土", sun: "日", mon: "月" };
+  var WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
+  var DEFAULT_START = "2026-10-03"; // 元の調査基準日(土曜始まり)
+  var BIRTHDAY_ISO = "2026-10-05"; // 誕生日(固定の実日付)
   var DEFAULT_BUDGET = 250000;
   var DEFAULT_BUF = 10;
   var MEAL_DUR = { breakfast: 45, lunch1: 60, lunch2: 60, dinner1: 90 };
@@ -6656,7 +6701,51 @@ var DATA = {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
     });
   }
-  function yen(n) { return "¥" + Math.round(n).toLocaleString("ja-JP"); }
+  function yen(n) { return '<span class="money">¥' + Math.round(n).toLocaleString("ja-JP") + "</span>"; }
+
+  /* ---------- date shifting ---------- */
+  function parseISO(s) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || "");
+    return m ? new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])) : null;
+  }
+  function toISO(d) {
+    var mm = String(d.getMonth() + 1), dd = String(d.getDate());
+    return d.getFullYear() + "-" + (mm.length < 2 ? "0" + mm : mm) + "-" + (dd.length < 2 ? "0" + dd : dd);
+  }
+  function addDays(d, n) {
+    var r = new Date(d.getTime());
+    r.setDate(r.getDate() + n);
+    return r;
+  }
+  function tripStartDate() { return parseISO(state.startDate) || parseISO(DEFAULT_START); }
+  // Day1/Day2/Day3 are structurally fixed (arrival / main-with-special-dinner / short departure);
+  // only the calendar date + weekday + "is this actually the birthday" label are computed live.
+  function getDays() {
+    var start = tripStartDate();
+    var dates = DAY_KEYS.map(function (k, i) { return addDays(start, i); });
+    var bdayIdx = -1;
+    dates.forEach(function (d, i) { if (toISO(d) === BIRTHDAY_ISO) bdayIdx = i; });
+    return DAY_KEYS.map(function (k, i) {
+      var d = dates[i], dow = WEEKDAY_JA[d.getDay()];
+      var note;
+      if (i === 0) note = "空港着後スタート" + (bdayIdx === 0 ? " · 誕生日" : "");
+      else if (i === 1) note = bdayIdx === 1 ? "誕生日ディナーの夜(当日)" : bdayIdx === 2 ? "夜は誕生日前夜ディナー" : "夜は特別ディナー";
+      else note = bdayIdx === 2 ? "誕生日 — 昼過ぎ帰路" : "最終日 — 昼過ぎ帰路" + (bdayIdx === 1 ? "(誕生日は前日の夜に)" : "");
+      return {
+        key: k, label: DAY_LABELS[i], m: d.getMonth() + 1, d: d.getDate(), dow: dow,
+        note: note, bday: i === bdayIdx, bdayEve: bdayIdx === i + 1,
+        dowMismatch: dow !== ORIGINAL_DOW[k]
+      };
+    });
+  }
+  function getNights() {
+    var days = getDays();
+    return [
+      { key: "sat", no: 1, m: days[0].m, d: days[0].d },
+      { key: "sun", no: 2, m: days[1].m, d: days[1].d }
+    ];
+  }
+  function nightLabel(nn) { return nn.no + "泊目(" + nn.m + "/" + nn.d + ")"; }
   function toMin(hm) {
     var m = /^(\d{1,2}):(\d{2})$/.exec(hm || "");
     return m ? Number(m[1]) * 60 + Number(m[2]) : 0;
@@ -6728,7 +6817,7 @@ var DATA = {
     return st;
   }
   function defaultState() {
-    var s = { tab: DATA.plans[0].id, budget: DEFAULT_BUDGET, plans: {} };
+    var s = { tab: DATA.plans[0].id, budget: DEFAULT_BUDGET, startDate: DEFAULT_START, hidePrice: false, plans: {} };
     DATA.plans.forEach(function (p) { s.plans[p.id] = freshValidated(p); });
     return s;
   }
@@ -6750,6 +6839,8 @@ var DATA = {
     if (saved && saved.plans) {
       if (saved.tab && DATA.plans.some(function (p) { return p.id === saved.tab; })) state.tab = saved.tab;
       if (typeof saved.budget === "number" && saved.budget >= 0) state.budget = saved.budget;
+      if (typeof saved.startDate === "string" && parseISO(saved.startDate)) state.startDate = saved.startDate;
+      if (typeof saved.hidePrice === "boolean") state.hidePrice = saved.hidePrice;
       DATA.plans.forEach(function (p) {
         var sp = saved.plans[p.id];
         if (!sp) return;
@@ -6769,11 +6860,11 @@ var DATA = {
         });
         if (typeof sp.dinner === "number" && p.dinners[sp.dinner]) cur.dinner = sp.dinner;
         if (sp.dinner === null) cur.dinner = null;
-        NIGHTS.forEach(function (nn) {
-          var lid = sp.lodging && sp.lodging[nn.key];
-          if (typeof lid === "string" && p.lodgings.some(function (l) { return l.id === lid; })) cur.lodging[nn.key] = lid;
-          var lp = sp.lodgingPrice && sp.lodgingPrice[nn.key];
-          if (typeof lp === "number") cur.lodgingPrice[nn.key] = lp;
+        NIGHT_KEYS.forEach(function (k) {
+          var lid = sp.lodging && sp.lodging[k];
+          if (typeof lid === "string" && p.lodgings.some(function (l) { return l.id === lid; })) cur.lodging[k] = lid;
+          var lp = sp.lodgingPrice && sp.lodgingPrice[k];
+          if (typeof lp === "number") cur.lodgingPrice[k] = lp;
         });
         if (typeof sp.memo === "string") cur.memo = sp.memo;
         if (Array.isArray(sp.transport)) {
@@ -6799,8 +6890,8 @@ var DATA = {
     if (s.dinner != null && p.dinners[s.dinner] && !dinnerAllowed(p.dinners[s.dinner], s)) s.dinner = null;
   }
   function effPrice(p, s, a) {
-    for (var i = 0; i < NIGHTS.length; i++) {
-      var lodg = lodgById(p, s.lodging[NIGHTS[i].key]);
+    for (var i = 0; i < NIGHT_KEYS.length; i++) {
+      var lodg = lodgById(p, s.lodging[NIGHT_KEYS[i]]);
       if (lodg.perks && Object.prototype.hasOwnProperty.call(lodg.perks, a.id)) return lodg.perks[a.id];
     }
     return a.price;
@@ -6864,16 +6955,18 @@ var DATA = {
   }
 
   function renderHero() {
-    var p = plan(), c = costs();
+    var p = plan(), c = costs(), days = getDays();
     var el = document.getElementById("hero");
+    var bdayDay = days.filter(function (d) { return d.bday; })[0];
+    var rangeTxt = days[0].m + "/" + days[0].d + "(" + days[0].dow + ") – " + days[2].m + "/" + days[2].d + "(" + days[2].dow + ")";
     el.innerHTML =
       imgTag("hero_" + p.id, "himg", p.name) +
       '<div class="hgrad"></div>' +
       '<div class="hloc">◆ ' + esc(p.sub) + "</div>" +
-      '<div class="hbday">10/5は誕生日 · Day 3</div>' +
+      (bdayDay ? '<div class="hbday">' + bdayDay.m + "/" + bdayDay.d + "は誕生日 · " + bdayDay.label + "</div>" : "") +
       '<div class="hbottom"><h1>' + esc(p.name) + "</h1>" +
       '<div class="hchips">' +
-      '<span class="hchip"><small>旅行期間</small>10/3(土) – 10/5(月)</span>' +
+      '<span class="hchip"><small>旅行期間</small>' + rangeTxt + "</span>" +
       '<span class="hchip"><small>旅行者</small>大人2名</span>' +
       '<span class="hchip"><small>概算合計</small><span id="heroBudget">' + yen(c.couple) + "</span></span>" +
       p.tags.map(function (t) { return '<span class="hchip tag">#' + esc(t) + "</span>"; }).join("") +
@@ -7235,8 +7328,9 @@ var DATA = {
   function renderTimeline() {
     var p = plan(), s = pstate();
     var html = "";
+    var nights = getNights();
 
-    DAYS.forEach(function (day) {
+    getDays().forEach(function (day) {
       var entries = s.sched[day.key];
       var sched = computeTimes(s, day.key);
       var times = sched.rows;
@@ -7247,18 +7341,18 @@ var DATA = {
       html += '<div class="day"><div class="drail">' +
         '<div class="dl">' + day.label + "</div>" +
         '<div class="dn">' + day.d + "</div>" +
-        '<div class="dd">10月・' + day.dow + "曜</div>" +
+        '<div class="dd">' + day.m + "月・" + day.dow + "曜</div>" +
         (day.bday ? '<div class="dbday">誕生日</div>' : "") +
         "</div>" +
         '<div class="dbody">' +
-        '<div class="dayctl"><span>' + day.note + "</span>" +
+        '<div class="dayctl"><span>' + esc(day.note) + "</span>" +
         '<label>開始 <input type="time" step="900" value="' + esc(s.dayStart[day.key]) + '" data-daystart="' + day.key + '"></label>' +
         '<label>' + (day.key === "mon" ? "空港着リミット" : "宿着リミット") + ' <input type="time" step="900" value="' + esc(s.dayEnd[day.key]) + '" data-dayend="' + day.key + '"></label>' +
         '<span class="dend' + (over > 0 ? " over" : "") + '">' + (day.key === "mon" ? "空港着 " : "宿着 ") + toHM(endMin) + (over > 0 ? " · " + over + "分オーバー" : " · 余裕" + (limitMin - endMin) + "分") + "</span>" +
         '<button class="optbtn" data-opt="' + day.key + '" title="移動時間と食事時間帯を考慮して並べ替え">最適順にソート</button>' +
         "</div>";
 
-      if (day.key !== "mon") html += lodgingRowHtml(p, s, NIGHTS[day.key === "sat" ? 0 : 1]);
+      if (day.key !== "mon") html += lodgingRowHtml(p, s, nights[day.key === "sat" ? 0 : 1]);
       if (over > 0) {
         html += '<div class="dwarn">' + (day.key === "mon" ? "空港着リミットを" : "宿着リミットを") + over + "分超えています — 移動・余裕・所要を調整するか予定を減らして。</div>";
       }
@@ -7428,6 +7522,7 @@ var DATA = {
   function renderPool() {
     var p = plan(), s = pstate();
     var el = document.getElementById("pool");
+    var days = getDays();
     el.innerHTML = p.activities.filter(function (a) {
       return catFilter === "all" || a.category === catFilter;
     }).map(function (a) {
@@ -7436,15 +7531,15 @@ var DATA = {
       var priceHtml = eff !== a.price
         ? "<s>" + yen(a.price) + "</s> " + (eff === 0 ? '<span class="free">宿泊者無料</span>' : yen(eff))
         : (eff === 0 ? '<span class="free">無料</span>' : yen(eff) + "<small> /人</small>");
-      var btns = DAYS.map(function (day) {
+      var btns = days.map(function (day) {
         var st = a.days[day.key];
         var on = inDay(s, day.key, a.id);
         return '<button class="addbtn' + (on ? " on" : "") + '" data-add="' + a.id + '" data-day="' + day.key + '"' +
           (st === "closed" ? " disabled" : "") +
-          ' aria-pressed="' + on + '" aria-label="' + esc(a.name) + "を10/" + day.d + "に" + (on ? "から外す" : "追加") + '">' +
-          (on ? "✓" : "+") + "10/" + day.d + "</button>";
+          ' aria-pressed="' + on + '" aria-label="' + esc(a.name) + "を" + day.m + "/" + day.d + "に" + (on ? "から外す" : "追加") + '">' +
+          (on ? "✓" : "+") + day.m + "/" + day.d + "</button>";
       }).join("");
-      var avail = DAYS.map(function (day) {
+      var avail = days.map(function (day) {
         return '<span class="av ' + a.days[day.key] + '">' + day.d + "日" + STATUS_TXT[a.days[day.key]] + "</span>";
       }).join("");
       return '<article class="acard' + (inAny ? " in" : "") + '">' +
@@ -7522,10 +7617,10 @@ var DATA = {
     el.innerHTML = p.lodgings.map(function (l) {
       var onSat = s.lodging.sat === l.id, onSun = s.lodging.sun === l.id;
       var badge = onSat && onSun ? "2泊とも" : onSat ? "1泊目" : onSun ? "2泊目" : null;
-      var nightBtns = NIGHTS.map(function (nn) {
+      var nightBtns = getNights().map(function (nn) {
         var on = s.lodging[nn.key] === l.id;
         return '<button class="addbtn' + (on ? " on" : "") + '" data-lodg="' + l.id + '" data-night="' + nn.key + '"' +
-          ' aria-pressed="' + on + '">' + (on ? "✓ " : "") + nn.label + " " + yen(l.nightly[nn.key]) + "</button>";
+          ' aria-pressed="' + on + '">' + (on ? "✓ " : "") + nightLabel(nn) + " " + yen(l.nightly[nn.key]) + "</button>";
       }).join("");
       return '<div class="lcard' + (badge ? " sel" : "") + '">' +
         imgTag(p.id + "__lodg_" + l.id, "", l.name) +
@@ -7575,9 +7670,9 @@ var DATA = {
     var p = plan(), s = pstate(), c = costs();
     var el = document.getElementById("summary");
     var html = "<h2>料金サマリー</h2>" + '<div class="srows">';
-    NIGHTS.forEach(function (nn) {
+    getNights().forEach(function (nn) {
       var l = lodgById(p, s.lodging[nn.key]);
-      html += '<div class="srow"><span class="sl">宿泊 ' + nn.no + '泊目 <small>' + esc(l.shortName) + "(2人)</small></span>" +
+      html += '<div class="srow"><span class="sl">宿泊 ' + nn.no + '泊目(' + nn.m + "/" + nn.d + ') <small>' + esc(l.shortName) + "(2人)</small></span>" +
         '<input type="number" min="0" step="1000" value="' + s.lodgingPrice[nn.key] + '" data-lodging="' + nn.key + '" aria-label="宿泊費' + nn.no + '泊目"></div>';
     });
     p.transport.forEach(function (t, i) {
@@ -7623,12 +7718,12 @@ var DATA = {
   function updateTotals() {
     var c = costs();
     var el = document.getElementById("summary");
-    el.querySelector(".tv").textContent = yen(c.couple);
-    el.querySelector(".tp").textContent = "1名あたり " + yen(c.perPerson);
+    el.querySelector(".tv").innerHTML = yen(c.couple);
+    el.querySelector(".tp").innerHTML = "1名あたり " + yen(c.perPerson);
     var sv = el.querySelector('[data-sv="act"]');
-    if (sv) sv.textContent = yen(c.act * 2);
+    if (sv) sv.innerHTML = yen(c.act * 2);
     var svm = el.querySelector('[data-sv="meals"]');
-    if (svm) svm.textContent = yen(c.meals * 2);
+    if (svm) svm.innerHTML = yen(c.meals * 2);
     var b = state.budget;
     var fill = el.querySelector(".bgt-fill"), note = el.querySelector(".bgt-note");
     if (fill && note) {
@@ -7637,11 +7732,11 @@ var DATA = {
       fill.style.width = pct + "%";
       fill.classList.toggle("over", over);
       note.classList.toggle("over", over);
-      note.textContent = (over ? "予算オーバー +" + yen(c.couple - b) : "残り " + yen(b - c.couple)) +
+      note.innerHTML = (over ? "予算オーバー +" + yen(c.couple - b) : "残り " + yen(b - c.couple)) +
         " (" + (b > 0 ? Math.round(c.couple / b * 100) : 0) + "%使用)";
     }
     var hb = document.getElementById("heroBudget");
-    if (hb) hb.textContent = yen(c.couple);
+    if (hb) hb.innerHTML = yen(c.couple);
   }
 
   function renderPoints() {
@@ -7681,7 +7776,43 @@ var DATA = {
     renderFoodPool();
     renderLodgings();
     var hb = document.getElementById("heroBudget");
-    if (hb) hb.textContent = yen(costs().couple);
+    if (hb) hb.innerHTML = yen(costs().couple);
+  }
+
+  function renderSettingsBar() {
+    var days = getDays();
+    var el = document.getElementById("settingsBar");
+    var mismatch = days.some(function (d) { return d.dowMismatch; });
+    var hasBday = days.some(function (d) { return d.bday; });
+    document.body.classList.toggle("price-hidden", !!state.hidePrice);
+    var nav = document.getElementById("navDates");
+    if (nav) nav.textContent = "2026." + pad2(days[0].m) + "." + pad2(days[0].d) + "(" + days[0].dow + ") – " +
+      pad2(days[2].m) + "." + pad2(days[2].d) + "(" + days[2].dow + ")";
+    el.innerHTML =
+      '<span class="sbfield"><label for="tripStart">出発日(Day 1)</label>' +
+      '<input type="date" id="tripStart" value="' + esc(state.startDate) + '"></span>' +
+      '<span class="sbrange">→ ' + days[2].m + "/" + days[2].d + "(" + days[2].dow + ")まで 2泊3日</span>" +
+      '<button class="sbreset" id="dateReset" type="button">初期日程に戻す(' + defaultDateLabel() + ")</button>" +
+      '<button class="sbtoggle" id="priceToggle" type="button" aria-pressed="' + !!state.hidePrice + '">' +
+      '<span class="dot"></span>' + (state.hidePrice ? "金額を表示する" : "金額を隠す") + "</button>" +
+      (mismatch ? '<div class="sbwarn">⚠ 曜日が元の調査基準(土・日・月)と変わっています。休館日・営業時間の情報はその曜日を前提に裏取りしたものなので、実際の開館状況は予約前に再確認してください。</div>' : "") +
+      (!hasBday && !mismatch ? '<div class="sbwarn">⚠ この日程には誕生日(10/5)が含まれていません。誕生日ディナーの日取りは手動で調整してください。</div>' : "");
+
+    var dateInput = document.getElementById("tripStart");
+    dateInput.addEventListener("change", function () {
+      if (dateInput.value) { state.startDate = dateInput.value; save(); renderAll(); }
+    });
+    document.getElementById("dateReset").addEventListener("click", function () {
+      state.startDate = DEFAULT_START; save(); renderAll();
+    });
+    document.getElementById("priceToggle").addEventListener("click", function () {
+      state.hidePrice = !state.hidePrice; save(); renderSettingsBar();
+    });
+  }
+  function pad2(n) { n = String(n); return n.length < 2 ? "0" + n : n; }
+  function defaultDateLabel() {
+    var d = parseISO(DEFAULT_START);
+    return (d.getMonth() + 1) + "/" + d.getDate() + "〜";
   }
 
   function renderAll() {
@@ -7691,6 +7822,7 @@ var DATA = {
     refresh();
     renderPoints();
     renderMemo();
+    renderSettingsBar();
   }
 
   var optAllBtn = document.getElementById("optAllBtn");
@@ -7699,6 +7831,7 @@ var DATA = {
     save(); refresh();
   });
 
+  document.body.classList.toggle("price-hidden", !!state.hidePrice);
   renderAll();
   renderFoot();
 })();
