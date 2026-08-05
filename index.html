@@ -495,12 +495,8 @@
   }
   :root[data-theme="dark"] .sbwarn, .darkauto .sbwarn { color: #ffb872; background: rgba(244,150,47,.14); }
 
-  /* price-hide: blur every rendered amount and the raw price-edit inputs */
-  .price-hidden .money { filter: blur(6px); user-select: none; }
-  .price-hidden input[data-tr], .price-hidden input[data-lodging],
-  .price-hidden input[data-budget], .price-hidden input[data-mealprice] {
-    filter: blur(6px);
-  }
+  /* price-hide: remove every priced element from the layout entirely (not just visually masked) */
+  .price-hidden .money { display: none; }
 
   @media (max-width: 700px) {
     .nav-right { display: none; }
@@ -6702,6 +6698,12 @@ var DATA = {
     });
   }
   function yen(n) { return '<span class="money">¥' + Math.round(n).toLocaleString("ja-JP") + "</span>"; }
+  // <option> content can't be targeted by CSS (browsers strip nested tags), so hiding a price
+  // inside a <select> must omit the text at generation time rather than blur/hide it visually.
+  function yenOpt(n, suffix) {
+    if (state.hidePrice) return null;
+    return "¥" + Math.round(n).toLocaleString("ja-JP") + (suffix || "");
+  }
 
   /* ---------- date shifting ---------- */
   function parseISO(s) {
@@ -6763,6 +6765,13 @@ var DATA = {
     return '<span class="vtag ng" title="日付指定の実売価格を確認できていません。予約前に要確認">価格未確認</span>';
   }
   function actById(p, id) { return p.activities.filter(function (a) { return a.id === id; })[0] || null; }
+  // activity price tag: discounted-strike / plain / free — the free badge always stays visible
+  // (it's a status, not a figure), the numeric portion(s) hide as one unit so no "/人" is left dangling
+  function actPriceHtml(a, eff) {
+    if (eff === 0) return '<span class="free">' + (eff !== a.price ? "宿泊者無料" : "無料") + "</span>";
+    if (eff !== a.price) return '<span class="money"><s>' + yen(a.price) + "</s> " + yen(eff) + "</span>";
+    return '<span class="money">' + yen(eff) + "<small>/人</small></span>";
+  }
   function lodgById(p, id) { return p.lodgings.filter(function (l) { return l.id === id; })[0] || p.lodgings[0]; }
   function restById(p, id) { return (p.restaurants || []).filter(function (r) { return r.id === id; })[0] || null; }
   function slotTag(slot) { return slot === "dinner1" ? "dinner" : slot.indexOf("lunch") === 0 ? "lunch" : null; }
@@ -6968,7 +6977,7 @@ var DATA = {
       '<div class="hchips">' +
       '<span class="hchip"><small>旅行期間</small>' + rangeTxt + "</span>" +
       '<span class="hchip"><small>旅行者</small>大人2名</span>' +
-      '<span class="hchip"><small>概算合計</small><span id="heroBudget">' + yen(c.couple) + "</span></span>" +
+      '<span class="hchip money"><small>概算合計</small><span id="heroBudget">' + yen(c.couple) + "</span></span>" +
       p.tags.map(function (t) { return '<span class="hchip tag">#' + esc(t) + "</span>"; }).join("") +
       "</div></div>";
   }
@@ -7245,9 +7254,7 @@ var DATA = {
     if (!a) return "";
     var st = a.days[dayKey];
     var eff = effPrice(p, s, a);
-    var priceHtml = eff !== a.price
-      ? "<s>" + yen(a.price) + "</s> " + (eff === 0 ? '<span class="free">宿泊者無料</span>' : yen(eff))
-      : (eff === 0 ? '<span class="free">無料</span>' : yen(eff) + "<small>/人</small>");
+    var priceHtml = actPriceHtml(a, eff);
     return '<div class="item">' +
       '<div class="trange">' + toHM(tm.st) + "<br>|<br>" + toHM(tm.en) + "</div>" +
       imgTag(p.id + "__" + a.id, "thumb", a.name) +
@@ -7276,8 +7283,9 @@ var DATA = {
     } else if (pool.length) {
       var selHtml = '<select class="mealsel" data-mealsel data-day="' + dayKey + '" data-idx="' + idx + '" aria-label="店を選択">' +
         pool.map(function (r) {
+          var priceSeg = yenOpt(r.price, "/人");
           return '<option value="' + r.id + '"' + (e.customPrice == null && e.rest === r.id ? " selected" : "") + ">" +
-            esc(r.name) + "(" + yen(r.price) + "/人 · " + esc(zoneName(p, r.zone)) + ")</option>";
+            esc(r.name) + "(" + (priceSeg ? priceSeg + " · " : "") + esc(zoneName(p, r.zone)) + ")</option>";
         }).join("") +
         '<option value="custom"' + (e.customPrice != null ? " selected" : "") + ">カスタム(自由入力)</option>" +
         "</select>";
@@ -7297,7 +7305,7 @@ var DATA = {
       '<div class="imeta">' + durEditor(dayKey, idx, e.dur) + "</div></div>" +
       '<div class="iprice">' +
       (included ? '<span class="free">¥0</span>' :
-        '<span class="pin">¥<input type="number" min="0" step="100" value="' + price + '" data-mealprice data-day="' + dayKey + '" data-idx="' + idx + '" aria-label="食事代(1人)"><small>/人</small></span>') +
+        '<span class="pin money">¥<input type="number" min="0" step="100" value="' + price + '" data-mealprice data-day="' + dayKey + '" data-idx="' + idx + '" aria-label="食事代(1人)"><small>/人</small></span>') +
       "</div>" +
       moveBtns(dayKey, idx, len) +
       '<span class="rmspace"></span>' +
@@ -7313,10 +7321,10 @@ var DATA = {
       '<option value=""' + (s.dinner == null ? " selected" : "") + ">ディナーを選ぶ…</option>" +
       p.dinners.map(function (dn, i) {
         var ok = dinnerAllowed(dn, s);
-        var priceTxt = dn.price === 0 ? "宿泊プランに含む" : yen(dn.price) + "/人";
+        var priceTxt = dn.price === 0 ? "宿泊プランに含む" : yenOpt(dn.price, "/人");
         var lockTxt = ok ? "" : " — 要: 2泊目を" + dn.requires.map(function (lid) { return lodgById(p, lid).shortName; }).join("/") + "に";
         return '<option value="' + i + '"' + (s.dinner === i ? " selected" : "") + (ok ? "" : " disabled") + ">" +
-          esc(dn.name) + "(" + priceTxt + ")" + esc(lockTxt) + "</option>";
+          esc(dn.name) + (priceTxt ? "(" + priceTxt + ")" : "") + esc(lockTxt) + "</option>";
       }).join("") +
       "</select>" +
       (d ? '<div class="bmeta">' + esc(d.note) + ' <a href="' + esc(d.source.url) + '" target="_blank" rel="noopener">' + esc(d.source.label) + " ↗</a></div>"
@@ -7477,7 +7485,7 @@ var DATA = {
       '<div class="ibody">' +
       '<div class="iname"><span class="ltag">宿泊</span>' + esc(l.name) + "</div>" +
       '<div class="imeta"><span>' + night.no + "泊目 · 【" + esc(l.grade) + "】 · " + esc(l.mealNote) + "</span></div></div>" +
-      '<div class="iprice">' + yen(s.lodgingPrice[night.key]) + "<small>/泊(2人)</small></div>" +
+      '<div class="iprice money">' + yen(s.lodgingPrice[night.key]) + "<small>/泊(2人)</small></div>" +
       '<button class="go" data-go-lodg aria-label="宿泊候補へ">変更</button>' +
       "</div>";
   }
@@ -7528,9 +7536,7 @@ var DATA = {
     }).map(function (a) {
       var inAny = ["sat", "sun", "mon"].some(function (k) { return inDay(s, k, a.id); });
       var eff = effPrice(p, s, a);
-      var priceHtml = eff !== a.price
-        ? "<s>" + yen(a.price) + "</s> " + (eff === 0 ? '<span class="free">宿泊者無料</span>' : yen(eff))
-        : (eff === 0 ? '<span class="free">無料</span>' : yen(eff) + "<small> /人</small>");
+      var priceHtml = actPriceHtml(a, eff);
       var btns = days.map(function (day) {
         var st = a.days[day.key];
         var on = inDay(s, day.key, a.id);
@@ -7593,7 +7599,7 @@ var DATA = {
       return '<div class="frow">' +
         '<div class="fhead"><span class="fname">' + esc(r.name) + "</span>" +
         '<span class="zchip">' + esc(zoneName(p, r.zone)) + "</span>" +
-        '<span class="fprice">' + yen(r.price) + "<small>/人</small></span></div>" +
+        '<span class="fprice money">' + yen(r.price) + "<small>/人</small></span></div>" +
         '<div class="fnote">' + esc(r.note) + ' <a href="' + esc(r.source.url) + '" target="_blank" rel="noopener">' + esc(r.source.label) + " ↗</a></div>" +
         '<div class="addrow">' + btns + "</div>" +
         "</div>";
@@ -7628,7 +7634,7 @@ var DATA = {
         '<span class="grade">' + esc(l.grade) + "</span>" +
         '<div class="lbody">' +
         '<div class="lname">' + esc(l.name) + "</div>" +
-        '<div class="lprice">' + yen(l.nightly.sat) + " / " + yen(l.nightly.sun) + '<small> 土/日 · 2人1泊2食</small>' + verifyTag(l) + "</div>" +
+        '<div class="lprice"><span class="money">' + yen(l.nightly.sat) + " / " + yen(l.nightly.sun) + "</span>" + '<small> 土/日 · 2人1泊2食</small>' + verifyTag(l) + "</div>" +
         '<div class="lnote">' + esc(l.range) + " · " + esc(l.mealNote) +
         (l.perksNote ? " · " + esc(l.perksNote) : "") + "</div>" +
         '<div class="lsrc"><a href="' + esc(l.source.url) + '" target="_blank" rel="noopener">' + esc(l.source.label) + " ↗</a></div>" +
@@ -7659,7 +7665,7 @@ var DATA = {
     var diff = Math.abs(b - c.couple);
     return '<div class="bgt">' +
       '<div class="bgt-row"><span class="sl">予算(2人合計)</span>' +
-      '<input type="number" min="0" step="10000" value="' + b + '" data-budget aria-label="予算"></div>' +
+      '<input class="money" type="number" min="0" step="10000" value="' + b + '" data-budget aria-label="予算"></div>' +
       '<div class="bgt-bar"><div class="bgt-fill' + (over ? " over" : "") + '" style="width:' + pct + '%"></div></div>' +
       '<div class="bgt-note' + (over ? " over" : "") + '">' +
       (over ? "予算オーバー +" + yen(diff) : "残り " + yen(diff)) + " (" + Math.round(c.couple / b * 100) + "%使用)</div>" +
@@ -7673,11 +7679,11 @@ var DATA = {
     getNights().forEach(function (nn) {
       var l = lodgById(p, s.lodging[nn.key]);
       html += '<div class="srow"><span class="sl">宿泊 ' + nn.no + '泊目(' + nn.m + "/" + nn.d + ') <small>' + esc(l.shortName) + "(2人)</small></span>" +
-        '<input type="number" min="0" step="1000" value="' + s.lodgingPrice[nn.key] + '" data-lodging="' + nn.key + '" aria-label="宿泊費' + nn.no + '泊目"></div>';
+        '<input class="money" type="number" min="0" step="1000" value="' + s.lodgingPrice[nn.key] + '" data-lodging="' + nn.key + '" aria-label="宿泊費' + nn.no + '泊目"></div>';
     });
     p.transport.forEach(function (t, i) {
       html += '<div class="srow"><span class="sl">' + esc(t.label) + " <small>2人分 · " + esc(t.note) + "</small></span>" +
-        '<input type="number" min="0" step="100" value="' + s.transport[i] + '" data-tr="' + i + '" aria-label="' + esc(t.label) + '"></div>';
+        '<input class="money" type="number" min="0" step="100" value="' + s.transport[i] + '" data-tr="' + i + '" aria-label="' + esc(t.label) + '"></div>';
     });
     html += '<div class="srow head"><span class="sl">アクティビティ・体験 <small>大人2名分</small></span><span class="sv" data-sv="act">' + yen(c.act * 2) + "</span></div>";
     html += '<div class="srow"><span class="sl">食事(朝・昼・夕) <small>大人2名分 · 宿泊込み分は¥0</small></span><span class="sv" data-sv="meals">' + yen(c.meals * 2) + "</span></div>";
@@ -7806,7 +7812,8 @@ var DATA = {
       state.startDate = DEFAULT_START; save(); renderAll();
     });
     document.getElementById("priceToggle").addEventListener("click", function () {
-      state.hidePrice = !state.hidePrice; save(); renderSettingsBar();
+      // full re-render: <option> price text is generated conditionally in JS (CSS can't reach into <select> content)
+      state.hidePrice = !state.hidePrice; save(); renderAll();
     });
   }
   function pad2(n) { n = String(n); return n.length < 2 ? "0" + n : n; }
