@@ -135,6 +135,14 @@
   .card-head h2 { font-size: 16px; font-weight: 800; margin: 0; }
   .card-head .sub { font-size: 11px; color: var(--ink-3); }
   .card-head .optall { margin-left: auto; }
+  .vtag {
+    display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 999px;
+    font-size: 9.5px; font-weight: 800; letter-spacing: .02em; vertical-align: 1px;
+  }
+  .vtag.ok { background: rgba(53,197,142,.16); color: #1d8f63; }
+  .vtag.ng { background: rgba(244,80,47,.13); color: #c23c1e; }
+  :root[data-theme="dark"] .vtag.ok, .darkauto .vtag.ok { color: #4fd6a0; }
+  :root[data-theme="dark"] .vtag.ng, .darkauto .vtag.ng { color: #ff8a68; }
 
   /* ---------- hero ---------- */
   .hero { border-radius: var(--r); overflow: hidden; position: relative; box-shadow: var(--shadow-lg); background: var(--nav); }
@@ -1136,7 +1144,8 @@ var DATA = {
      "source": {
       "label": "トラベルコ実勢",
       "url": "https://www.tour.ne.jp/j_hotel/5171/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "mid",
@@ -1159,7 +1168,8 @@ var DATA = {
      "source": {
       "label": "MY LODGE Naoshima公式",
       "url": "https://mylodge-naoshima.com/room"
-     }
+     },
+     "verified": null
     },
     {
      "id": "roka",
@@ -1182,7 +1192,8 @@ var DATA = {
      "source": {
       "label": "トラベルコ実勢",
       "url": "https://www.tour.ne.jp/j_hotel/61928/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "rihga",
@@ -1205,7 +1216,8 @@ var DATA = {
      "source": {
       "label": "Yahoo!トラベル実勢",
       "url": "https://travel.yahoo.co.jp/00906441/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "celebration",
@@ -1231,7 +1243,8 @@ var DATA = {
      "source": {
       "label": "ベネッセアートサイト直島 宿泊者特典",
       "url": "https://benesse-artsite.jp/stay/benefits.html"
-     }
+     },
+     "verified": null
     }
    ],
    "transport": [
@@ -1875,7 +1888,8 @@ var DATA = {
      "source": {
       "label": "JTB実勢(10/3・4日付指定)",
       "url": "https://www.jtb.co.jp/kokunai-hotel/htl/8608057/plan/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "mid",
@@ -1898,7 +1912,8 @@ var DATA = {
      "source": {
       "label": "トラベルコ実勢",
       "url": "https://www.tour.ne.jp/j_hotel/5788/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "yurian",
@@ -1910,10 +1925,10 @@ var DATA = {
       "bf": true,
       "dn": true
      },
-     "price": 94600,
+     "price": 83600,
      "nightly": {
       "sat": 45100,
-      "sun": 49500
+      "sun": 38500
      },
      "range": "2名 10/3(土) ¥45,100〜/ 10/4(日) 素泊¥38,500・露天付客室¥49,500〜88,800",
      "mealNote": "夕朝食付(個室食事処で薩摩の郷土会席)",
@@ -1921,7 +1936,8 @@ var DATA = {
      "source": {
       "label": "楽天トラベル実勢",
       "url": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/56748"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "sheraton",
@@ -1944,7 +1960,8 @@ var DATA = {
      "source": {
       "label": "じゃらん実勢",
       "url": "https://www.jalan.net/yad386058/plan/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "celebration",
@@ -1967,7 +1984,8 @@ var DATA = {
      "source": {
       "label": "JTB 白水館実勢(10/3・4日付指定)",
       "url": "https://www.jtb.co.jp/kokunai-hotel/htl/8621002/plan/"
-     }
+     },
+     "verified": "jalan"
     }
    ],
    "transport": [
@@ -2579,7 +2597,8 @@ var DATA = {
      "source": {
       "label": "楽天トラベル実勢",
       "url": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/16718"
-     }
+     },
+     "verified": null
     },
     {
      "id": "yamatoya",
@@ -2591,10 +2610,10 @@ var DATA = {
       "bf": true,
       "dn": true
      },
-     "price": 158146,
+     "price": 212960,
      "nightly": {
-      "sat": 68606,
-      "sun": 89540
+      "sat": 101640,
+      "sun": 111320
      },
      "range": "2名 10/3(土) ¥68,606〜135,520 / 10/4(日) ¥89,540〜118,580(2食付は¥111,320〜)",
      "mealNote": "夕食の会席込み(2食付)",
@@ -2602,7 +2621,8 @@ var DATA = {
      "source": {
       "label": "大和屋本店公式",
       "url": "https://www.yamatoyahonten.com/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "mid",
@@ -2625,7 +2645,8 @@ var DATA = {
      "source": {
       "label": "じゃらん実勢",
       "url": "https://www.jalan.net/yad332766/plan/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "funaya",
@@ -2648,7 +2669,8 @@ var DATA = {
      "source": {
       "label": "JTB実勢",
       "url": "https://www.jtb.co.jp/kokunai-hotel/htl/7461008/plan/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "chaharu",
@@ -2671,7 +2693,8 @@ var DATA = {
      "source": {
       "label": "JTB実勢",
       "url": "https://www.jtb.co.jp/kokunai-hotel/htl/7461033/plan/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "celebration",
@@ -2694,7 +2717,8 @@ var DATA = {
      "source": {
       "label": "一休.com",
       "url": "https://www.ikyu.com/00001407/"
-     }
+     },
+     "verified": null
     }
    ],
    "transport": [
@@ -3317,7 +3341,8 @@ var DATA = {
      "source": {
       "label": "トラベルコ実勢",
       "url": "https://www.tour.ne.jp/j_hotel/29709/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "spa",
@@ -3340,7 +3365,8 @@ var DATA = {
      "source": {
       "label": "ロワジールホテル那覇公式",
       "url": "https://www.loisir-naha.com/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "mid",
@@ -3363,7 +3389,8 @@ var DATA = {
      "source": {
       "label": "トラベルコ実勢",
       "url": "https://www.tour.ne.jp/j_hotel/38110/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "yuinchi",
@@ -3386,7 +3413,8 @@ var DATA = {
      "source": {
       "label": "ユインチホテル南城公式",
       "url": "https://www.yuinchi.jp/stay/japanese-hotspring/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "hiramatsu",
@@ -3409,7 +3437,8 @@ var DATA = {
      "source": {
       "label": "たびらい/JTB実勢",
       "url": "https://www.jtb.co.jp/kokunai-hotel/htl/8706002/plan/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "hyakuna",
@@ -3432,7 +3461,8 @@ var DATA = {
      "source": {
       "label": "JTB実勢",
       "url": "https://www.jtb.co.jp/kokunai-hotel/htl/8720001/plan/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "senagahotel",
@@ -3455,7 +3485,8 @@ var DATA = {
      "source": {
       "label": "価格.com実勢",
       "url": "https://travel.kakaku.com/%E5%9B%BD%E5%86%85%E5%AE%BF%E6%B3%8A%E4%BA%88%E7%B4%84/%E7%90%89%E7%90%83%E6%B8%A9%E6%B3%89%20%E7%80%AC%E9%95%B7%E5%B3%B6%E3%83%9B%E3%83%86%E3%83%AB-11293446/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "nashiro",
@@ -3478,7 +3509,8 @@ var DATA = {
      "source": {
       "label": "一休.com実勢",
       "url": "https://www.ikyu.com/00002956/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "harborview",
@@ -3501,7 +3533,8 @@ var DATA = {
      "source": {
       "label": "楽天トラベル実勢",
       "url": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/176757"
-     }
+     },
+     "verified": null
     },
     {
      "id": "nahaterrace",
@@ -3524,7 +3557,8 @@ var DATA = {
      "source": {
       "label": "トラベルコ実勢",
       "url": "https://www.tour.ne.jp/j_hotel/5928/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "busena",
@@ -3547,7 +3581,8 @@ var DATA = {
      "source": {
       "label": "トラベルコ実勢",
       "url": "https://www.tour.ne.jp/j_hotel/5901/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "celebration",
@@ -3570,7 +3605,8 @@ var DATA = {
      "source": {
       "label": "ホテルコレクティブ公式 Anniversary",
       "url": "https://hotelcollective.jp/anniversary/"
-     }
+     },
+     "verified": null
     }
    ],
    "transport": [
@@ -4081,7 +4117,8 @@ var DATA = {
      "source": {
       "label": "JTB",
       "url": "https://www.jtb.co.jp/kokunai-hotel/htl/8413035/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "hoteiya",
@@ -4104,7 +4141,8 @@ var DATA = {
      "source": {
       "label": "ほてい屋公式",
       "url": "https://www.hoteiya-yado.jp/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "gettouan",
@@ -4127,7 +4165,8 @@ var DATA = {
      "source": {
       "label": "月燈庵公式",
       "url": "https://www.gettouan.com/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "warabino",
@@ -4150,7 +4189,8 @@ var DATA = {
      "source": {
       "label": "わらび野公式",
       "url": "http://www.warabino.net/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "umeen",
@@ -4173,7 +4213,8 @@ var DATA = {
      "source": {
       "label": "じゃらん",
       "url": "https://www.jalan.net/yad318959/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "kai",
@@ -4196,7 +4237,8 @@ var DATA = {
      "source": {
       "label": "界 由布院公式",
       "url": "https://hoshinoresorts.com/ja/hotels/kaiyufuin/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "tamanoyu",
@@ -4219,7 +4261,8 @@ var DATA = {
      "source": {
       "label": "由布院玉の湯公式",
       "url": "https://www.tamanoyu.co.jp/"
-     }
+     },
+     "verified": "rakuten"
     },
     {
      "id": "kamenoi",
@@ -4242,7 +4285,8 @@ var DATA = {
      "source": {
       "label": "亀の井別荘公式",
       "url": "https://www.kamenoi-bessou.jp/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "murata",
@@ -4265,7 +4309,8 @@ var DATA = {
      "source": {
       "label": "山荘無量塔公式",
       "url": "https://sansou-murata.com/"
-     }
+     },
+     "verified": null
     }
    ],
    "transport": [
@@ -4835,7 +4880,8 @@ var DATA = {
      "source": {
       "label": "おりはし旅館公式",
       "url": "https://orihashi.co.jp/rooms/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "yakakutei",
@@ -4858,7 +4904,8 @@ var DATA = {
      "source": {
       "label": "じゃらん",
       "url": "https://www.jalan.net/yad387006/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "kaikiri",
@@ -4870,10 +4917,10 @@ var DATA = {
       "bf": true,
       "dn": true
      },
-     "price": 115800,
+     "price": 178200,
      "nightly": {
-      "sat": 64500,
-      "sun": 51300
+      "sat": 95700,
+      "sun": 82500
      },
      "range": "2名 10/3(土) ¥64,500〜115,500 / 10/4(日) ¥51,300〜102,300",
      "mealNote": "2食付",
@@ -4881,7 +4928,8 @@ var DATA = {
      "source": {
       "label": "界 霧島公式",
       "url": "https://hoshinoresorts.com/ja/hotels/kaikirishima/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "ishihara",
@@ -4904,7 +4952,8 @@ var DATA = {
      "source": {
       "label": "妙見石原荘公式",
       "url": "https://www.m-ishiharaso.com/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "gajoen",
@@ -4927,7 +4976,8 @@ var DATA = {
      "source": {
       "label": "忘れの里 雅叙苑公式",
       "url": "https://gajoen.jp/"
-     }
+     },
+     "verified": null
     }
    ],
    "transport": [
@@ -5507,7 +5557,8 @@ var DATA = {
      "source": {
       "label": "啄木亭公式",
       "url": "https://www.takubokutei.com/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "chikuba",
@@ -5519,10 +5570,10 @@ var DATA = {
       "bf": true,
       "dn": true
      },
-     "price": 54404,
+     "price": 48104,
      "nightly": {
       "sat": 28404,
-      "sun": 26000
+      "sun": 19700
      },
      "range": "2名1泊2食 10/3(土) ¥28,404〜(寿司＆和牛会席・1泊2食付を確認)/ 10/4(日)は要確認",
      "mealNote": "2食付(寿司＆和牛会席 or 基本会席「竹」)",
@@ -5530,7 +5581,8 @@ var DATA = {
      "source": {
       "label": "竹葉新葉亭公式",
       "url": "https://chikuba-s.co.jp/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "umitoakari",
@@ -5553,7 +5605,8 @@ var DATA = {
      "source": {
       "label": "ヒューイットリゾート公式",
       "url": "https://hewitt-resort.com/hakodate-yunokawa/"
-     }
+     },
+     "verified": null
     },
     {
      "id": "nagisatei",
@@ -5565,9 +5618,9 @@ var DATA = {
       "bf": true,
       "dn": true
      },
-     "price": 52400,
+     "price": 54400,
      "nightly": {
-      "sat": 29800,
+      "sat": 31800,
       "sun": 22600
      },
      "range": "2名 10/3(土) ¥29,800〜/ 10/4(日) ¥22,600〜(最安は素泊まり含む・2食付は上位帯)",
@@ -5576,7 +5629,8 @@ var DATA = {
      "source": {
       "label": "じゃらん",
       "url": "https://www.jalan.net/yad324568/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "wakamatsu",
@@ -5599,7 +5653,8 @@ var DATA = {
      "source": {
       "label": "割烹旅館若松公式",
       "url": "https://www.wakamatsuryokan.com/"
-     }
+     },
+     "verified": "jalan"
     }
    ],
    "transport": [
@@ -6394,7 +6449,8 @@ var DATA = {
      "source": {
       "label": "竹村家本館公式",
       "url": "http://takemuraya.sakura.ne.jp/index.html"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "iroha",
@@ -6417,7 +6473,8 @@ var DATA = {
      "source": {
       "label": "御舟宿いろは公式",
       "url": "https://www.tomo-iroha.jp/"
-     }
+     },
+     "verified": "gambo"
     },
     {
      "id": "nishiyama",
@@ -6429,10 +6486,10 @@ var DATA = {
       "bf": true,
       "dn": true
      },
-     "price": 286000,
+     "price": 312000,
      "nightly": {
-      "sat": 150000,
-      "sun": 136000
+      "sat": 174000,
+      "sun": 138000
      },
      "range": "2名1泊2食 10/3(土) ¥150,000〜 / 10/4(日) ¥136,000〜(最安の28㎡ダブルは在庫なし・実際に取れる下限)",
      "mealNote": "2食付",
@@ -6440,7 +6497,8 @@ var DATA = {
      "source": {
       "label": "Ryokan 尾道西山公式",
       "url": "https://o-nishiyama.co.jp/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "ochikochi",
@@ -6463,7 +6521,8 @@ var DATA = {
      "source": {
       "label": "遠音近音公式",
       "url": "https://www.ochikochi.co.jp/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "shiomachi",
@@ -6475,10 +6534,10 @@ var DATA = {
       "bf": true,
       "dn": true
      },
-     "price": 99000,
+     "price": 114400,
      "nightly": {
       "sat": 59400,
-      "sun": 39600
+      "sun": 55000
      },
      "range": "2名 10/3(土) ¥59,400〜107,800 / 10/4(日) ¥39,600〜96,800",
      "mealNote": "2食付(オーベルジュ「櫻や」で会席。毎週水曜は夕食休止)",
@@ -6486,7 +6545,8 @@ var DATA = {
      "source": {
       "label": "潮待ちホテル公式",
       "url": "https://www.shiomachi-hotel.com/rooms/"
-     }
+     },
+     "verified": "jalan"
     },
     {
      "id": "sekitei",
@@ -6503,13 +6563,14 @@ var DATA = {
       "sat": 100000,
       "sun": 80000
      },
-     "range": "2名1泊2食 公式料金表 土¥100,000/日¥80,000(母屋「連舞」)。じゃらん経由は日¥127,600〜のため公式直予約が有利",
+     "range": "2名1泊2食 公式料金表 土¥100,000/日¥80,000(母屋「連舞」)。じゃらん経由は10/4 ¥127,600〜(10/3は在庫なし)",
      "mealNote": "2食付(夕食は部屋食・朝食は広間)",
      "perksNote": "1500坪の日本庭園に数寄屋の母屋と離れが点在する全12室。全室に客室風呂(離れ・四阿は露天/半露天)。庭園は米誌ランキング上位の常連。宮島口まで車12分",
      "source": {
       "label": "石亭公式",
       "url": "https://www.sekitei.to/yoyaku_ryoukin.html"
-     }
+     },
+     "verified": "official"
     }
    ],
    "transport": [
@@ -6604,6 +6665,13 @@ var DATA = {
     min = Math.max(0, Math.round(min));
     var h = Math.floor(min / 60) % 24, m = min % 60;
     return (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m;
+  }
+  var VERIFY_SRC = { jalan: "じゃらん", rakuten: "楽天", official: "公式", gambo: "予約サイト" };
+  function verifyTag(l) {
+    if (l.verified) {
+      return '<span class="vtag ok" title="' + VERIFY_SRC[l.verified] + 'で2026/10/3・10/4の2名総額(1泊2食)を実際に確認">実売確認済</span>';
+    }
+    return '<span class="vtag ng" title="日付指定の実売価格を確認できていません。予約前に要確認">価格未確認</span>';
   }
   function actById(p, id) { return p.activities.filter(function (a) { return a.id === id; })[0] || null; }
   function lodgById(p, id) { return p.lodgings.filter(function (l) { return l.id === id; })[0] || p.lodgings[0]; }
@@ -7465,7 +7533,7 @@ var DATA = {
         '<span class="grade">' + esc(l.grade) + "</span>" +
         '<div class="lbody">' +
         '<div class="lname">' + esc(l.name) + "</div>" +
-        '<div class="lprice">' + yen(l.nightly.sat) + " / " + yen(l.nightly.sun) + '<small> 土/日 · 2人1泊</small></div>' +
+        '<div class="lprice">' + yen(l.nightly.sat) + " / " + yen(l.nightly.sun) + '<small> 土/日 · 2人1泊2食</small>' + verifyTag(l) + "</div>" +
         '<div class="lnote">' + esc(l.range) + " · " + esc(l.mealNote) +
         (l.perksNote ? " · " + esc(l.perksNote) : "") + "</div>" +
         '<div class="lsrc"><a href="' + esc(l.source.url) + '" target="_blank" rel="noopener">' + esc(l.source.label) + " ↗</a></div>" +
