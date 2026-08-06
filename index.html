@@ -145,6 +145,7 @@
     position: absolute; top: 12px; left: 12px;
     background: rgba(255,255,255,.94); color: #1a2333; font-size: 11.5px; font-weight: 700;
     border-radius: 99px; padding: 4px 12px; box-shadow: var(--shadow);
+    max-width: calc(100% - 150px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .hero .hbday {
     position: absolute; top: 12px; right: 12px;
@@ -552,7 +553,7 @@ body{font-size:14px;line-height:1.68;background:
 .settingsbar{background:rgba(255,255,255,.84);backdrop-filter:blur(12px)}
 .settingsbar-inner{max-width:1560px;padding:10px 28px}
 
-.layout{max-width:1560px;margin:0 auto;padding:20px 28px 52px;display:grid;grid-template-columns:minmax(560px,1fr) 390px 315px;gap:20px;align-items:start}
+.layout{max-width:1560px;margin:0 auto;padding:20px 28px 52px;display:grid;grid-template-columns:minmax(560px,1fr) 390px 315px;gap:20px;align-items:stretch}
 .col-main{display:contents}.hero{grid-column:1/-1;grid-row:1}.col-main>.card{grid-column:1;grid-row:2}.col-cands{grid-column:2;grid-row:2;max-width:none;display:flex;gap:20px}.col-sum{grid-column:3;grid-row:2;max-width:none;display:flex;gap:20px}
 .card{border:1px solid rgba(178,198,216,.68);box-shadow:var(--shadow);border-radius:18px;overflow:hidden}
 .card-head{padding:20px 22px 4px;gap:12px}.card-head h2{font-size:17px;letter-spacing:.01em}.card-head .sub{font-size:11px}
@@ -614,7 +615,7 @@ footer.page{max-width:1560px;padding:0 28px 46px}
     <section class="hero" id="hero" aria-label="プラン概要"></section>
     <section class="card">
       <div class="card-head">
-        <h2>旅程プラン(2泊3日)</h2>
+        <h2>🗓️ 旅程プラン(2泊3日)</h2>
         <span class="sub">10/5(月)は誕生日・昼過ぎ帰路 — ディナーはDay 2の夜に</span>
         <button class="optbtn optall" id="optAllBtn" title="休館日・宿着/空港リミット・移動時間・昼食時間帯を考慮して、予定を3日間に振り分け直します">日またぎで最適化</button>
       </div>
@@ -624,17 +625,17 @@ footer.page{max-width:1560px;padding:0 28px 46px}
 
   <aside class="col-cands">
     <section class="card" id="poolCard">
-      <div class="card-head"><h2>アクティビティ候補</h2><span class="sub">+ボタンで日程へ / 休みの日は押せません</span></div>
+      <div class="card-head"><h2>✨ アクティビティ候補</h2><span class="sub">+ボタンで日程へ / 休みの日は押せません</span></div>
       <div class="filters" id="catFilters" role="group" aria-label="カテゴリ絞り込み"></div>
       <div class="filters filters-zone" id="zoneFilters" role="group" aria-label="エリア絞り込み"></div>
       <div class="pool" id="pool"></div>
     </section>
     <section class="card" id="foodCard">
-      <div class="card-head"><h2>食事候補</h2><span class="sub">土日の営業を確認済み / ボタンでスロットへ割当</span></div>
+      <div class="card-head"><h2>🍽️ 食事候補</h2><span class="sub">土日の営業を確認済み / ボタンでスロットへ割当</span></div>
       <div class="foods" id="foodPool"></div>
     </section>
     <section class="card" id="lodgCard">
-      <div class="card-head"><h2>宿泊候補</h2><span class="sub">タップで切り替え(2人2泊の概算)</span></div>
+      <div class="card-head"><h2>🏨 宿泊候補</h2><span class="sub">タップで切り替え(2人2泊の概算)</span></div>
       <div class="lodgs" id="lodgings"></div>
     </section>
   </aside>
@@ -645,7 +646,7 @@ footer.page{max-width:1560px;padding:0 28px 46px}
     </div>
     <section class="card points" id="points"></section>
     <section class="card memo">
-      <h3>旅のメモ</h3>
+      <h3>📝 旅のメモ</h3>
       <textarea id="memo" placeholder="予約メモ、行きたい店、サプライズの段取りなど…"></textarea>
       <p>非公開・このブラウザにのみ保存されます</p>
     </section>
@@ -7959,7 +7960,7 @@ var DATA = {
   function renderSummary() {
     var p = plan(), s = pstate(), c = costs();
     var el = document.getElementById("summary");
-    var html = "<h2>料金サマリー</h2>" + '<div class="srows">';
+    var html = "<h2>🧾 料金サマリー</h2>" + '<div class="srows">';
     getNights().forEach(function (nn) {
       var l = lodgById(p, s.lodging[nn.key]);
       html += '<div class="srow"><span class="sl">宿泊 ' + nn.no + '泊目(' + nn.m + "/" + nn.d + ') <small>' + esc(l.shortName) + "(2人)</small></span>" +
@@ -8032,7 +8033,7 @@ var DATA = {
   function renderPoints() {
     var p = plan();
     document.getElementById("points").innerHTML =
-      "<h3>このプランのポイント</h3><ul>" +
+      "<h3>💡 このプランのポイント</h3><ul>" +
       p.points.map(function (pt) { return "<li>" + esc(pt) + "</li>"; }).join("") +
       "</ul>";
   }
