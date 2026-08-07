@@ -495,8 +495,10 @@
   }
   .darkauto .sbwarn { color: #ffb872; background: rgba(244,150,47,.14); }
 
-  /* price-hide: remove every priced element from the layout entirely (not just visually masked) */
+  /* price-hide: remove every priced element from the layout entirely (not just visually masked).
+     .bgt (budget gauge) goes too — its bar width/% used leaks spending even with .money hidden. */
   .price-hidden .money { display: none; }
+  .price-hidden .bgt { display: none; }
 
   @media (max-width: 700px) {
     .nav-right { display: none; }
