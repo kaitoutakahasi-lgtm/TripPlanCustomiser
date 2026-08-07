@@ -134,8 +134,8 @@
   }
   .vtag.ok { background: rgba(53,197,142,.16); color: #1d8f63; }
   .vtag.ng { background: rgba(244,80,47,.13); color: #c23c1e; }
-  :root[data-theme="dark"] .vtag.ok, .darkauto .vtag.ok { color: #4fd6a0; }
-  :root[data-theme="dark"] .vtag.ng, .darkauto .vtag.ng { color: #ff8a68; }
+  .darkauto .vtag.ok { color: #4fd6a0; }
+  .darkauto .vtag.ng { color: #ff8a68; }
 
   /* ---------- hero ---------- */
   .hero { border-radius: var(--r); overflow: hidden; position: relative; box-shadow: var(--shadow-lg); background: var(--nav); }
@@ -493,7 +493,7 @@
     flex-basis: 100%; font-size: 11px; color: #b5580f; background: rgba(244,150,47,.12);
     border-radius: 8px; padding: 6px 10px; line-height: 1.6;
   }
-  :root[data-theme="dark"] .sbwarn, .darkauto .sbwarn { color: #ffb872; background: rgba(244,150,47,.14); }
+  .darkauto .sbwarn { color: #ffb872; background: rgba(244,150,47,.14); }
 
   /* price-hide: remove every priced element from the layout entirely (not just visually masked) */
   .price-hidden .money { display: none; }
@@ -519,8 +519,11 @@
 
 <style id="v2-redesign">
 /* Trip Plan Studio v2 — premium travel workspace */
+/* deliberately a single light look: also pin data-theme="dark" here so an explicit dark
+   preference doesn't fall through to the pre-v2 dark palette below (which this redesign never covered) */
 :root,
-:root[data-theme="light"] {
+:root[data-theme="light"],
+:root[data-theme="dark"] {
   --nav:#0b2748;
   --nav-ink:#f8fbff;
   --nav-dim:#afc1d6;
