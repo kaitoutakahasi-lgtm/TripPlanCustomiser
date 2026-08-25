@@ -6771,6 +6771,7 @@ var DATA = {
   var DAY_LABELS = ["DAY 1", "DAY 2", "DAY 3"];
   var ORIGINAL_DOW = { sat: "土", sun: "日", mon: "月" };
   var WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
+  var DOW_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]; // Date#getDay()順の実曜日キー
   var DEFAULT_START = "2026-10-03"; // 元の調査基準日(土曜始まり)
   var BIRTHDAY_ISO = "2026-10-05"; // 誕生日(固定の実日付)
   var DATE_PRESETS = [
@@ -6835,9 +6836,21 @@ var DATA = {
       return {
         key: k, label: DAY_LABELS[i], m: d.getMonth() + 1, d: d.getDate(), dow: dow,
         note: note, bday: i === bdayIdx, bdayEve: bdayIdx === i + 1,
-        dowMismatch: dow !== ORIGINAL_DOW[k]
+        dowMismatch: dow !== ORIGINAL_DOW[k],
+        realKey: DOW_KEYS[d.getDay()]
       };
     });
+  }
+  // 休館日等の"days"データはsat/sun/monという文字列そのものを実際の曜日(土/日/月)として裏取りしている。
+  // 出発日をずらして曜日が変わった場合、スロット名ではなく実際の曜日でdaysを引く必要がある(未収録の曜日はopen扱い)。
+  function realDayKey(slotKey) {
+    var days = getDays();
+    for (var i = 0; i < days.length; i++) if (days[i].key === slotKey) return days[i].realKey;
+    return slotKey;
+  }
+  function dayStatusAt(a, realKey) {
+    if (!a || !a.days) return "open";
+    return a.days[realKey] || "open";
   }
   function getNights() {
     var days = getDays();
@@ -7281,13 +7294,14 @@ var DATA = {
     });
     if (!acts.length) { days.forEach(optimizeDay); return; }
 
+    var realKeyOf = {}; days.forEach(function (k) { realKeyOf[k] = realDayKey(k); });
     function allowed(e, k) {
       var a = actById(p, e.id);
-      return !(a && a.days && a.days[k] === "closed");
+      return dayStatusAt(a, realKeyOf[k]) !== "closed";
     }
     function checkPen(e, k) {
       var a = actById(p, e.id);
-      return a && a.days && a.days[k] === "check" ? 12 : 0;
+      return dayStatusAt(a, realKeyOf[k]) === "check" ? 12 : 0;
     }
 
     var bestTotal = Infinity, bestAssign = null;
@@ -7378,7 +7392,7 @@ var DATA = {
   function actRowHtml(p, s, e, dayKey, idx, tm, len) {
     var a = actById(p, e.id);
     if (!a) return "";
-    var st = a.days[dayKey];
+    var st = dayStatusAt(a, realDayKey(dayKey));
     var eff = effPrice(p, s, a);
     var priceHtml = actPriceHtml(a, eff);
     return '<div class="item">' +
@@ -7684,7 +7698,7 @@ var DATA = {
       var eff = effPrice(p, s, a);
       var priceHtml = actPriceHtml(a, eff);
       var btns = days.map(function (day) {
-        var st = a.days[day.key];
+        var st = dayStatusAt(a, day.realKey);
         var on = inDay(s, day.key, a.id);
         return '<button class="addbtn' + (on ? " on" : "") + '" data-add="' + a.id + '" data-day="' + day.key + '"' +
           (st === "closed" ? " disabled" : "") +
@@ -7692,7 +7706,8 @@ var DATA = {
           (on ? "✓" : "+") + day.m + "/" + day.d + "</button>";
       }).join("");
       var avail = days.map(function (day) {
-        return '<span class="av ' + a.days[day.key] + '">' + day.d + "日" + STATUS_TXT[a.days[day.key]] + "</span>";
+        var st = dayStatusAt(a, day.realKey);
+        return '<span class="av ' + st + '">' + day.d + "日" + STATUS_TXT[st] + "</span>";
       }).join("");
       return '<article class="acard' + (inAny ? " in" : "") + '">' +
         '<div class="aimg">' + imgTag(p.id + "__" + a.id, "", a.name) +
@@ -7956,7 +7971,7 @@ var DATA = {
       '<button class="sbtoggle" id="priceToggle" type="button" aria-pressed="' + !!state.hidePrice + '">' +
       '<span class="dot"></span>' + (state.hidePrice ? "金額を表示する" : "金額を隠す") + "</button>" +
       (activePreset && activePreset.holiday ? '<div class="sbwarn">⚠ ' + esc(activePreset.holiday) + '(3連休)。航空券・宿とも通常週末より高め・混みやすい時期です。</div>' : "") +
-      (mismatch ? '<div class="sbwarn">⚠ 曜日が元の調査基準(土・日・月)と変わっています。休館日・営業時間の情報はその曜日を前提に裏取りしたものなので、実際の開館状況は予約前に再確認してください。</div>' : "") +
+      (mismatch ? '<div class="sbwarn">⚠ 曜日が元の調査基準(土・日・月)と変わっています。休館日情報は実際の曜日(火・水など)に自動で読み替え済みですが、火〜金曜の休館日は未調査のため営業扱いにしています。念のため現地情報は予約前に確認してください。</div>' : "") +
       (!hasBday && !mismatch ? '<div class="sbwarn">⚠ この日程には誕生日(10/5)が含まれていません。誕生日ディナーの日取りは手動で調整してください。</div>' : "");
 
     var dateInput = document.getElementById("tripStart");
