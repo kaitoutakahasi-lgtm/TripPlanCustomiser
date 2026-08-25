@@ -478,6 +478,19 @@
     padding: 4px 10px; font-size: 11.5px; color: var(--ink-2); cursor: pointer;
   }
   .sbreset:hover { background: var(--bg); }
+  .sbpresets { display: inline-flex; align-items: center; gap: 6px; }
+  .sbpreset {
+    background: none; border: 1px solid var(--line-strong); border-radius: 999px;
+    padding: 4px 11px; font-size: 11.5px; font-weight: 600; color: var(--ink-2); cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .sbpreset:hover { background: var(--bg); }
+  .sbpreset.active { color: var(--primary); border-color: var(--primary); background: var(--primary-tint, rgba(244,150,47,.12)); }
+  .sbholiday {
+    font-size: 10.5px; color: #b5580f; background: rgba(244,150,47,.12);
+    border-radius: 999px; padding: 2px 8px; margin-left: 2px;
+  }
+  .darkauto .sbholiday { color: #ffb872; background: rgba(244,150,47,.14); }
   .sbtoggle {
     margin-left: auto; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
     background: none; border: 1px solid var(--line-strong); border-radius: 999px;
@@ -2959,9 +2972,7 @@ var DATA = {
     "雨リスク★2。滝・神宮・牧場と屋外多めなので、雨予報の日は霧島アートの森と湯めぐり中心に組み替えを",
     "空路適性は全プラン中最強クラス: 鹿児島空港→妙見温泉が車わずか15分。移動はレンタカー前提(空港前に各社集結・2日8,000円〜)",
     "霧島アートの森と塩浸温泉龍馬公園は月曜休 → 10/5(月)は不可、日曜までに。えびの高原方面の県道1号(硫黄山)は土日昼のみ開放",
-    "雅叙苑は茅葺き古民家・全10室の隠れ宿 — 「籠って祝う誕生日」の本命。土曜泊は早期予約必須",
-    "★確定プラン: 全予約・航空券とも支払い済み。実日程は10/4(日)雅叙苑→10/5(月・誕生日)おりはし旅館→10/6(火)成田発で帰京。画面の日付は基準日10/3(土)始まりのままのため、カレンダー表示は実際の曜日と1日ずれる点に注意",
-    "空港時刻もFIX済み: Day1は鹿児島13:30着(ANA623)+レンタカー受取を見て14:00開始に短縮(昼食枠・霧島温泉市場は削除)。Day3はおりはし11:00チェックアウト→犬飼滝→13:30に終え、鹿児島15:35発(GK624)に余裕を持って間に合わせる"
+    "雅叙苑は茅葺き古民家・全10室の隠れ宿 — 「籠って祝う誕生日」の本命。土曜泊は早期予約必須"
    ],
    "intro": "鹿児島空港から15分の渓流沿い。数寄屋造りの野鶴亭から、茅葺き古民家の離れが点在する雅叙苑へ — どちらも妙見温泉の和の隠れ宿で、格が上がっていく2泊です。昼は霧島神宮や明治の木造駅舎・嘉例川、野外美術館をドライブでめぐり、夜は囲炉裏端の田舎会席。",
    "geo": {
@@ -3468,22 +3479,22 @@ var DATA = {
      "id": "orihashi",
      "zone": "MYO",
      "grade": "手頃",
-     "name": "おりはし旅館【予約済み】(明治12年創業・全室離れ)",
+     "name": "おりはし旅館(明治12年創業・全室離れ)",
      "shortName": "おりはし",
      "meals": {
       "bf": true,
       "dn": true
      },
-     "price": 210700,
+     "price": 201200,
      "nightly": {
       "sat": 135400,
-      "sun": 75300
+      "sun": 65800
      },
-     "range": "実予約: 10/5(月)→10/6(火) ¥75,000(2名2食付)+入湯税¥150/人。予約番号8UAF6ATC・離れ「水明/川側」露天・内湯付き",
+     "range": "2名1泊2食 10/3(土) ¥135,400(上位2種のみ在庫)/ 10/4(日)・10/5(月) ¥65,800〜(川沿い新棟離れ確約・月替わり懐石)。同一プランで土曜は約2倍",
      "mealNote": "2食付(月替わりの季節懐石)",
      "perksNote": "日本秘湯を守る会。離れ11棟12室すべてに源泉かけ流しの露天+内風呂+水風呂。自噴冷泉「キズ湯」の湯処も",
      "source": {
-      "label": "予約確認メール(hpdsp.net)",
+      "label": "おりはし旅館公式",
       "url": "https://orihashi.co.jp/rooms/"
      },
      "verified": "jalan"
@@ -3564,22 +3575,22 @@ var DATA = {
      "id": "gajoen",
      "zone": "MYO",
      "grade": "記念日",
-     "name": "忘れの里 雅叙苑【予約済み】",
+     "name": "忘れの里 雅叙苑",
      "shortName": "雅叙苑",
      "meals": {
       "bf": true,
       "dn": true
      },
-     "price": 205900,
+     "price": 220000,
      "nightly": {
-      "sat": 105900,
+      "sat": 120000,
       "sun": 100000
      },
-     "range": "実予約: 10/4(日)14:00→10/5(月)12:00 ¥105,900(2名2食付)。予約番号2026081431217455・Bタイプ お風呂リビング付離れ。アレルギー配慮申請済み(大豆製品系)",
+     "range": "2名1泊 約9.5万円〜(2食付)",
      "mealNote": "2食付",
      "perksNote": "「露天風呂付き客室」発祥とされる茅葺き離れ全8室・全室かけ流し。露天付きの部屋を予約時に指定推奨",
      "source": {
-      "label": "予約確認メール(hotel-story.ne.jp)",
+      "label": "忘れの里 雅叙苑公式",
       "url": "https://gajoen.jp/"
      },
      "verified": null
@@ -3587,9 +3598,9 @@ var DATA = {
    ],
    "transport": [
     {
-     "label": "東京⇔鹿児島 往復(予約済み)",
-     "price": 76840,
-     "note": "2名・トラベリスト経由で予約・支払い済み。往路ANA623(羽田11:40→鹿児島13:30)/復路GK624・Jetstar(鹿児島15:35→成田17:30、受託手荷物15kg込み)。手配料・事務手数料込みの決済総額。※復路は成田着(羽田ではない)なので都心への帰路の時間・交通費に注意"
+     "label": "東京⇔鹿児島 往復",
+     "price": 35680,
+     "note": "2名分・1名往復¥17,840はスカイマークなど格安便の想定(ANA/JAL/スカイマーク/ソラシド計26便/日・約105分)。ANA/JAL正規便だと現在1名往復¥19,600〜24,300程度が相場のため、その場合は2名で約5〜7万円に上振れする点に注意"
     },
     {
      "label": "レンタカー2日+燃料(2人で1台)",
@@ -3600,9 +3611,11 @@ var DATA = {
    "defaults": {
     "sched": {
      "sat": [
+      "@lunch1",
       "kareigawa",
       "jingu",
       "maruo",
+      "ichiba",
       "@dinner1"
      ],
      "sun": [
@@ -3617,19 +3630,19 @@ var DATA = {
      ]
     },
     "dayStart": {
-     "sat": "14:00",
+     "sat": "11:00",
      "sun": "09:00",
      "mon": "08:30"
     },
     "dayEnd": {
      "sat": "21:30",
      "sun": "21:30",
-     "mon": "13:30"
+     "mon": "12:30"
     },
     "dinner": 0,
     "lodging": {
-     "sat": "gajoen",
-     "sun": "orihashi"
+     "sat": "yakakutei",
+     "sun": "gajoen"
     }
    }
   },
@@ -6760,6 +6773,11 @@ var DATA = {
   var WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
   var DEFAULT_START = "2026-10-03"; // 元の調査基準日(土曜始まり)
   var BIRTHDAY_ISO = "2026-10-05"; // 誕生日(固定の実日付)
+  var DATE_PRESETS = [
+    { start: "2026-10-10", label: "10/10-12", holiday: "10/12(月)は体育の日" },
+    { start: "2026-10-11", label: "10/11-13", holiday: "10/12(月)は体育の日" },
+    { start: "2026-10-17", label: "10/17-19", holiday: null }
+  ];
   var DEFAULT_BUDGET = 250000;
   var DEFAULT_BUF = 10;
   var MEAL_DUR = { breakfast: 45, lunch1: 60, lunch2: 60, dinner1: 90 };
@@ -7922,13 +7940,21 @@ var DATA = {
     var nav = document.getElementById("navDates");
     if (nav) nav.textContent = "2026." + pad2(days[0].m) + "." + pad2(days[0].d) + "(" + days[0].dow + ") – " +
       pad2(days[2].m) + "." + pad2(days[2].d) + "(" + days[2].dow + ")";
+    var activePreset = null;
+    DATE_PRESETS.forEach(function (p) { if (p.start === state.startDate) activePreset = p; });
     el.innerHTML =
       '<span class="sbfield"><label for="tripStart">出発日(Day 1)</label>' +
       '<input type="date" id="tripStart" value="' + esc(state.startDate) + '"></span>' +
       '<span class="sbrange">→ ' + days[2].m + "/" + days[2].d + "(" + days[2].dow + ")まで 2泊3日</span>" +
+      '<span class="sbpresets">' +
+      DATE_PRESETS.map(function (p) {
+        return '<button class="sbpreset' + (p.start === state.startDate ? " active" : "") + '" type="button" data-start="' + p.start + '">' + esc(p.label) + "</button>";
+      }).join("") +
+      "</span>" +
       '<button class="sbreset" id="dateReset" type="button">初期日程に戻す(' + defaultDateLabel() + ")</button>" +
       '<button class="sbtoggle" id="priceToggle" type="button" aria-pressed="' + !!state.hidePrice + '">' +
       '<span class="dot"></span>' + (state.hidePrice ? "金額を表示する" : "金額を隠す") + "</button>" +
+      (activePreset && activePreset.holiday ? '<div class="sbwarn">⚠ ' + esc(activePreset.holiday) + '(3連休)。航空券・宿とも通常週末より高め・混みやすい時期です。</div>' : "") +
       (mismatch ? '<div class="sbwarn">⚠ 曜日が元の調査基準(土・日・月)と変わっています。休館日・営業時間の情報はその曜日を前提に裏取りしたものなので、実際の開館状況は予約前に再確認してください。</div>' : "") +
       (!hasBday && !mismatch ? '<div class="sbwarn">⚠ この日程には誕生日(10/5)が含まれていません。誕生日ディナーの日取りは手動で調整してください。</div>' : "");
 
@@ -7938,6 +7964,11 @@ var DATA = {
     });
     document.getElementById("dateReset").addEventListener("click", function () {
       state.startDate = DEFAULT_START; save(); renderAll();
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".sbpreset"), function (btn) {
+      btn.addEventListener("click", function () {
+        state.startDate = btn.getAttribute("data-start"); save(); renderAll();
+      });
     });
     document.getElementById("priceToggle").addEventListener("click", function () {
       // full re-render: <option> price text is generated conditionally in JS (CSS can't reach into <select> content)
