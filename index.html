@@ -6901,6 +6901,527 @@ var DATA = {
      "sun": "gosyobou"
     }
    }
+  },
+  {
+   "id": "kumamoto",
+   "name": "山鹿・杖立 薪サウナと茅葺きの湯宿",
+   "sub": "豆富屋やまと×日田屋・黒川温泉",
+   "tags": [
+    "温泉",
+    "薪サウナ",
+    "茅葺き離れ",
+    "雨リスク★2"
+   ],
+   "points": [
+    "★全国調査で唯一の全条件充足プラン: 純和風(畳・布団)×茅葺き移築離れ×宿内の貸切薪サウナ×個室会席×飛行機移動を同時に満たすのは平山温泉「豆富屋やまと」だけだった",
+    "実測(8/29): やまと10/17(土)かやぶき離れ「拾番」¥101,250(2食付・貸切薪サウナ120分込)、日田屋10/18(日)¥21,000〜22,000でどちらも空室確認済み。残室僅少のため即予約推奨",
+    "移動はレンタカー前提: 空港→山鹿60分、山鹿→杖立50分、杖立→黒川25分、黒川→空港75分。羽田⇔熊本はANA/JAL/ソラシド等で約1時間50分",
+    "2泊目の格上げ候補: 黒川・いこい旅館(茅葺きの滝の湯・10/18 ¥58,300実測)や御客屋(創業1722年・黒川最古)。予算+約10万円で竹ふえ(全室離れ・部屋食・貸切サウナ「竹岩浴」)も",
+    "八千代座(明治43年築・国重要文化財の芝居小屋)は公演日は見学不可のため要事前確認。さくら湯は第3水曜休だが10/21のため旅程に影響なし"
+   ],
+   "intro": "飛行機で熊本へ飛び、山鹿・平山温泉の茅葺き離れに泊まる新発見プラン。1泊目(誕生日の夜)は豆富屋やまと — 移築した茅葺き日本家屋の離れ「拾番」に泊まり、専用の薪サウナ「無創庵」を120分貸切、完全個室の食事処で手作り豆腐と馬肉の会席(一休の夕食評点4.93)。2泊目は杖立温泉・日田屋(昭和9年築・1日3組)で京仕込みの懐石を完全部屋食で。昼は八千代座と豊前街道、杖立の背戸屋、黒川温泉の入湯手形湯めぐりをレンタカーでつなぎます。",
+   "geo": {
+    "names": {
+     "YAM": "山鹿・平山温泉",
+     "TSU": "杖立温泉",
+     "KUR": "黒川温泉",
+     "ASO": "阿蘇・大観峰",
+     "APT": "阿蘇くまもと空港"
+    },
+    "local": 10,
+    "arrival": "YAM",
+    "airport": "APT",
+    "travel": {
+     "YAM|TSU": 50,
+     "YAM|KUR": 60,
+     "YAM|ASO": 80,
+     "YAM|APT": 60,
+     "TSU|KUR": 25,
+     "TSU|ASO": 50,
+     "TSU|APT": 70,
+     "KUR|ASO": 40,
+     "KUR|APT": 75,
+     "ASO|APT": 45
+    },
+    "travelNote": "全行程レンタカー前提(所要は通常時の目安)。空港⇔山鹿60分・杖立⇔黒川25分と、点在する温泉地を車でつなぐ構成"
+   },
+   "activities": [
+    {
+     "id": "yachiyoza",
+     "zone": "YAM",
+     "name": "八千代座(明治43年築・国重要文化財の芝居小屋)",
+     "category": "sight",
+     "price": 530,
+     "durH": 1,
+     "duration": "約1時間",
+     "days": {
+      "sat": "check",
+      "sun": "check",
+      "mon": "check",
+      "tue": "check"
+     },
+     "note": "9:00–18:00。明治の芝居小屋を廻り舞台・奈落まで見学可。公演・イベント日は見学不可のため要事前確認(0968-44-4004)",
+     "source": {
+      "label": "八千代座公式",
+      "url": "https://www.yachiyoza.com/"
+     }
+    },
+    {
+     "id": "sakurayu",
+     "zone": "YAM",
+     "name": "さくら湯(江戸期由来の木造温泉)",
+     "category": "onsen",
+     "price": 350,
+     "durH": 0.5,
+     "duration": "約30分",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "6:00–24:00・第3水曜休(10/21のため旅程影響なし)。九州最大級の木造温泉。道後式の唐破風が見事",
+     "source": {
+      "label": "山鹿温泉観光協会",
+      "url": "https://yamaga.site/"
+     }
+    },
+    {
+     "id": "buzen",
+     "zone": "YAM",
+     "name": "豊前街道さんぽ(麹屋・酒蔵)",
+     "category": "sight",
+     "price": 0,
+     "durH": 1,
+     "duration": "約1時間",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "終日散策可。千代の園酒造・麹屋など江戸〜明治の町並み。店舗は概ね10:00–17:00",
+     "source": {
+      "label": "山鹿温泉観光協会",
+      "url": "https://yamaga.site/"
+     }
+    },
+    {
+     "id": "toro",
+     "zone": "YAM",
+     "name": "山鹿灯籠民芸館",
+     "category": "art",
+     "price": 300,
+     "durH": 0.5,
+     "duration": "約30分",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "9:00–18:00・年末年始休。金灯籠(和紙と糊だけの伝統工芸)の名品を展示。大正14年築の旧安田銀行の洋館",
+     "source": {
+      "label": "山鹿温泉観光協会",
+      "url": "https://yamaga.site/"
+     }
+    },
+    {
+     "id": "sedoya",
+     "zone": "TSU",
+     "name": "杖立温泉 背戸屋めぐり",
+     "category": "sight",
+     "price": 0,
+     "durH": 1,
+     "duration": "約1時間",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "終日散策可。湯けむり路地の昭和レトロな裏町歩き。もみじの湯・薬師堂など",
+     "source": {
+      "label": "杖立温泉観光協会",
+      "url": "https://tsuetate-onsen.com/"
+     }
+    },
+    {
+     "id": "mushiba",
+     "zone": "TSU",
+     "name": "杖立 蒸し場で温泉蒸し体験",
+     "category": "food",
+     "price": 300,
+     "durH": 0.5,
+     "duration": "約30分",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "98℃の源泉蒸気の共同蒸し場で卵・野菜・プリンを蒸す。食材は周辺商店で購入",
+     "source": {
+      "label": "杖立温泉観光協会",
+      "url": "https://tsuetate-onsen.com/"
+     }
+    },
+    {
+     "id": "tegata",
+     "zone": "KUR",
+     "name": "黒川温泉 入湯手形で湯めぐり",
+     "category": "onsen",
+     "price": 1500,
+     "durH": 2,
+     "duration": "約2時間",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "手形1枚で3湯(半年有効)。立ち寄り湯は概ね8:30–21:00。丸鈴橋・川端通りの露天群",
+     "source": {
+      "label": "黒川温泉観光旅館協同組合",
+      "url": "https://www.kurokawaonsen.or.jp/"
+     }
+    },
+    {
+     "id": "kawabata",
+     "zone": "KUR",
+     "name": "黒川 川端通りさんぽ+食べ歩き",
+     "category": "food",
+     "price": 1000,
+     "durH": 1,
+     "duration": "約1時間",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "いきなり団子・温泉プリン・どらどら焼き等。店舗は概ね9:00–17:30",
+     "source": {
+      "label": "黒川温泉観光旅館協同組合",
+      "url": "https://www.kurokawaonsen.or.jp/"
+     }
+    },
+    {
+     "id": "daikanbo",
+     "zone": "ASO",
+     "name": "大観峰(阿蘇五岳の大パノラマ)",
+     "category": "sight",
+     "price": 0,
+     "durH": 0.75,
+     "duration": "約45分",
+     "days": {
+      "sat": "open",
+      "sun": "open",
+      "mon": "open",
+      "tue": "open"
+     },
+     "note": "見学自由(茶店8:30–17:00頃)。阿蘇カルデラと五岳を一望。10月は雲海シーズン初期",
+     "source": {
+      "label": "熊本県公式観光サイト",
+      "url": "https://kumamoto.guide/"
+     }
+    }
+   ],
+   "dinners": [
+    {
+     "name": "宿の会席で誕生日ディナー(2食付プランに含む)",
+     "price": 0,
+     "requires": [
+      "yamato",
+      "hitaya",
+      "ikoi",
+      "okyakuya",
+      "takefue"
+     ],
+     "note": "やまとは完全個室食事処で豆腐+馬肉会席(夕食評点4.93)、日田屋は完全部屋食の京仕込み懐石。記念日ケーキ・演出は予約時に要相談",
+     "source": {
+      "label": "一休.com 豆富屋やまと",
+      "url": "https://www.ikyu.com/00002688/"
+     }
+    }
+   ],
+   "meals": {
+    "lunch1": {
+     "label": "山鹿で昼食(目安)",
+     "price": 1600,
+     "zone": "YAM",
+     "rest": "somon",
+     "note": "",
+     "options": [
+      {
+       "name": "米米惣門亭(千代の園酒造の食事処)",
+       "price": 1600,
+       "note": "豊前街道の酒蔵郷土料理。営業日・時間は要確認(裏取り未実施)",
+       "source": {
+        "label": "山鹿温泉観光協会",
+        "url": "https://yamaga.site/"
+       }
+      }
+     ]
+    },
+    "dinner1": {
+     "label": "山鹿・平山で夕食(目安)",
+     "price": 4000,
+     "zone": "YAM",
+     "rest": "somon",
+     "note": "2食付の宿ならプラン込みに自動切替",
+     "options": [
+      {
+       "name": "宿の会席(やまと・2食付)",
+       "price": 4000,
+       "note": "既定は宿の2食付のためこの枠は通常使わない",
+       "source": {
+        "label": "一休.com",
+        "url": "https://www.ikyu.com/00002688/"
+       }
+      }
+     ]
+    },
+    "lunch2": {
+     "label": "杖立・黒川で昼食(目安)",
+     "price": 1300,
+     "zone": "KUR",
+     "rest": "warokuya",
+     "note": "",
+     "options": [
+      {
+       "name": "わろく屋(黒川・湯治めし)",
+       "price": 1300,
+       "note": "黒川温泉街の昼処。営業日は要確認(裏取り未実施)",
+       "source": {
+        "label": "黒川温泉観光旅館協同組合",
+        "url": "https://www.kurokawaonsen.or.jp/"
+       }
+      }
+     ]
+    },
+    "breakfast": {
+     "label": "宿の朝食",
+     "price": 1500,
+     "note": ""
+    }
+   },
+   "restaurants": [
+    {
+     "id": "somon",
+     "zone": "YAM",
+     "meals": [
+      "lunch",
+      "dinner"
+     ],
+     "name": "米米惣門亭(千代の園酒造)",
+     "price": 1600,
+     "note": "豊前街道の酒蔵郷土料理。営業日・時間は要確認",
+     "source": {
+      "label": "山鹿温泉観光協会",
+      "url": "https://yamaga.site/"
+     }
+    },
+    {
+     "id": "warokuya",
+     "zone": "KUR",
+     "meals": [
+      "lunch"
+     ],
+     "name": "わろく屋",
+     "price": 1300,
+     "note": "黒川温泉・川端通り近くの昼処(湯治めし・カレー)。営業日は要確認",
+     "source": {
+      "label": "黒川温泉観光旅館協同組合",
+      "url": "https://www.kurokawaonsen.or.jp/"
+     }
+    },
+    {
+     "id": "tsuetate_pudding",
+     "zone": "TSU",
+     "meals": [
+      "lunch"
+     ],
+     "name": "杖立プリン食べ歩き(各店)",
+     "price": 500,
+     "note": "名物の温泉蒸しプリン。背戸屋めぐりとセットで",
+     "source": {
+      "label": "杖立温泉観光協会",
+      "url": "https://tsuetate-onsen.com/"
+     }
+    }
+   ],
+   "lodgings": [
+    {
+     "id": "yamato",
+     "zone": "YAM",
+     "grade": "記念日",
+     "name": "平山温泉 豆富屋やまと【本命・要即予約】",
+     "shortName": "やまと",
+     "meals": {
+      "bf": true,
+      "dn": true
+     },
+     "price": 202500,
+     "nightly": {
+      "sat": 101250,
+      "sun": 101250
+     },
+     "range": "実測(一休/Yahoo!・8/29): 10/17(土)かやぶき離れ「拾番」¥101,250(2名2食・貸切薪サウナ120分込)で空室確認済み。10/18(日)は未実測",
+     "mealNote": "2食付(完全個室食事処・手作り豆腐+馬肉会席。夕食評点4.93)",
+     "perksNote": "【箱:伝統建築】茅葺き移築の日本家屋離れ「拾番」ほか全5棟。【純和風】和室+特注羽毛布団(「弐拾番」のみ和洋室2階建てなので避ける)。専用薪サウナ「無創庵」貸切120分がプラン込み・ウィスキング付きプランあり",
+     "source": {
+      "label": "一休.com",
+      "url": "https://www.ikyu.com/00002688/"
+     },
+     "verified": "official"
+    },
+    {
+     "id": "hitaya",
+     "zone": "TSU",
+     "grade": "部屋食",
+     "name": "杖立温泉 旅館日田屋(昭和9年創業・1日3組)",
+     "shortName": "日田屋",
+     "meals": {
+      "bf": true,
+      "dn": true
+     },
+     "price": 70000,
+     "nightly": {
+      "sat": 48000,
+      "sun": 22000
+     },
+     "range": "実測(じゃらん・8/29): 10/17(土)¥46,000〜48,000/10/18(日)¥21,000〜22,000(2名2食)で空室確認済み",
+     "mealNote": "2食付(京仕込みの懐石・完全お部屋食。口コミ4.9)",
+     "perksNote": "【箱:昭和9年築の木造】湯治場の風情が残る全8室・1日3組の宿(改装度は要現地確認)。貸切の専用湯+杖立名物の蒸湯(スチームサウナ)※ドライサウナではない",
+     "source": {
+      "label": "じゃらん",
+      "url": "https://www.jalan.net/yad327290/"
+     },
+     "verified": "jalan"
+    },
+    {
+     "id": "ikoi",
+     "zone": "KUR",
+     "grade": "名湯",
+     "name": "黒川温泉 いこい旅館",
+     "shortName": "いこい",
+     "meals": {
+      "bf": true,
+      "dn": true
+     },
+     "price": 116600,
+     "nightly": {
+      "sat": 58300,
+      "sun": 58300
+     },
+     "range": "実測(楽天・8/29): 10/18(日)風呂付和室9畳「松」¥58,300(残1・霜降馬刺+阿蘇王牛会席)。10/17(土)は未実測(黒川の土曜は在庫僅少)",
+     "mealNote": "2食付(馬刺し+あか牛の会席)",
+     "perksNote": "【箱:木造+茅葺きの滝の湯】川端通りの歴史宿・日本名湯秘湯百選。囲炉裏と13の湯",
+     "source": {
+      "label": "楽天トラベル",
+      "url": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/55943"
+     },
+     "verified": "rakuten"
+    },
+    {
+     "id": "okyakuya",
+     "zone": "KUR",
+     "grade": "老舗",
+     "name": "黒川温泉 御客屋(創業享保7年)",
+     "shortName": "御客屋",
+     "meals": {
+      "bf": true,
+      "dn": true
+     },
+     "price": 118800,
+     "nightly": {
+      "sat": 57200,
+      "sun": 61600
+     },
+     "range": "実測(楽天・8/29): 10/17(土)和室6畳¥57,200/8畳¥61,600(2名2食・あか牛セイロ蒸し+馬刺し)。10/18(日)は未実測",
+     "mealNote": "2食付(あか牛+馬刺しの会席・食事処)",
+     "perksNote": "【箱:伝統建築】創業1722年・黒川最古の御用宿(木造2階・全13室)。夕食は食事処で部屋食なし",
+     "source": {
+      "label": "楽天トラベル",
+      "url": "https://hotel.travel.rakuten.co.jp/hotelinfo/plan/80591"
+     },
+     "verified": "rakuten"
+    },
+    {
+     "id": "takefue",
+     "zone": "KUR",
+     "grade": "最高峰",
+     "name": "秘境 白川源泉 山荘 竹ふえ(南小国)",
+     "shortName": "竹ふえ",
+     "meals": {
+      "bf": true,
+      "dn": true
+     },
+     "price": 412000,
+     "nightly": {
+      "sat": 206000,
+      "sun": 206000
+     },
+     "range": "JTB掲載: 露天なし離れ¥206,000〜272,000/露天付き¥290,000〜446,000(2名・2食付)。予算超過のため参考枠・日付実測なし",
+     "mealNote": "2食付(夕朝とも完全部屋食)",
+     "perksNote": "【箱:和風平屋の離れ群】竹林5,000坪に全12室の離れ(和室中心・「夕月夜」「天飛」は和洋室)。宿泊者限定の貸切サウナ「竹岩浴」(45分・電話予約)+貸切風呂3種無料",
+     "source": {
+      "label": "JTB",
+      "url": "https://www.jtb.co.jp/kokunai-hotel/htl/8332A05/plan/"
+     },
+     "verified": null
+    }
+   ],
+   "transport": [
+    {
+     "label": "東京⇔熊本 往復",
+     "price": 60000,
+     "note": "2名分・ANA/JAL/ソラシドエア等で約1時間50分。10/17-19は通常週末のため1名往復¥3万前後の想定(具体便は要実測)。阿蘇くまもと空港利用"
+    },
+    {
+     "label": "レンタカー2日+燃料(2人で1台)",
+     "price": 15000,
+     "note": "空港前で貸出。山鹿⇔杖立⇔黒川の周遊はレンタカー前提"
+    }
+   ],
+   "defaults": {
+    "sched": {
+     "sat": [
+      "@lunch1",
+      "yachiyoza",
+      "buzen",
+      "@dinner1"
+     ],
+     "sun": [
+      "@breakfast",
+      "sedoya",
+      "mushiba",
+      "@lunch2",
+      "tegata",
+      "kawabata"
+     ],
+     "mon": [
+      "@breakfast",
+      "daikanbo"
+     ]
+    },
+    "dayStart": {
+     "sat": "12:30",
+     "sun": "09:00",
+     "mon": "08:30"
+    },
+    "dayEnd": {
+     "sat": "21:30",
+     "sun": "21:30",
+     "mon": "13:00"
+    },
+    "dinner": 0,
+    "lodging": {
+     "sat": "yamato",
+     "sun": "hitaya"
+    }
+   }
   }
  ]
 };
