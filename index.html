@@ -3017,7 +3017,7 @@ var DATA = {
     "雨リスク★2"
    ],
    "points": [
-    "★決定プラン(8/29): 10/17(土)野鶴亭(本館10畳¥81,400実測・残1〜2室)→10/18(日)おりはし離れ「竹林」(¥154,000実測・残1室・専用サウナ+水風呂+大露天)。総額≈¥30.4万(予算+5.4万は納得済み)。竹林の寝室はベッドだが10帖の和室空間あり。予約順: ①竹林 ②野鶴亭 ③航空券(羽田⇔鹿児島 実測2名¥46,940) ④レンタカー。両宿ともアレルギー申請【本人:未発酵大豆(豆腐・豆乳・湯葉・枝豆・もやし ※醤油・味噌・納豆はOK)+りんご+パラミツ/同行者:やまいも】を忘れずに",
+    "★航空券確定(8/29): 往路GK625 10/18(日)成田12:50→鹿児島14:55/復路NH628 10/20(火)鹿児島16:35→羽田18:25(2名¥23,120実測)。日程は10/18(日)-10/20(火)で確定 — 月曜休の施設(アートの森・塩浸温泉)はDay2(10/19月)にあたるため回避を。宿は確認メール未着(電話予約か手配中) — 確定したら反映。アレルギー申請【本人:未発酵大豆(豆腐・豆乳・湯葉・枝豆・もやし ※醤油・味噌・納豆はOK)+りんご+パラミツ/同行者:やまいも】を全宿へ",
     "雨リスク★2。滝・神宮・牧場と屋外多めなので、雨予報の日は霧島アートの森と湯めぐり中心に組み替えを",
     "空路適性は全プラン中最強クラス: 鹿児島空港→妙見温泉が車わずか15分。移動はレンタカー前提(空港前に各社集結・2日8,000円〜)",
     "霧島アートの森と塩浸温泉龍馬公園は月曜休 → 10/5(月)は不可、日曜までに。えびの高原方面の県道1号(硫黄山)は土日昼のみ開放",
@@ -3687,9 +3687,9 @@ var DATA = {
    ],
    "transport": [
     {
-     "label": "東京⇔鹿児島 往復",
-     "price": 35680,
-     "note": "2名分・1名往復¥17,840はスカイマークなど格安便の想定(ANA/JAL/スカイマーク/ソラシド計26便/日・約105分)。ANA/JAL正規便だと現在1名往復¥19,600〜24,300程度が相場のため、その場合は2名で約5〜7万円に上振れする点に注意"
+     "label": "東京⇔鹿児島(予約・支払い済み)",
+     "price": 49120,
+     "note": "復路は実測: NH628 10/20(火)鹿児島16:35→羽田18:25着・2名¥23,120(セール運賃・決済完了/予約番号DYHQAB)。往路はジェットスターGK625 10/18(日)成田12:50→鹿児島14:55(予約番号GMQ4GM・金額は旅程表メール待ちのため2名¥26,000は仮置き)。※往路は羽田でなく成田発な点に注意"
     },
     {
      "label": "レンタカー2日+燃料(2人で1台)",
@@ -7568,8 +7568,8 @@ var DATA = {
   var ORIGINAL_DOW = { sat: "土", sun: "日", mon: "月" };
   var WEEKDAY_JA = ["日", "月", "火", "水", "木", "金", "土"];
   var DOW_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]; // Date#getDay()順の実曜日キー
-  var DEFAULT_START = "2026-10-17"; // メイン候補日程(土曜始まり — 元の調査基準10/3と同じ土日月なので裏取りデータがそのまま有効)
-  var LEGACY_START = "2026-10-03"; // 旧基準日。保存済みstateがこの値ならリスケ前の残骸なので新デフォルトに移行
+  var DEFAULT_START = "2026-10-18"; // 確定日程(日曜始まり — GK625/NH628の実予約に合わせた10/18-20)
+  var LEGACY_STARTS = ["2026-10-03", "2026-10-17"]; // 旧デフォルト。保存済みstateがこれらなら確定日程に移行
   var BIRTHDAY_ISO = "2026-10-05"; // 誕生日(固定の実日付)
   var DATE_PRESETS = [
     { start: "2026-10-10", label: "10/10-12", holiday: "10/12(月)は体育の日" },
@@ -7757,7 +7757,7 @@ var DATA = {
     if (saved && saved.plans) {
       if (saved.tab && DATA.plans.some(function (p) { return p.id === saved.tab; })) state.tab = saved.tab;
       if (typeof saved.budget === "number" && saved.budget >= 0) state.budget = saved.budget;
-      if (typeof saved.startDate === "string" && parseISO(saved.startDate) && saved.startDate !== LEGACY_START) state.startDate = saved.startDate;
+      if (typeof saved.startDate === "string" && parseISO(saved.startDate) && LEGACY_STARTS.indexOf(saved.startDate) === -1) state.startDate = saved.startDate;
       if (typeof saved.hidePrice === "boolean") state.hidePrice = saved.hidePrice;
       DATA.plans.forEach(function (p) {
         var sp = saved.plans[p.id];
@@ -8771,7 +8771,7 @@ var DATA = {
       '<button class="sbtoggle" id="priceToggle" type="button" aria-pressed="' + !!state.hidePrice + '">' +
       '<span class="dot"></span>' + (state.hidePrice ? "金額を表示する" : "金額を隠す") + "</button>" +
       (activePreset && activePreset.holiday ? '<div class="sbwarn">⚠ ' + esc(activePreset.holiday) + '(3連休)。航空券・宿とも通常週末より高め・混みやすい時期です。</div>' : "") +
-      (mismatch ? '<div class="sbwarn">⚠ 曜日が元の調査基準(土・日・月)と変わっています。休館日情報は実際の曜日(火・水など)に自動で読み替え済みですが、火〜金曜の休館日は未調査のため営業扱いにしています。念のため現地情報は予約前に確認してください。</div>' : "") +
+      (mismatch ? '<div class="sbwarn">⚠ 曜日が元の調査基準(土・日・月)と変わっています。休館日情報は実際の曜日に自動で読み替え済みで、火曜も全アクティビティ調査済みです(水〜金曜のみ未調査のため営業扱い)。祝日振替など例外は現地情報を予約前に確認してください。</div>' : "") +
       (!hasBday && !mismatch ? '<div class="sbwarn">⚠ この日程には誕生日(10/5)が含まれていません。誕生日ディナーの日取りは手動で調整してください。</div>' : "");
 
     var dateInput = document.getElementById("tripStart");
